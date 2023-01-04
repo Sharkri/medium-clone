@@ -4,7 +4,8 @@ function TrendingPost({ post }: { post: Post }) {
   return (
     <div>
       <p>{post.title}</p>
-      <p>{post.author}</p>
+      <p>{post.author.name}</p>
+      <img src={post.author.avatar} alt="user avatar" />
     </div>
   );
 }

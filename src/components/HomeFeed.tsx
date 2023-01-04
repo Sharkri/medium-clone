@@ -7,7 +7,12 @@ function HomeFeed() {
       <section>
         <TrendingPosts
           posts={[
-            { title: "test", author: "test", date: new Date(), id: "test" },
+            {
+              title: "test",
+              author: { name: "barack obama", avatar: "" },
+              date: new Date(),
+              id: "test",
+            },
           ]}
         />
       </section>
