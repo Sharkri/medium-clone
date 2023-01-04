@@ -1,11 +1,6 @@
 import TrendingPost from "./TrendingPost";
+import Post from "./PostInterface";
 
-interface Post {
-  title: string;
-  author: string;
-  date: Date;
-  id: string | number;
-}
 function TrendingPosts({ posts }: { posts: Post[] }) {
   return (
     <div>
