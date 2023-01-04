@@ -1,6 +1,13 @@
 .hero {
   background-color: var(--homepage-main-color);
-  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-content {
+  flex-grow: 1;
+  padding: 25px 18px;
+  max-width: 1250px;
 }
 
 .hero-text {
