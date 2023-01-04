@@ -5,7 +5,7 @@ function HomeFeed() {
   return (
     <div>
       <section>
-        <TrendingPosts />
+        <TrendingPosts posts={[]} />
       </section>
 
       <section>
