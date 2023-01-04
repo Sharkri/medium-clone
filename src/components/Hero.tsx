@@ -1,7 +1,9 @@
+import "../css/Hero.css";
+
 function Hero() {
   return (
     <div>
-      <h1>hero</h1>
+      <h2 className="hero-text">Stay curious.</h2>
     </div>
   );
 }

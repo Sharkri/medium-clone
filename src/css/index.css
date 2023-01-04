@@ -6,6 +6,11 @@
   outline: 1px solid red;
 }
 
+@font-face {
+  font-family: gt-super;
+  src: url("../fonts/GT-Super/GT-Super-Text-Book-Trial.otf");
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",

@@ -1,0 +1,7 @@
+.hero-text {
+  font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-size: 95px;
+  letter-spacing: -0.05em;
+  font-weight: 400;
+  background-color: var(--homepage-main-color);
+}
