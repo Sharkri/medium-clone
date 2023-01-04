@@ -13,8 +13,20 @@
 
 .hero-subtext {
   color: rgba(41, 41, 41, 1);
-  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 400;
   font-size: 24px;
-  max-width: 500px;
+  max-width: 420px;
+  margin-bottom: 50px;
+}
+
+.start-reading {
+  width: 213px;
+  padding: 7px 20px 9px;
+  line-height: 24px;
+  font-size: 20px;
+  font-family: inherit;
+  background: rgb(25, 25, 25);
+  border-color: rgb(25, 25, 25);
+  color: rgb(255, 255, 255);
+  border-radius: 999px;
 }

@@ -7,6 +7,8 @@ function Hero() {
       <h3 className="hero-subtext">
         Discover stories, thinking, and expertise from writers on any topic.
       </h3>
+
+      <button className="start-reading">Start reading</button>
     </div>
   );
 }
