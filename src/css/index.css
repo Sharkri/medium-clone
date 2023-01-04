@@ -3,7 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   /* For visualization purposes */
-  border: 1px solid red;
+  outline: 1px solid red;
 }
 
 body {
@@ -12,6 +12,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --homepage-main-color: #ffc017;
 }
 
 code {
