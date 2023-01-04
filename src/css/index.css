@@ -2,13 +2,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* For visualization purposes */
-  outline: 1px solid red;
 }
 
 @font-face {
   font-family: gt-super;
   src: url("../fonts/GT-Super/GT-Super-Text-Book-Trial.otf");
+}
+
+@font-face {
+  font-family: sohne;
+  src: url("../fonts/söhne/TestSöhne-Buch.otf");
 }
 
 body {

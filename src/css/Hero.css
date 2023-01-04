@@ -1,7 +1,20 @@
+.hero {
+  background-color: var(--homepage-main-color);
+  padding: 24px;
+}
+
 .hero-text {
   font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
   font-size: 95px;
   letter-spacing: -0.05em;
   font-weight: 400;
-  background-color: var(--homepage-main-color);
+  margin-bottom: 16px;
+}
+
+.hero-subtext {
+  color: rgba(41, 41, 41, 1);
+  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  max-width: 500px;
 }
