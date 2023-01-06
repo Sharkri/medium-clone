@@ -1,4 +1,3 @@
-import useModal from "./useModal";
 import { createContext, ReactNode } from "react";
 
 interface IModalContext {
@@ -14,14 +13,4 @@ const ModalContext = createContext<IModalContext>({
   toggleModal: () => {},
 });
 
-function ModalProvider({ children }: { children: ReactNode }) {
-  const { modalContent, isModalOpen, toggleModal } = useModal();
-
-  return (
-    <ModalContext.Provider value={{ modalContent, isModalOpen, toggleModal }}>
-      {children}
-    </ModalContext.Provider>
-  );
-}
-
-export { ModalContext, ModalProvider };
+export default ModalContext;

@@ -2,11 +2,14 @@ import Header from "./Header";
 import Hero from "./Hero";
 import HomeFeed from "./HomeFeed";
 import Modal from "./modal/Modal";
-import { ModalProvider } from "./modal/ModalContext";
+import ModalContext from "./modal/ModalContext";
+import useModal from "./modal/useModal";
 
 function Home() {
+  const { modalContent, toggleModal, isModalOpen } = useModal();
+
   return (
-    <ModalProvider>
+    <ModalContext.Provider value={{ modalContent, toggleModal, isModalOpen }}>
       <Modal />
 
       <Header />
@@ -14,7 +17,7 @@ function Home() {
         <Hero />
         <HomeFeed />
       </main>
-    </ModalProvider>
+    </ModalContext.Provider>
   );
 }
 
