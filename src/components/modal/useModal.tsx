@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 
 export default function useModal() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
   const [modalContent, setModalContent] = useState<ReactNode>(null);
 
   function toggleModal(content?: ReactNode) {
