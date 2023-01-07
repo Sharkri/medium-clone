@@ -12,7 +12,9 @@ it('navigates to <SignUpPage /> when "No account? Create one" is clicked', () =>
   // Should open modal with correct element
   expect(openModalButton.mock.calls[0][0]).toMatchInlineSnapshot(`
     Object {
-      "children": "Create one",
+      "children": <b>
+        Create one
+      </b>,
       "element": <SignUpPage />,
     }
   `);

@@ -21,7 +21,9 @@ export default function SignInPage() {
 
       <p>
         No account?{" "}
-        <OpenModalButton element={<SignUpPage />}>Create one</OpenModalButton>
+        <OpenModalButton element={<SignUpPage />}>
+          <b>Create one</b>
+        </OpenModalButton>
       </p>
     </div>
   );

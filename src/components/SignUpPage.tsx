@@ -20,7 +20,9 @@ export default function SignUpPage() {
       </ul>
       <p>
         Already have an account?{" "}
-        <OpenModalButton element={<SignInPage />}>Sign In</OpenModalButton>
+        <OpenModalButton element={<SignInPage />}>
+          <b>Sign In</b>
+        </OpenModalButton>
       </p>
     </div>
   );
