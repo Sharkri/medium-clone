@@ -7,7 +7,11 @@ function Modal() {
   return isModalOpen ? (
     <div className="modal">
       <div className="modal-content">
-        <button className="close-modal" onClick={() => setModalOpen(false)}>
+        <button
+          className="close-modal"
+          onClick={() => setModalOpen(false)}
+          aria-label="close"
+        >
           <i className="fa-solid fa-xmark" />
         </button>
 
