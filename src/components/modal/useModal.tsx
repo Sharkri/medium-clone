@@ -4,10 +4,10 @@ export default function useModal() {
   const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
   const [modalContent, setModalContent] = useState<ReactNode>(null);
 
-  function toggleModal(content?: ReactNode) {
-    setIsModalOpen((prevState) => !prevState);
+  function setModalOpen(isOpen: Boolean, content?: ReactNode) {
+    setIsModalOpen(isOpen);
     if (content) setModalContent(content);
   }
 
-  return { isModalOpen, toggleModal, modalContent };
+  return { isModalOpen, setModalOpen, modalContent };
 }

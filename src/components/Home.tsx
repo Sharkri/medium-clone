@@ -6,10 +6,10 @@ import ModalContext from "./modal/ModalContext";
 import useModal from "./modal/useModal";
 
 function Home() {
-  const { modalContent, toggleModal, isModalOpen } = useModal();
+  const { modalContent, setModalOpen, isModalOpen } = useModal();
 
   return (
-    <ModalContext.Provider value={{ modalContent, toggleModal, isModalOpen }}>
+    <ModalContext.Provider value={{ modalContent, setModalOpen, isModalOpen }}>
       <Modal />
 
       <Header />

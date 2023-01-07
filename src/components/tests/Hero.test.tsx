@@ -7,12 +7,12 @@ import SignUpPage from "../SignUpPage";
 jest.mock("../SignUpModal.tsx", () => jest.fn());
 
 it('opens sign up modal when "Start reading" button is clicked', () => {
-  const mockToggleModal = jest.fn();
+  const setModalOpenMock = jest.fn();
 
   render(
     <ModalContext.Provider
       value={{
-        toggleModal: mockToggleModal,
+        setModalOpen: setModalOpenMock,
         isModalOpen: false,
         modalContent: null,
       }}
@@ -25,7 +25,7 @@ it('opens sign up modal when "Start reading" button is clicked', () => {
 
   userEvent.click(signUpButton);
 
-  // should toggle modal with sign up page
-  expect(mockToggleModal).toHaveBeenCalledTimes(1);
-  expect(mockToggleModal).toHaveBeenCalledWith(<SignUpPage />);
+  // should set modal open with sign up page as content
+  expect(setModalOpenMock).toHaveBeenCalledTimes(1);
+  expect(setModalOpenMock).toHaveBeenCalledWith(true, <SignUpPage />);
 });

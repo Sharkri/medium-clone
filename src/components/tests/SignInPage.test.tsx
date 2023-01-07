@@ -5,11 +5,11 @@ import SignInPage from "../SignInPage";
 import SignUpPage from "../SignUpPage";
 
 it("should ", () => {
-  const toggleModalMock = jest.fn();
+  const setModalOpen = jest.fn();
   render(
     <ModalContext.Provider
       value={{
-        toggleModal: toggleModalMock,
+        setModalOpen,
         modalContent: null,
         isModalOpen: false,
       }}
@@ -21,5 +21,5 @@ it("should ", () => {
   const createAccount = screen.getByRole("button", { name: "Create one" });
   userEvent.click(createAccount);
 
-  expect(toggleModalMock).toHaveBeenCalledWith(<SignUpPage />);
+  expect(setModalOpen).toHaveBeenCalledWith(true, <SignUpPage />);
 });

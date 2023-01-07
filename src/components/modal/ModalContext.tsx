@@ -3,14 +3,14 @@ import { createContext, ReactNode } from "react";
 interface IModalContext {
   modalContent: ReactNode;
   isModalOpen: Boolean;
-  toggleModal: Function;
+  setModalOpen: Function;
 }
 
 // Initialize modal context
 const ModalContext = createContext<IModalContext>({
   modalContent: null,
   isModalOpen: false,
-  toggleModal: () => {},
+  setModalOpen: () => {},
 });
 
 export default ModalContext;

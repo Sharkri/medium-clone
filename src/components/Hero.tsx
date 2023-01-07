@@ -4,7 +4,7 @@ import ModalContext from "./modal/ModalContext";
 import SignUpPage from "./SignUpPage";
 
 function Hero() {
-  const { toggleModal } = useContext(ModalContext);
+  const { setModalOpen } = useContext(ModalContext);
 
   return (
     <div className="hero">
@@ -15,7 +15,7 @@ function Hero() {
         </h3>
         <button
           className="start-reading"
-          onClick={() => toggleModal(<SignUpPage />)}
+          onClick={() => setModalOpen(true, <SignUpPage />)}
         >
           Start reading
         </button>

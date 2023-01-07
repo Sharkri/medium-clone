@@ -6,12 +6,12 @@ import userEvent from "@testing-library/user-event";
 import SignInPage from "../SignInPage";
 
 it(`opens sign in modal when "Sign In" is clicked`, () => {
-  const mockToggleModal = jest.fn();
+  const mockSetModalOpen = jest.fn();
   render(
     <MemoryRouter>
       <ModalContext.Provider
         value={{
-          toggleModal: mockToggleModal,
+          setModalOpen: mockSetModalOpen,
           isModalOpen: false,
           modalContent: null,
         }}
@@ -21,11 +21,11 @@ it(`opens sign in modal when "Sign In" is clicked`, () => {
     </MemoryRouter>
   );
 
-  expect(mockToggleModal).not.toBeCalled();
+  expect(mockSetModalOpen).not.toBeCalled();
 
   const signInButton = screen.getByRole("button", { name: /Sign In/i });
   userEvent.click(signInButton);
 
-  expect(mockToggleModal).toBeCalledTimes(1);
-  expect(mockToggleModal).toHaveBeenCalledWith(<SignInPage />);
+  expect(mockSetModalOpen).toBeCalledTimes(1);
+  expect(mockSetModalOpen).toHaveBeenCalledWith(true, <SignInPage />);
 });

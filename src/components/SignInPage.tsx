@@ -3,7 +3,7 @@ import ModalContext from "./modal/ModalContext";
 import SignUpPage from "./SignUpPage";
 
 export default function SignInPage() {
-  const { toggleModal } = useContext(ModalContext);
+  const { setModalOpen } = useContext(ModalContext);
   return (
     <div className="sign-in-page">
       <ul>
@@ -21,7 +21,9 @@ export default function SignInPage() {
 
       <p>
         No account?{" "}
-        <button onClick={() => toggleModal(<SignUpPage />)}>Create one</button>
+        <button onClick={() => setModalOpen(true, <SignUpPage />)}>
+          Create one
+        </button>
       </p>
     </div>
   );
