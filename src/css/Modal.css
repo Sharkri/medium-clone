@@ -51,8 +51,13 @@
 
 .close-modal {
   position: absolute;
-  top: 12px;
+  top: 8px;
   right: 12px;
-  color: rgba(117, 117, 117, 0.6);
+  color: rgb(75, 75, 75);
   font-size: 24px;
+  transition: 0.3s;
+}
+
+.close-modal:hover {
+  color: rgb(58, 58, 58);
 }
