@@ -61,3 +61,14 @@ li {
   color: transparent;
   -webkit-text-fill-color: transparent;
 }
+
+.small-text {
+  font-size: 13px;
+  color: rgba(117, 117, 117, 1);
+  font-weight: 400;
+}
+
+.underline {
+  text-decoration: underline;
+  cursor: pointer;
+}

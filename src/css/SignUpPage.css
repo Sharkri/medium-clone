@@ -1,3 +1,9 @@
+.sign-up-page {
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+
 .sign-up-heading {
   color: rgba(8, 8, 8, 1);
   font-size: 28px;

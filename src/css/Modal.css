@@ -45,8 +45,8 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  width: clamp(0px, calc(100% - 36px), 678px);
+  height: clamp(0px, calc(100% - 24px), 695px);
 }
 
 .close-modal {
