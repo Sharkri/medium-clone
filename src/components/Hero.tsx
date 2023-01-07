@@ -1,11 +1,8 @@
-import { useContext } from "react";
 import "../css/Hero.css";
-import ModalContext from "./modal/ModalContext";
+import OpenModalButton from "./OpenModalButton";
 import SignUpPage from "./SignUpPage";
 
 function Hero() {
-  const { setModalOpen } = useContext(ModalContext);
-
   return (
     <div className="hero">
       <div className="hero-content">
@@ -13,12 +10,10 @@ function Hero() {
         <h3 className="hero-subtext">
           Discover stories, thinking, and expertise from writers on any topic.
         </h3>
-        <button
-          className="start-reading"
-          onClick={() => setModalOpen(true, <SignUpPage />)}
-        >
+
+        <OpenModalButton element={<SignUpPage />} className="start-reading">
           Start reading
-        </button>
+        </OpenModalButton>
       </div>
     </div>
   );
