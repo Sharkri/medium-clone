@@ -1,25 +1,19 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import ModalContext from "../modal/ModalContext";
+import { render } from "@testing-library/react";
+import OpenModalButton from "../OpenModalButton";
 import SignInPage from "../SignInPage";
-import SignUpPage from "../SignUpPage";
 
-it("should navigate to sign up page", () => {
-  const setModalOpen = jest.fn();
-  render(
-    <ModalContext.Provider
-      value={{
-        setModalOpen,
-        modalContent: null,
-        isModalOpen: false,
-      }}
-    >
-      <SignInPage />
-    </ModalContext.Provider>
-  );
+jest.mock("../OpenModalButton.tsx", () => jest.fn());
 
-  const createAccount = screen.getByRole("button", { name: "Create one" });
-  userEvent.click(createAccount);
+it('navigates to <SignUpPage /> when "No account? Create one" is clicked', () => {
+  render(<SignInPage />);
 
-  expect(setModalOpen).toHaveBeenCalledWith(true, <SignUpPage />);
+  const openModalButton = OpenModalButton as jest.Mock;
+
+  // Should open modal with correct element
+  expect(openModalButton.mock.calls[0][0]).toMatchInlineSnapshot(`
+    Object {
+      "children": "Create one",
+      "element": <SignUpPage />,
+    }
+  `);
 });
