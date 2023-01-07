@@ -24,6 +24,12 @@ body {
   font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.serif {
+  font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

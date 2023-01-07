@@ -1,9 +1,11 @@
 import OpenModalButton from "./OpenModalButton";
 import SignInPage from "./SignInPage";
+import "../css/SignUpPage.css";
 
 export default function SignUpPage() {
   return (
     <div className="sign-up-page">
+      <h2 className="serif sign-up-heading">Join Medium.</h2>
       <ul>
         <li>
           <button>
