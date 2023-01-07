@@ -42,6 +42,10 @@ button {
   background: none;
 }
 
+li {
+  list-style-type: none;
+}
+
 /* Apply color to google icon */
 .fa-google {
   background: conic-gradient(
