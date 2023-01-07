@@ -4,7 +4,7 @@ import ModalContext from "../modal/ModalContext";
 import SignInPage from "../SignInPage";
 import SignUpPage from "../SignUpPage";
 
-it("should ", () => {
+it("should navigate to sign up page", () => {
   const setModalOpen = jest.fn();
   render(
     <ModalContext.Provider
