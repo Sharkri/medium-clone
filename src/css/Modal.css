@@ -17,4 +17,13 @@
   background-color: white;
   padding: 44px 56px;
   box-shadow: rgb(0 0 0 / 15%) 0px 2px 10px;
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  color: rgba(117, 117, 117, 0.6);
+  font-size: 24px;
 }
