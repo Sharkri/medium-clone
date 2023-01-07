@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Hero from "../Hero";
 import ModalContext from "../modal/ModalContext";
-import SignUpModal from "../SignUpModal";
+import SignUpPage from "../SignUpPage";
 
 jest.mock("../SignUpModal.tsx", () => jest.fn());
 
@@ -25,7 +25,7 @@ it('opens sign up modal when "Start reading" button is clicked', () => {
 
   userEvent.click(signUpButton);
 
-  // should toggle modal with sign up modal
+  // should toggle modal with sign up page
   expect(mockToggleModal).toHaveBeenCalledTimes(1);
-  expect(mockToggleModal).toHaveBeenCalledWith(<SignUpModal />);
+  expect(mockToggleModal).toHaveBeenCalledWith(<SignUpPage />);
 });

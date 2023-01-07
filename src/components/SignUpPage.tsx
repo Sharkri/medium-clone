@@ -1,4 +1,4 @@
-export default function SignUpModal() {
+export default function SignUpPage() {
   return (
     <ul>
       <li>

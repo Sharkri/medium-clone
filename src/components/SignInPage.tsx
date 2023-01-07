@@ -1,4 +1,4 @@
-export default function SignInModal() {
+export default function SignInPage() {
   return (
     <ul>
       <li>

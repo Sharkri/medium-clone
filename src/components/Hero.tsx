@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import "../css/Hero.css";
 import ModalContext from "./modal/ModalContext";
-import SignUpModal from "./SignUpModal";
+import SignUpPage from "./SignUpPage";
 
 function Hero() {
   const { toggleModal } = useContext(ModalContext);
@@ -15,7 +15,7 @@ function Hero() {
         </h3>
         <button
           className="start-reading"
-          onClick={() => toggleModal(<SignUpModal />)}
+          onClick={() => toggleModal(<SignUpPage />)}
         >
           Start reading
         </button>
