@@ -14,6 +14,11 @@
   src: url("../fonts/söhne/TestSöhne-Buch.otf");
 }
 
+@font-face {
+  font-family: sohne-bold;
+  src: url("../fonts/söhne/TestSöhne-Dreiviertelfett.otf");
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -44,6 +49,10 @@ button {
 
 li {
   list-style-type: none;
+}
+
+b {
+  font-family: sohne-bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 /* Apply color to google icon */
