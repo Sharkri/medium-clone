@@ -1,6 +1,7 @@
 import OpenModalButton from "./OpenModalButton";
 import SignUpPage from "./SignUpPage";
 import "../css/SignInPage.css";
+import AuthenticationButton from "./AuthenticationButton";
 
 export default function SignInPage() {
   return (
@@ -8,16 +9,20 @@ export default function SignInPage() {
       <h2 className="serif sign-in-heading">Welcome back.</h2>
 
       <div>
-        <ul>
+        <ul className="sign-in-options">
           <li>
-            <button>
-              <i className="fa-brands fa-google"></i> sign in with gogle
-            </button>
+            <AuthenticationButton
+              icon={<i className="fa-brands fa-google" />}
+              text="Sign in with google"
+              onClick={() => {}}
+            ></AuthenticationButton>
           </li>
           <li>
-            <button>
-              <i className="fa-regular fa-envelope"></i>sign in with email
-            </button>
+            <AuthenticationButton
+              icon={<i className="fa-regular fa-envelope" />}
+              text="Sign in with email"
+              onClick={() => {}}
+            ></AuthenticationButton>
           </li>
         </ul>
         <p>
