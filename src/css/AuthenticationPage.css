@@ -17,12 +17,6 @@
   gap: 12px;
 }
 
-.authentication-options li {
-  padding: 9px 12px 10px 20px;
-  border: 1px solid rgb(168, 168, 168);
-  border-radius: 999px;
-}
-
 .authentication-page-content {
   width: 100%;
   display: flex;

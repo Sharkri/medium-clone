@@ -12,8 +12,10 @@ export default function ButtonWithIcon({
 }) {
   return (
     <button className="button-with-icon" onClick={onClick}>
-      <i className={icon} />
-      {children}
+      <span className="button-with-icon-content">
+        <i className={icon} />
+        {children}
+      </span>
     </button>
   );
 }

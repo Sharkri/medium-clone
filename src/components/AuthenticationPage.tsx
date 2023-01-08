@@ -18,7 +18,7 @@ export default function AuthenticationPage({
       </h2>
 
       <div className="authentication-page-content">
-        <ul className="authentication-options">{children}</ul>
+        <div className="authentication-options">{children}</div>
 
         {isSignUpPage ? (
           // If isSignUpPage, show link to redirect to <SignInPage />
