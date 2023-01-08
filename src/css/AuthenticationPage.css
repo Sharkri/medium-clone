@@ -12,6 +12,15 @@
 
 .authentication-options {
   width: clamp(0px, 100%, 212px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.authentication-options li {
+  padding: 9px 12px 10px 20px;
+  border: 1px solid rgb(168, 168, 168);
+  border-radius: 999px;
 }
 
 .authentication-page-content {
@@ -20,4 +29,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.authentication-page-content b {
+  color: green;
+  font-size: 16px;
+  line-height: 24px;
 }

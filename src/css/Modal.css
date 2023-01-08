@@ -56,7 +56,6 @@
   color: rgb(75, 75, 75);
   font-size: 24px;
   transition: 0.3s;
-  -webkit-text-stroke: 2px white;
 }
 
 .close-modal:hover {

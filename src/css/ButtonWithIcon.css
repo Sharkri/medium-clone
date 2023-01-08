@@ -1,17 +1,13 @@
 .button-with-icon {
   display: flex;
   align-items: center;
-  gap: 8px;
-  border: 1px solid rgb(168, 168, 168);
-  padding: 6px 12px 8px 16px;
-  border-radius: 999px;
-  color: rgba(41, 41, 41, 1);
+  gap: 12.5px;
+  font-size: 15px;
+  color: rgb(41, 41, 41);
   line-height: 20px;
-  font-size: 14px;
   text-align: left;
-  width: 100%;
 }
 
 .button-with-icon > i {
-  font-size: 20px;
+  font-size: 18px;
 }

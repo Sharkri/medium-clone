@@ -16,7 +16,7 @@ function Modal() {
     >
       <div className="modal-content">
         <button
-          className="close-modal"
+          className="close-modal thin-icon"
           onClick={() => setModalOpen(false)}
           aria-label="close"
         >
