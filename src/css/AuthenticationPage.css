@@ -11,7 +11,7 @@
 }
 
 .authentication-options {
-  width: clamp(0px, 100%, 212px);
+  width: 212px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -31,7 +31,11 @@
   align-items: center;
 }
 
-.authentication-page-content b {
+.redirect-link {
+  margin-top: 40px;
+}
+
+.redirect-link b {
   color: green;
   font-size: 16px;
   line-height: 24px;

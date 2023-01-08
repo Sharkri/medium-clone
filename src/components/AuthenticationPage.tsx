@@ -22,14 +22,14 @@ export default function AuthenticationPage({
 
         {isSignUpPage ? (
           // If isSignUpPage, show link to redirect to <SignInPage />
-          <p>
+          <p className="redirect-link">
             <span>Already have an account? </span>
             <OpenModalButton element={<SignInPage />}>
               <b>Sign in</b>
             </OpenModalButton>
           </p>
         ) : (
-          <p>
+          <p className="redirect-link">
             <span>No account? </span>
             <OpenModalButton element={<SignUpPage />}>
               <b>Create one</b>
