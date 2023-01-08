@@ -13,6 +13,27 @@ export default function SignInPage() {
       </li>
       <li>
         <ButtonWithIcon
+          icon={<i className="fa-brands fa-square-facebook" />}
+          text="Sign up with Facebook"
+          onClick={() => {}}
+        ></ButtonWithIcon>
+      </li>
+      <li>
+        <ButtonWithIcon
+          icon={<i className="fa-brands fa-apple" />}
+          text="Sign up with Apple"
+          onClick={() => {}}
+        ></ButtonWithIcon>
+      </li>{" "}
+      <li>
+        <ButtonWithIcon
+          icon={<i className="fa-brands fa-twitter" />}
+          text="Sign up with Twitter"
+          onClick={() => {}}
+        ></ButtonWithIcon>
+      </li>
+      <li>
+        <ButtonWithIcon
           icon={<i className="fa-regular fa-envelope" />}
           text="Sign in with email"
           onClick={() => {}}

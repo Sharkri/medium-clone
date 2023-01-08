@@ -1,8 +1,8 @@
 .button-with-icon {
   display: flex;
   align-items: center;
-  gap: 12.5px;
-  font-size: 15px;
+  gap: 12px;
+  font-size: 14.2px;
   color: rgb(41, 41, 41);
   line-height: 20px;
   text-align: left;

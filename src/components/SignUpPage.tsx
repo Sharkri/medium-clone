@@ -7,7 +7,14 @@ export default function SignUpPage() {
       <li>
         <ButtonWithIcon
           icon={<i className="fa-brands fa-google" />}
-          text="Sign up with google"
+          text="Sign up with Google"
+          onClick={() => {}}
+        ></ButtonWithIcon>
+      </li>
+      <li>
+        <ButtonWithIcon
+          icon={<i className="fa-brands fa-square-facebook" />}
+          text="Sign up with Facebook"
           onClick={() => {}}
         ></ButtonWithIcon>
       </li>
