@@ -1,7 +1,7 @@
-.authentication-button {
+.button-with-icon {
   display: flex;
   align-items: center;
-  width: clamp(0px, 100%, 212px);
+  gap: 8px;
   border: 1px solid rgb(168, 168, 168);
   padding: 6px 12px 8px 16px;
   border-radius: 999px;
@@ -9,8 +9,9 @@
   line-height: 20px;
   font-size: 14px;
   text-align: left;
+  width: 100%;
 }
 
-.authentication-button > i {
-  font-size: 25px;
+.button-with-icon > i {
+  font-size: 20px;
 }
