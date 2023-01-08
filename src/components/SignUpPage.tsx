@@ -5,25 +5,19 @@ export default function SignUpPage() {
   return (
     <AuthenticationPage isSignUpPage={true}>
       <li>
-        <ButtonWithIcon
-          icon={<i className="fa-brands fa-google" />}
-          text="Sign up with Google"
-          onClick={() => {}}
-        ></ButtonWithIcon>
+        <ButtonWithIcon icon="fa-brands fa-google" onClick={() => {}}>
+          Sign up with Google
+        </ButtonWithIcon>
       </li>
       <li>
-        <ButtonWithIcon
-          icon={<i className="fa-brands fa-square-facebook" />}
-          text="Sign up with Facebook"
-          onClick={() => {}}
-        ></ButtonWithIcon>
+        <ButtonWithIcon icon="fa-brands fa-square-facebook" onClick={() => {}}>
+          Sign up with Facebook
+        </ButtonWithIcon>
       </li>
       <li>
-        <ButtonWithIcon
-          icon={<i className="fa-regular fa-envelope" />}
-          text="Sign up with email"
-          onClick={() => {}}
-        ></ButtonWithIcon>
+        <ButtonWithIcon icon="fa-regular fa-envelope" onClick={() => {}}>
+          Sign up with email
+        </ButtonWithIcon>
       </li>
     </AuthenticationPage>
   );

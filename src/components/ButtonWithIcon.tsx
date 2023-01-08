@@ -3,17 +3,17 @@ import "../css/ButtonWithIcon.css";
 
 export default function ButtonWithIcon({
   icon,
-  text,
+  children,
   onClick,
 }: {
-  icon: ReactNode;
-  text: string;
+  icon: string;
+  children: ReactNode;
   onClick?: React.MouseEventHandler;
 }) {
   return (
     <button className="button-with-icon" onClick={onClick}>
-      {icon}
-      {text}
+      <i className={icon} />
+      {children}
     </button>
   );
 }
