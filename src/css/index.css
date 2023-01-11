@@ -95,6 +95,10 @@ b {
   font-weight: 400;
 }
 
+.medium-text {
+  font-size: 28px;
+}
+
 .underline {
   text-decoration: underline;
   cursor: pointer;

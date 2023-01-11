@@ -13,7 +13,7 @@ export default function AuthenticationPage({
 }) {
   return (
     <div className="authentication-page">
-      <h2 className="serif authentication-heading">
+      <h2 className="serif medium-text">
         {isSignUpPage ? "Join Medium." : "Welcome back."}
       </h2>
 
