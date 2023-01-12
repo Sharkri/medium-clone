@@ -1,4 +1,5 @@
 import EmailForm from "./EmailForm";
+import "../css/SignUpWithEmail.css";
 
 export default function SignUpWithEmail() {
   return (
