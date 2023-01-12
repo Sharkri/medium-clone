@@ -1,12 +1,16 @@
-import HeaderTitle from "./HeaderTitle";
+import { Link } from "react-router-dom";
 import "../css/Header.css";
+import Logo from "./Logo";
 import Nav from "./Nav";
 
 function Header() {
   return (
     <header>
       <div className="header-content">
-        <HeaderTitle />
+        <Link to="/">
+          <Logo />
+        </Link>
+
         <Nav />
       </div>
     </header>
