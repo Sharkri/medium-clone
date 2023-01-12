@@ -1,0 +1,41 @@
+.email-form .input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 28px;
+}
+
+.email-form label {
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgb(41, 41, 41);
+}
+
+.email-form input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgb(168, 168, 168);
+  width: 270px;
+  font: inherit;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.email-form input:hover {
+  border-color: rgb(117, 117, 117);
+}
+
+.email-form input:focus {
+  border-color: rgb(41, 41, 41);
+}
+
+.email-form button[type="submit"] {
+  width: 226px;
+  line-height: 20px;
+  font-size: 15px;
+  padding: 7px 16px 9px;
+}

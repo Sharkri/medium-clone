@@ -25,6 +25,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   --homepage-main-color: #ffc017;
   font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -106,4 +107,17 @@ b {
 
 .thin-icon {
   -webkit-text-stroke: 2px white;
+}
+
+.black-button {
+  background-color: rgb(25, 25, 25);
+  border: 1px solid rgb(25, 25, 25);
+  color: white;
+  border-radius: 999px;
+  transition: 0.25s;
+}
+
+.black-button:hover {
+  background-color: black;
+  border-color: black;
 }

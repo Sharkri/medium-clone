@@ -11,7 +11,10 @@ function Hero() {
           Discover stories, thinking, and expertise from writers on any topic.
         </h3>
 
-        <OpenModalButton element={<SignUpPage />} className="start-reading">
+        <OpenModalButton
+          element={<SignUpPage />}
+          className="start-reading black-button"
+        >
           Start reading
         </OpenModalButton>
       </div>

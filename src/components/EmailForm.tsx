@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../css/EmailForm.css";
 
 export default function EmailForm({
   onSubmit,
@@ -15,8 +16,9 @@ export default function EmailForm({
         e.preventDefault();
         onSubmit(email);
       }}
+      className="email-form"
     >
-      <div>
+      <div className="input-container">
         <label htmlFor={id}>Your email</label>
         <input
           type="email"
@@ -27,7 +29,9 @@ export default function EmailForm({
         />
       </div>
 
-      <button type="submit">Continue</button>
+      <button type="submit" className="black-button">
+        Continue
+      </button>
     </form>
   );
 }

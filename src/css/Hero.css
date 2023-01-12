@@ -26,11 +26,7 @@
 
 .start-reading {
   width: 213px;
-  padding: 7px 20px 9px;
   line-height: 24px;
   font-size: 20px;
-  background-color: rgb(25, 25, 25);
-  border: 1px solid rgb(25, 25, 25);
-  color: white;
-  border-radius: 999px;
+  padding: 7px 20px 9px;
 }
