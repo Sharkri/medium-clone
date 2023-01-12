@@ -22,6 +22,8 @@ export default function EmailForm({
           type="email"
           id={id}
           onChange={(e) => setEmail(e.target.value)}
+          value={email}
+          required
         />
       </div>
 
