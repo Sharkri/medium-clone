@@ -6,8 +6,8 @@ export default function SignInWithEmail() {
     <div className="sign-in-with-email">
       <h2 className="serif medium-text">Sign in with email</h2>
       <p>
-        Enter the email address associated with your account, and we’ll send a
-        magic link to your inbox.
+        Enter the email address associated with your account and enter your
+        Medium password.
       </p>
       <AuthenticationForm onSubmit={() => {}} />
     </div>
