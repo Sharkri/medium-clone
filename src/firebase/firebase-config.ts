@@ -1,5 +1,3 @@
-import { initializeApp } from "firebase/app";
-
 const firebaseConfig = {
   apiKey: "AIzaSyAD2_5njZVMcPFmlymF-t590iuUbmKaSSc",
   authDomain: "medium-clone-469b9.firebaseapp.com",
@@ -10,5 +8,4 @@ const firebaseConfig = {
   measurementId: "G-4PCF1WCZQ6",
 };
 
-// Initialize Firebase
-initializeApp(firebaseConfig);
+export default firebaseConfig;
