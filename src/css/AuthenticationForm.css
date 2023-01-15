@@ -47,3 +47,21 @@
   padding: 7px 16px 9px;
   width: 100%;
 }
+
+.password-input {
+  position: relative;
+}
+
+.toggle-password-visible {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  opacity: 0;
+  transition: 0.27s;
+  min-width: 18.13px;
+  font-size: 14.5px;
+}
+
+.password-input:hover .toggle-password-visible {
+  opacity: 1;
+}

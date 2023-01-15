@@ -10,6 +10,7 @@ export default function AuthenticationForm({
   const [emailId, passwordId] = [useId(), useId()];
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <form
@@ -31,13 +32,27 @@ export default function AuthenticationForm({
       </div>
       <div className="password-container">
         <label htmlFor={passwordId}>Your password</label>
-        <input
-          type="password"
-          id={passwordId}
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-          required
-        />
+        <div className="password-input">
+          <input
+            type={isPasswordVisible ? "text" : "password"}
+            id={passwordId}
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            required
+          />
+          <button
+            aria-label="toggle password visibility"
+            className="toggle-password-visible"
+            type="button"
+            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+          >
+            <i
+              className={`fa-regular fa-${
+                isPasswordVisible ? "eye-slash" : "eye"
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       <button type="submit" className="black-button">
