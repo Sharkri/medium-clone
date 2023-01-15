@@ -27,6 +27,7 @@ export default function AuthenticationForm({
           id={emailId}
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          autoComplete="email"
           required
         />
       </div>
@@ -38,6 +39,7 @@ export default function AuthenticationForm({
             id={passwordId}
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            autoComplete="current-password"
             required
           />
           <button
