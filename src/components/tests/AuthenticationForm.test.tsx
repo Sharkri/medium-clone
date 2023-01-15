@@ -1,13 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import EmailForm from "../EmailForm";
+import AuthenticationForm from "../AuthenticationForm";
 import "@testing-library/jest-dom";
 
 const mockId = "test-id";
 const mockOnSubmit = jest.fn();
 
 it("should render correct input values and call onSubmit with email", () => {
-  render(<EmailForm onSubmit={mockOnSubmit} id={mockId} />);
+  render(<AuthenticationForm onSubmit={mockOnSubmit} id={mockId} />);
 
   const input = screen.getByRole("textbox");
 

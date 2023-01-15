@@ -1,4 +1,12 @@
-.email-form .input-container {
+.email-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.email-container,
+.password-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,8 +42,8 @@
 }
 
 .email-form button[type="submit"] {
-  width: 226px;
   line-height: 20px;
   font-size: 15px;
   padding: 7px 16px 9px;
+  width: 100%;
 }

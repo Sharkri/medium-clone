@@ -1,4 +1,4 @@
-import EmailForm from "./EmailForm";
+import AuthenticationForm from "./AuthenticationForm";
 import "../css/SignInWithEmail.css";
 
 export default function SignInWithEmail() {
@@ -9,7 +9,7 @@ export default function SignInWithEmail() {
         Enter the email address associated with your account, and we’ll send a
         magic link to your inbox.
       </p>
-      <EmailForm onSubmit={() => {}} id="sign-in-email" />
+      <AuthenticationForm onSubmit={() => {}} id="sign-in-email" />
     </div>
   );
 }
