@@ -27,6 +27,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   --homepage-main-color: #ffc017;
+  --error-color: rgb(201, 74, 74);
   font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 

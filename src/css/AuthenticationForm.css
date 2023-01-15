@@ -12,10 +12,6 @@
   width: 100%;
 }
 
-.password-container .input {
-  position: relative;
-}
-
 .toggle-password-visible {
   position: absolute;
   right: 4px;
@@ -23,7 +19,6 @@
   opacity: 0;
   transition: 0.27s;
   min-width: 18.13px;
-  font-size: 14.5px;
 }
 
 .password-container .input:hover .toggle-password-visible {

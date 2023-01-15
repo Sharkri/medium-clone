@@ -30,7 +30,7 @@ export default function Input({
   const id = useId();
 
   return (
-    <div className={`input-container ${className}`}>
+    <div className={`input-container ${className} ${error ? "error" : ""}`}>
       <label htmlFor={id}>{labelText}</label>
       <div className="input">
         <input
@@ -40,10 +40,10 @@ export default function Input({
           type={type}
           autoComplete={autoComplete}
           required={required}
-          className={error ? "error" : ""}
         />
         {children}
       </div>
+      <span className="error-text">error text</span>
     </div>
   );
 }

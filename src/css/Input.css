@@ -5,13 +5,18 @@
   gap: 12px;
   margin-top: 12px;
   margin-bottom: 28px;
+  color: rgb(41, 41, 41);
+}
+
+.input-container.error {
+  color: var(--error-color);
 }
 
 .input-container label {
-  font-size: 14px;
+  font-size: 13.2px;
   line-height: 20px;
   text-align: center;
-  color: rgb(41, 41, 41);
+  color: inherit;
 }
 
 .input-container input {
@@ -23,6 +28,12 @@
   font: inherit;
   text-align: center;
   transition: border-color 0.3s;
+  color: rgb(41, 41, 41);
+  padding-bottom: 3px;
+}
+
+.input-container .input {
+  position: relative;
 }
 
 .input-container input:hover {
@@ -31,4 +42,28 @@
 
 .input-container input:focus {
   border-color: rgb(41, 41, 41);
+}
+
+.input-container.error input {
+  border-bottom-color: var(--error-color);
+  animation: 0.4s shake;
+}
+
+.error-text {
+  font-size: 13px;
+}
+
+@keyframes shake {
+  0% {
+    margin-left: 0rem;
+  }
+  25% {
+    margin-left: 0.5rem;
+  }
+  75% {
+    margin-left: -0.5rem;
+  }
+  100% {
+    margin-left: 0rem;
+  }
 }
