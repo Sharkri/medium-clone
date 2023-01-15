@@ -9,11 +9,15 @@ export default function SignUpWithEmail() {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(getAuthInstance());
 
+  const handleSubmit = async (email: string, password: string) => {
+    await createUserWithEmailAndPassword(email, password);
+  };
+
   return (
     <div className="sign-up-with-email">
       <h2 className="serif medium-text">Sign up with email</h2>
       <p>Enter your email address to create an account.</p>
-      <AuthenticationForm onSubmit={createUserWithEmailAndPassword} />
+      <AuthenticationForm onSubmit={handleSubmit} />
     </div>
   );
 }
