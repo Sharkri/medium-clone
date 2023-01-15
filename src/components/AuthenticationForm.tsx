@@ -1,22 +1,23 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import "../css/AuthenticationForm.css";
-import uniqid from "uniqid";
 
 export default function AuthenticationForm({
   onSubmit,
 }: {
   onSubmit: Function;
 }) {
+  // random ids for input id
+  const [emailId, passwordId] = [useId(), useId()];
   const [email, setEmail] = useState("");
-  const emailId = uniqid();
-  const passwordId = uniqid();
+  const [password, setPassword] = useState("");
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit(email);
+        onSubmit(email, password);
       }}
-      className="email-form"
+      className="authentication-form"
     >
       <div className="email-container">
         <label htmlFor={emailId}>Your email</label>
@@ -33,8 +34,8 @@ export default function AuthenticationForm({
         <input
           type="password"
           id={passwordId}
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
           required
         />
       </div>

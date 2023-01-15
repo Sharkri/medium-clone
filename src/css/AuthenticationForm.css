@@ -1,7 +1,7 @@
-.email-form {
+.authentication-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 4px;
   align-items: center;
 }
 
@@ -15,14 +15,14 @@
   margin-bottom: 28px;
 }
 
-.email-form label {
+.authentication-form label {
   font-size: 14px;
   line-height: 20px;
   text-align: center;
   color: rgb(41, 41, 41);
 }
 
-.email-form input {
+.authentication-form input {
   background-color: transparent;
   border: none;
   outline: none;
@@ -33,15 +33,15 @@
   transition: border-color 0.3s;
 }
 
-.email-form input:hover {
+.authentication-form input:hover {
   border-color: rgb(117, 117, 117);
 }
 
-.email-form input:focus {
+.authentication-form input:focus {
   border-color: rgb(41, 41, 41);
 }
 
-.email-form button[type="submit"] {
+.authentication-form button[type="submit"] {
   line-height: 20px;
   font-size: 15px;
   padding: 7px 16px 9px;
