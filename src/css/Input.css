@@ -1,0 +1,34 @@
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  margin-bottom: 28px;
+}
+
+.input-container label {
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  color: rgb(41, 41, 41);
+}
+
+.input-container input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid rgb(168, 168, 168);
+  width: 270px;
+  font: inherit;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.input-container input:hover {
+  border-color: rgb(117, 117, 117);
+}
+
+.input-container input:focus {
+  border-color: rgb(41, 41, 41);
+}
