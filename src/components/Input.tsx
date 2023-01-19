@@ -3,7 +3,7 @@ import "../css/Input.css";
 
 interface Error {
   message?: string;
-  code?: string;
+  code?: string | number;
   active?: boolean;
 }
 
@@ -22,8 +22,8 @@ export default function Input({
   onChange: Function;
   value: string;
   type: string;
-  required: boolean;
-  autoComplete: string;
+  required?: boolean;
+  autoComplete?: string;
   labelText: string;
   children?: ReactNode;
   className?: string;
@@ -42,7 +42,7 @@ export default function Input({
           value={value}
           type={type}
           autoComplete={autoComplete}
-          required={required}
+          required={required || false}
         />
         {children}
       </div>
