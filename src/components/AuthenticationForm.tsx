@@ -17,6 +17,7 @@ export default function AuthenticationForm({
         e.preventDefault();
         onSubmit(email, password);
       }}
+      noValidate
       className="authentication-form"
     >
       <Input
