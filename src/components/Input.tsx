@@ -4,6 +4,7 @@ import "../css/Input.css";
 interface Error {
   message?: string;
   code?: string;
+  active?: boolean;
 }
 
 export default function Input({
@@ -30,7 +31,9 @@ export default function Input({
   const id = useId();
 
   return (
-    <div className={`input-container ${className} ${error ? "error" : ""}`}>
+    <div
+      className={`input-container ${className} ${error.active ? "error" : ""}`}
+    >
       <label htmlFor={id}>{labelText}</label>
       <div className="input">
         <input
