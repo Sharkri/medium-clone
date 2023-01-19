@@ -11,17 +11,21 @@ export default function AuthenticationForm({
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  const [emailError, setEmailError] = useState({});
+  const [passwordError, setPasswordError] = useState({});
+
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
+
         onSubmit(email, password);
       }}
       noValidate
       className="authentication-form"
     >
       <Input
-        error={{ message: "test" }}
+        error={emailError}
         type="email"
         onChange={setEmail}
         value={email}
@@ -31,7 +35,7 @@ export default function AuthenticationForm({
       />
 
       <Input
-        error={{ message: "test" }}
+        error={passwordError}
         type={isPasswordVisible ? "text" : "password"}
         onChange={setPassword}
         value={password}
