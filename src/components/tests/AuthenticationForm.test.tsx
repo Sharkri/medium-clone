@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import AuthenticationForm from "../AuthenticationForm";
 import "@testing-library/jest-dom";
 
+jest.mock("../Spinner.tsx", () => () => <div>loading...</div>);
+
 const mockOnSubmit = jest.fn();
 
 it("should render email and password input. And it calls onSubmit with email and pass", () => {
@@ -61,7 +63,7 @@ it("should toggle password visibility", () => {
 });
 
 describe("Loading", () => {
-  it("adds data-loading to button when isLoading", () => {
+  it("adds spinner to button when isLoading", () => {
     const isLoading = true;
 
     render(
@@ -72,13 +74,10 @@ describe("Loading", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: "Continue" })).toHaveAttribute(
-      "data-loading",
-      "true"
-    );
+    expect(screen.getByText("loading...")).toBeInTheDocument();
   });
 
-  it("removes data-loading to button when not loading", () => {
+  it("removes spinner to button when not loading", () => {
     const isLoading = false;
 
     render(
@@ -89,9 +88,6 @@ describe("Loading", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: "Continue" })).toHaveAttribute(
-      "data-loading",
-      "false"
-    );
+    expect(screen.queryByText("loading...")).not.toBeInTheDocument();
   });
 });

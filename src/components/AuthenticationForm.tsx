@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "../css/AuthenticationForm.css";
 import Input from "./Input";
+import Spinner from "./Spinner";
 
 interface Error {
   code: string;
@@ -84,8 +85,8 @@ export default function AuthenticationForm({
         </button>
       </Input>
 
-      <button type="submit" className="black-button" data-loading={loading}>
-        Continue
+      <button type="submit" className="black-button">
+        {loading ? <Spinner /> : "Continue"}
       </button>
     </form>
   );

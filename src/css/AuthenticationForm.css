@@ -24,3 +24,10 @@
 .password-container .input:hover .toggle-password-visible {
   opacity: 1;
 }
+
+.authentication-form button[type="submit"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 42px;
+}
