@@ -32,10 +32,10 @@ export default function AuthenticationForm({
     }
 
     if (error.code.includes("email")) {
-      setEmailError({ message: "Please enter a valid email.", active: true });
+      setEmailError({ message: error.message, active: true });
     } else {
       setPasswordError({
-        message: "Password should be at least 6 characters",
+        message: error.message,
         active: true,
       });
     }
