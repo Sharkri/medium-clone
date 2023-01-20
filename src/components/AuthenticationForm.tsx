@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../css/AuthenticationForm.css";
 import Input from "./Input";
 
 export default function AuthenticationForm({
   onSubmit,
+  error,
 }: {
   onSubmit: Function;
+  error: any;
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,9 +16,26 @@ export default function AuthenticationForm({
   const [emailError, setEmailError] = useState({});
   const [passwordError, setPasswordError] = useState({});
 
+  useEffect(() => {
+    if (!error) {
+      setEmailError({});
+      setPasswordError({});
+      return;
+    }
+
+    if (error.code.includes("email")) {
+      setEmailError({ message: "Please enter a valid email.", active: true });
+    } else {
+      setPasswordError({
+        message: "Password should be at least 6 characters",
+        active: true,
+      });
+    }
+  }, [error]);
+
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
 
         onSubmit(email, password);

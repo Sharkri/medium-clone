@@ -51,19 +51,23 @@
 
 .error-text {
   font-size: 13px;
+  min-height: 17px;
 }
 
 @keyframes shake {
   0% {
-    margin-left: 0rem;
+    transform: translateX(0);
   }
   25% {
-    margin-left: 0.5rem;
+    transform: translateX(8px);
+  }
+  50% {
+    transform: translateX(-8px);
   }
   75% {
-    margin-left: -0.5rem;
+    transform: translateX(8px);
   }
   100% {
-    margin-left: 0rem;
+    transform: translateX(0);
   }
 }

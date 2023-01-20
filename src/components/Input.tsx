@@ -46,7 +46,7 @@ export default function Input({
         />
         {children}
       </div>
-      {error.active && <span className="error-text">{error.message}</span>}
+      <span className="error-text">{error.active && error.message}</span>
     </div>
   );
 }
