@@ -34,7 +34,7 @@ it("should render input attributes properly", () => {
 it("calls onChange with correct argument(s)", () => {
   render(
     <Input
-      error={{ code: 404, message: "not found", active: true }}
+      error={{ code: "404", message: "not found", active: true }}
       onChange={mockOnChange}
       value=""
       type="text"
@@ -58,7 +58,7 @@ it("hides error message when error.active = false", () => {
   render(
     <Input
       error={{
-        code: 404,
+        code: "404",
         message: "error 404: not found",
         active: isErrorActive,
       }}
