@@ -8,7 +8,7 @@ const mockOnChange = jest.fn();
 it("should render input attributes properly", () => {
   render(
     <Input
-      error={{ code: 404, message: "not found", active: true }}
+      error={{ code: "404", message: "not found", active: true }}
       onChange={mockOnChange}
       value="foo"
       type="text"

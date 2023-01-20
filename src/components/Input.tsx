@@ -3,7 +3,7 @@ import "../css/Input.css";
 
 interface Error {
   message?: string;
-  code?: string | number;
+  code?: string;
   active?: boolean;
 }
 

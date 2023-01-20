@@ -9,7 +9,11 @@ export default function SignInWithEmail() {
         Enter the email address associated with your account and enter your
         Medium password.
       </p>
-      <AuthenticationForm onSubmit={() => {}} error={{}} />
+      <AuthenticationForm
+        onSubmit={() => {}}
+        error={undefined}
+        loading={false}
+      />
     </div>
   );
 }

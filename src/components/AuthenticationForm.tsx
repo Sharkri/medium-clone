@@ -2,12 +2,19 @@ import { useEffect, useState } from "react";
 import "../css/AuthenticationForm.css";
 import Input from "./Input";
 
+interface Error {
+  code: string;
+  message: string;
+}
+
 export default function AuthenticationForm({
   onSubmit,
   error,
+  loading,
 }: {
   onSubmit: Function;
-  error: any;
+  error: Error | undefined;
+  loading: boolean;
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -77,7 +84,7 @@ export default function AuthenticationForm({
         </button>
       </Input>
 
-      <button type="submit" className="black-button">
+      <button type="submit" className="black-button" data-loading={loading}>
         Continue
       </button>
     </form>
