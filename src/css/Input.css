@@ -52,6 +52,7 @@
 .error-text {
   font-size: 13px;
   min-height: 17px;
+  max-width: 300px;
 }
 
 @keyframes shake {
