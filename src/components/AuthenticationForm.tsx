@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "../css/AuthenticationForm.css";
-import Input from "./Input";
-import Spinner from "./Spinner";
+import Input from "./helper/Input";
+import Spinner from "./helper/Spinner";
 
 interface Error {
   code: string;

@@ -1,5 +1,5 @@
 import TrendingPost from "./TrendingPost";
-import Post from "./PostInterface";
+import Post from "./interfaces/PostInterface";
 
 function TrendingPosts({ posts }: { posts: Post[] }) {
   return (

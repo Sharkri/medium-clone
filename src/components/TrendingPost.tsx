@@ -1,4 +1,4 @@
-import Post from "./PostInterface";
+import Post from "./interfaces/PostInterface";
 
 function TrendingPost({ post }: { post: Post }) {
   return (

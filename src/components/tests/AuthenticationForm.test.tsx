@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import AuthenticationForm from "../AuthenticationForm";
 import "@testing-library/jest-dom";
 
-jest.mock("../Spinner.tsx", () => () => <div>loading...</div>);
+jest.mock("../helper/Spinner.tsx", () => () => <div>loading...</div>);
 
 const mockOnSubmit = jest.fn();
 

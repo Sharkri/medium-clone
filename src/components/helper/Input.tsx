@@ -1,5 +1,5 @@
 import { ReactNode, useId } from "react";
-import "../css/Input.css";
+import "../../css/Input.css";
 
 interface Error {
   message?: string;

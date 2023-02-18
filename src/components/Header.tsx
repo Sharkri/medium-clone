@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "../css/Header.css";
-import Logo from "./Logo";
+import Logo from "./helper/Logo";
 import Nav from "./Nav";
 
 function Header() {
