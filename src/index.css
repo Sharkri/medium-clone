@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
@@ -6,17 +10,17 @@
 
 @font-face {
   font-family: gt-super;
-  src: url("../fonts/GT-Super/GT-Super-Text-Book-Trial.otf");
+  src: url("./fonts/GT-Super/GT-Super-Text-Book-Trial.otf");
 }
 
 @font-face {
   font-family: sohne;
-  src: url("../fonts/söhne/TestSöhne-Buch.otf");
+  src: url("./fonts/söhne/TestSöhne-Buch.otf");
 }
 
 @font-face {
   font-family: sohne-bold;
-  src: url("../fonts/söhne/TestSöhne-Dreiviertelfett.otf");
+  src: url("./fonts/söhne/TestSöhne-Dreiviertelfett.otf");
 }
 
 body {
