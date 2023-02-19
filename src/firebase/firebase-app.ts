@@ -5,6 +5,10 @@ import { getAuth } from "firebase/auth";
 const getAuthInstance = getAuth;
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+try {
+  initializeApp(firebaseConfig);
+} catch (error) {
+  console.error("Error initializing:", error);
+}
 
 export { getAuthInstance };

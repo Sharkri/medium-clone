@@ -8,7 +8,7 @@ const mockOnChange = jest.fn();
 it("should render input attributes properly", () => {
   render(
     <Input
-      error={{ code: "404", message: "not found", active: true }}
+      error={{ message: "not found" }}
       onChange={mockOnChange}
       value="foo"
       type="text"
@@ -34,7 +34,7 @@ it("should render input attributes properly", () => {
 it("calls onChange with correct argument(s)", () => {
   render(
     <Input
-      error={{ code: "404", message: "not found", active: true }}
+      error={{ message: "not found" }}
       onChange={mockOnChange}
       value=""
       type="text"
@@ -50,26 +50,4 @@ it("calls onChange with correct argument(s)", () => {
   expect(mockOnChange).toHaveBeenNthCalledWith(1, "F");
   expect(mockOnChange).toHaveBeenNthCalledWith(2, "o");
   expect(mockOnChange).toHaveBeenNthCalledWith(3, "o");
-});
-
-it("hides error message when error.active = false", () => {
-  const isErrorActive = false;
-
-  render(
-    <Input
-      error={{
-        code: "404",
-        message: "error 404: not found",
-        active: isErrorActive,
-      }}
-      onChange={mockOnChange}
-      value=""
-      type="text"
-      required={true}
-      autoComplete="text autocomplete test"
-      labelText="label text test"
-    />
-  );
-
-  expect(screen.queryByText("error 404: not found")).not.toBeInTheDocument();
 });

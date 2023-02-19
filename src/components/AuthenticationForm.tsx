@@ -1,45 +1,48 @@
 import { useEffect, useState } from "react";
 import "../css/AuthenticationForm.css";
+import Error from "../interfaces/ErrorInterface";
 import Input from "./helper/Input";
 import Spinner from "./helper/Spinner";
 
-interface Error {
-  code: string;
+interface IError {
   message: string;
 }
 
 export default function AuthenticationForm({
   onSubmit,
-  error,
   loading,
+  error,
 }: {
   onSubmit: Function;
+  loading: Boolean;
   error: Error | undefined;
-  loading: boolean;
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const [emailError, setEmailError] = useState({});
-  const [passwordError, setPasswordError] = useState({});
+  const [emailError, setEmailError] = useState<IError | null>(null);
+  const [passwordError, setPasswordError] = useState<IError | null>(null);
 
   useEffect(() => {
-    if (!error) {
-      setEmailError({});
-      setPasswordError({});
-      return;
-    }
+    if (error) {
+      const { code: errorCode, message: errorMessage } = error;
 
-    if (error.code.includes("email")) {
-      setEmailError({ message: error.message, active: true });
+      const errorObj = { message: errorMessage };
+      // if is email error
+      if (errorCode.includes("email")) setEmailError(errorObj);
+      // else, is password error
+      else setPasswordError(errorObj);
     } else {
-      setPasswordError({
-        message: error.message,
-        active: true,
-      });
+      // if no error
+      setEmailError(null);
+      setPasswordError(null);
     }
   }, [error]);
+
+  const togglePasswordVisibility = () =>
+    setIsPasswordVisible(!isPasswordVisible);
 
   return (
     <form
@@ -75,7 +78,7 @@ export default function AuthenticationForm({
           aria-label="toggle password visibility"
           className="toggle-password-visible"
           type="button"
-          onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+          onClick={togglePasswordVisibility}
         >
           <i
             className={`fa-regular fa-${

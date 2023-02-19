@@ -6,7 +6,7 @@ import { getAuthInstance } from "../firebase/firebase-app";
 export default function SignUpWithEmail() {
   // will use these vars later...
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [createUserWithEmailAndPassword, user, loading, error] =
+  const [createUserWithEmailAndPassword, , loading, error] =
     useCreateUserWithEmailAndPassword(getAuthInstance());
 
   const handleSubmit = async (email: string, password: string) => {

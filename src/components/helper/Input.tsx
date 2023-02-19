@@ -2,9 +2,7 @@ import { ReactNode, useId } from "react";
 import "../../css/Input.css";
 
 interface Error {
-  message?: string;
-  code?: string;
-  active?: boolean;
+  message: string;
 }
 
 export default function Input({
@@ -18,7 +16,7 @@ export default function Input({
   children,
   className,
 }: {
-  error: Error;
+  error: Error | null;
   onChange: Function;
   value: string;
   type: string;
@@ -31,9 +29,7 @@ export default function Input({
   const id = useId();
 
   return (
-    <div
-      className={`input-container ${className} ${error.active ? "error" : ""}`}
-    >
+    <div className={`input-container ${className} ${error ? "error" : ""}`}>
       <label htmlFor={id}>{labelText}</label>
       <div className="input">
         <input
@@ -46,7 +42,7 @@ export default function Input({
         />
         {children}
       </div>
-      <span className="error-text">{error.active && error.message}</span>
+      <span className="error-text">{error?.message}</span>
     </div>
   );
 }
