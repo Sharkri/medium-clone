@@ -5,8 +5,8 @@ import Nav from "./Nav";
 
 function Header() {
   return (
-    <header>
-      <div className="header-content">
+    <header className="py-[25px] px-[18px] flex justify-center border-b-[1px] border-black bg-yellow">
+      <div className="flex justify-between max-w-[1192px] grow">
         <Link to="/" aria-label="logo">
           <Logo />
         </Link>

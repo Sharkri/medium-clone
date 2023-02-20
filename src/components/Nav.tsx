@@ -5,7 +5,7 @@ import SignInPage from "./SignInPage";
 
 function Nav() {
   return (
-    <nav>
+    <nav className="flex items-center gap-6 text-sm">
       <Link to="#">Our story</Link>
       <Link to="#">Membership</Link>
       <Link to="#">Write</Link>
