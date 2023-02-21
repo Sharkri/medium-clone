@@ -19,6 +19,14 @@ module.exports = {
           "Times",
           "serif",
         ],
+        bold: [
+          "sohne-bold",
+          "Helvetica Neue",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
+        sans: ["sohne", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
       },
 
       keyframes: {

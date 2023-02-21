@@ -1,5 +1,3 @@
-import "../../css/Logo.css";
-
 export default function Logo() {
   return (
     <svg viewBox="0 0 3940 610" className="h-[25px]">

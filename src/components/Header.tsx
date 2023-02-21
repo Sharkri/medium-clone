@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "../css/Header.css";
 import Logo from "./helper/Logo";
 import Nav from "./Nav";
 

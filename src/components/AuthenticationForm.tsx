@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "../css/AuthenticationForm.css";
 import Error from "../interfaces/ErrorInterface";
 import Input from "./helper/Input";
 import Spinner from "./helper/Spinner";

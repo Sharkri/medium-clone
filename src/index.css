@@ -1,128 +1,58 @@
 @tailwind base;
+
+@layer base {
+  @font-face {
+    font-family: gt-super;
+    src: url("./fonts/GT-Super/GT-Super-Text-Book-Trial.otf");
+  }
+
+  @font-face {
+    font-family: sohne;
+    src: url("./fonts/söhne/TestSöhne-Buch.otf");
+  }
+
+  @font-face {
+    font-family: sohne-bold;
+    src: url("./fonts/söhne/TestSöhne-Dreiviertelfett.otf");
+  }
+  /* Apply color to google icon */
+  .fa-google {
+    background: conic-gradient(
+        from -45deg,
+        #ea4335 110deg,
+        #4285f4 90deg 180deg,
+        #34a853 180deg 270deg,
+        #fbbc05 270deg
+      )
+      73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .fa-square-facebook {
+    color: #3b5998;
+    background-image: linear-gradient(
+      to bottom,
+      transparent 20%,
+      white 20%,
+      white 93%,
+      transparent 93%
+    );
+    background-size: 55%;
+    background-position: 70% 0;
+    background-repeat: no-repeat;
+  }
+
+  .fa-twitter {
+    color: #1da1f2;
+  }
+
+  .thin-icon {
+    -webkit-text-stroke: 2px white;
+  }
+}
+
 @tailwind components;
 @tailwind utilities;
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-@font-face {
-  font-family: gt-super;
-  src: url("./fonts/GT-Super/GT-Super-Text-Book-Trial.otf");
-}
-
-@font-face {
-  font-family: sohne;
-  src: url("./fonts/söhne/TestSöhne-Buch.otf");
-}
-
-@font-face {
-  font-family: sohne-bold;
-  src: url("./fonts/söhne/TestSöhne-Dreiviertelfett.otf");
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  --homepage-main-color: #ffc017;
-  --error-color: rgb(201, 74, 74);
-  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.serif {
-  font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
-  letter-spacing: -0.03em;
-  font-weight: 400;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-button {
-  cursor: pointer;
-  font-family: inherit;
-  border: none;
-  background: none;
-}
-
-li {
-  list-style-type: none;
-}
-
-b {
-  font-family: sohne-bold, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-/* Apply color to google icon */
-.fa-google {
-  background: conic-gradient(
-      from -45deg,
-      #ea4335 110deg,
-      #4285f4 90deg 180deg,
-      #34a853 180deg 270deg,
-      #fbbc05 270deg
-    )
-    73% 55%/150% 150% no-repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-.fa-square-facebook {
-  color: #3b5998;
-  background-image: linear-gradient(
-    to bottom,
-    transparent 20%,
-    white 20%,
-    white 93%,
-    transparent 93%
-  );
-  background-size: 55%;
-  background-position: 70% 0;
-  background-repeat: no-repeat;
-}
-
-.fa-twitter {
-  color: #1da1f2;
-}
-
-.small-text {
-  font-size: 13px;
-  color: rgba(117, 117, 117, 1);
-  font-weight: 400;
-}
-
-.medium-text {
-  font-size: 28px;
-}
-
-/* .underline {
-  text-decoration: underline;
-  cursor: pointer;
-} */
-
-.thin-icon {
-  -webkit-text-stroke: 2px white;
-}
-
-.black-button {
-  background-color: rgb(25, 25, 25);
-  border: 1px solid rgb(25, 25, 25);
-  color: white;
-  border-radius: 999px;
-  transition: 0.25s;
-}
-
-.black-button:hover {
-  background-color: black;
-  border-color: black;
-}

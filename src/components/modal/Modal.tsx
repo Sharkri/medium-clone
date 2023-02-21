@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import ModalContext from "./ModalContext";
-import "../../css/Modal.css";
 
 function Modal() {
   const { isModalOpen, modalContent, setModalOpen } = useContext(ModalContext);

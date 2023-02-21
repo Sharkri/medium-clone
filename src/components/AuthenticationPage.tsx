@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import OpenModalButton from "./OpenModalButton";
 import SignInPage from "./SignInPage";
 import SignUpPage from "./SignUpPage";
-import "../css/AuthenticationPage.css";
 
 export default function AuthenticationPage({
   children,
@@ -27,7 +26,7 @@ export default function AuthenticationPage({
           <OpenModalButton
             element={isSignUpPage ? <SignInPage /> : <SignUpPage />}
           >
-            <b className="text-green-700 leading-6">
+            <b className="text-green-700 leading-6 font-bold">
               {isSignUpPage ? "Sign In" : "Create one"}
             </b>
           </OpenModalButton>

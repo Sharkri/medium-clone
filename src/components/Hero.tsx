@@ -1,4 +1,3 @@
-import "../css/Hero.css";
 import OpenModalButton from "./OpenModalButton";
 import SignUpPage from "./SignUpPage";
 

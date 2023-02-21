@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import "../css/Nav.css";
 import OpenModalButton from "./OpenModalButton";
 import SignInPage from "./SignInPage";
 

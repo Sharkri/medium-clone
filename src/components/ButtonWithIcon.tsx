@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import "../css/ButtonWithIcon.css";
 
 export default function ButtonWithIcon({
   icon, // FontAwesome icon className

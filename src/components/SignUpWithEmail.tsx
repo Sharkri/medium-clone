@@ -1,6 +1,5 @@
 import AuthenticationForm from "./AuthenticationForm";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import "../css/SignUpWithEmail.css";
 import { getAuthInstance } from "../firebase/firebase-app";
 
 export default function SignUpWithEmail() {
