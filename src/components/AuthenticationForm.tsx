@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import Error from "../interfaces/ErrorInterface";
 import Input from "./helper/Input";
+import PasswordInput from "./helper/PasswordInput";
 import Spinner from "./helper/Spinner";
-
-interface IError {
-  message: string;
-}
+import IError from "./interfaces/ErrorInterface";
 
 export default function AuthenticationForm({
   onSubmit,
@@ -18,8 +16,6 @@ export default function AuthenticationForm({
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const [emailError, setEmailError] = useState<IError | null>(null);
   const [passwordError, setPasswordError] = useState<IError | null>(null);
@@ -39,9 +35,6 @@ export default function AuthenticationForm({
       setPasswordError(null);
     }
   }, [error]);
-
-  const togglePasswordVisibility = () =>
-    setIsPasswordVisible(!isPasswordVisible);
 
   return (
     <form
@@ -63,29 +56,11 @@ export default function AuthenticationForm({
         required
       />
 
-      <Input
+      <PasswordInput
         error={passwordError}
-        type={isPasswordVisible ? "text" : "password"}
+        password={password}
         onChange={setPassword}
-        value={password}
-        autoComplete="current-password"
-        labelText="Your password"
-        className="group"
-        required
-      >
-        <button
-          aria-label="toggle password visibility"
-          className="text-lighterblack absolute right-1 bottom-1 opacity-0 min-w-[17.5px] transition duration-[250ms] group-hover:opacity-100"
-          type="button"
-          onClick={togglePasswordVisibility}
-        >
-          <i
-            className={`text-sm fa-regular fa-${
-              isPasswordVisible ? "eye-slash" : "eye"
-            }`}
-          />
-        </button>
-      </Input>
+      />
 
       <button
         type="submit"
