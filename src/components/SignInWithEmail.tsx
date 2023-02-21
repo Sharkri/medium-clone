@@ -8,9 +8,9 @@ export default function SignInWithEmail() {
     useSignInWithEmailAndPassword(getAuthInstance());
 
   return (
-    <div className="sign-in-with-email">
-      <h2 className="serif medium-text">Sign in with email</h2>
-      <p>
+    <div>
+      <h2 className="font-serif text-[28px]">Sign in with email</h2>
+      <p className="mb-[50px] mt-[30px] max-w-[316px]">
         Enter the email address associated with your account and enter your
         Medium password.
       </p>

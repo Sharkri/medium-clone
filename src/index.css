@@ -105,10 +105,10 @@ b {
   font-size: 28px;
 }
 
-.underline {
+/* .underline {
   text-decoration: underline;
   cursor: pointer;
-}
+} */
 
 .thin-icon {
   -webkit-text-stroke: 2px white;

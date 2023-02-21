@@ -14,9 +14,11 @@ export default function SignUpWithEmail() {
   };
 
   return (
-    <div className="sign-up-with-email">
-      <h2 className="serif medium-text">Sign up with email</h2>
-      <p>Enter your email address and a password to create an account.</p>
+    <div>
+      <h2 className="font-serif text-[28px]">Sign up with email</h2>
+      <p className="mb-[50px] mt-[30px] max-w-[316px]">
+        Enter your email address and a password to create an account.
+      </p>
       <AuthenticationForm
         onSubmit={handleSubmit}
         error={error}

@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import "../css/ButtonWithIcon.css";
 
 export default function ButtonWithIcon({
-  icon,
+  icon, // FontAwesome icon className
   children,
   onClick,
 }: {
@@ -11,9 +11,12 @@ export default function ButtonWithIcon({
   onClick?: React.MouseEventHandler;
 }) {
   return (
-    <button className="button-with-icon" onClick={onClick}>
-      <span className="button-with-icon-content">
-        <i className={icon} />
+    <button
+      className="pt-[9px] pr-3 pb-[10px] pl-5 border-[1px] border-solid border-neutral-400 rounded-full"
+      onClick={onClick}
+    >
+      <span className="flex items-center gap-3 text-[14.2px] text-lighterblack leading-5 text-left">
+        <i className={`${icon} text-lg`} />
         {children}
       </span>
     </button>

@@ -1,4 +1,4 @@
-@keyframes opacity {
+/* @keyframes opacity {
   0% {
     opacity: 0;
   }
@@ -15,9 +15,9 @@
   100% {
     transform: scale(1);
   }
-}
+} */
 
-.modal {
+/* .modal {
   position: fixed;
   left: 0;
   right: 0;
@@ -30,8 +30,8 @@
   align-items: center;
   animation: 300ms cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 normal forwards running
     opacity;
-}
-
+} */
+/* 
 .modal-content {
   overflow: auto;
   border-radius: 4px;
@@ -49,9 +49,9 @@
   flex-direction: column;
   width: clamp(0px, 100%, 678px);
   height: clamp(0px, 100%, 695px);
-}
+} */
 
-.close-modal {
+/* .close-modal {
   position: absolute;
   top: 8px;
   right: 12px;
@@ -62,4 +62,4 @@
 
 .close-modal:hover {
   color: rgb(0, 0, 0);
-}
+} */

@@ -52,7 +52,7 @@ export default function AuthenticationForm({
         onSubmit(email, password);
       }}
       noValidate
-      className="authentication-form"
+      className="flex flex-col gap-1 items-center"
     >
       <Input
         error={emailError}
@@ -71,24 +71,27 @@ export default function AuthenticationForm({
         value={password}
         autoComplete="current-password"
         labelText="Your password"
-        className="password-container"
+        className="group"
         required
       >
         <button
           aria-label="toggle password visibility"
-          className="toggle-password-visible"
+          className="text-lighterblack absolute right-1 bottom-1 opacity-0 min-w-[17.5px] transition duration-[250ms] group-hover:opacity-100"
           type="button"
           onClick={togglePasswordVisibility}
         >
           <i
-            className={`fa-regular fa-${
+            className={`text-sm fa-regular fa-${
               isPasswordVisible ? "eye-slash" : "eye"
             }`}
           />
         </button>
       </Input>
 
-      <button type="submit" className="black-button">
+      <button
+        type="submit"
+        className="flex justify-center items-center w-full min-h-[42px] leading-5 text-[15px] pt-[7px] px-4 pb-[9px] bg-lightblack border-lightblack text-white rounded-full transition duration-[0.25s] hover:bg-black hover:border-lightblack"
+      >
         {loading ? <Spinner /> : "Continue"}
       </button>
     </form>
