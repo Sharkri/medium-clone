@@ -9,11 +9,11 @@ export default function Input({
   onChange,
   value,
   autoComplete,
-  required,
+  required = false,
   type,
   labelText,
   children,
-  className,
+  className = "",
 }: {
   error: Error | null;
   onChange: Function;
@@ -29,9 +29,9 @@ export default function Input({
 
   return (
     <div
-      className={`flex flex-col items-center gap-3 mt-3 mb-7 ${
-        className || ""
-      } ${error ? "text-red-700" : "text-lighterblack"}`}
+      className={`flex flex-col items-center gap-3 mt-3 mb-7 ${className} ${
+        error ? "text-red-700" : "text-lighterblack"
+      }`}
     >
       <label htmlFor={id} className="text-[13.2px] leading-5 text-inherit">
         {labelText}
@@ -43,7 +43,7 @@ export default function Input({
           value={value}
           type={type}
           autoComplete={autoComplete}
-          required={required || false}
+          required={required}
           className={`pb-[3px] text-lighterblack outline-none border-b-[1px] border-neutral-400 w-[270px] text-center transition-colors duration-300 hover:border-neutral-600 focus:border-lighterblack ${
             error ? "animate-shake !border-red-500" : ""
           }`}

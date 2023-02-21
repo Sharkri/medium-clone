@@ -4,7 +4,7 @@ import ModalContext from "./modal/ModalContext";
 function OpenModalButton({
   element,
   children,
-  className,
+  className = "",
 }: {
   element: ReactNode;
   children: ReactNode;
@@ -13,10 +13,7 @@ function OpenModalButton({
   const { setModalOpen } = useContext(ModalContext);
 
   return (
-    <button
-      className={className || ""}
-      onClick={() => setModalOpen(true, element)}
-    >
+    <button className={className} onClick={() => setModalOpen(true, element)}>
       {children}
     </button>
   );
