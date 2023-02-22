@@ -9,9 +9,11 @@ import IError from "./interfaces/ErrorInterface";
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
 
   const [emailError, setEmailError] = useState<IError | null>(null);
   const [passwordError, setPasswordError] = useState<IError | null>(null);
+  const [fullNameError, setFullNameError] = useState<IError | null>(null);
 
   const [createUserWithEmailAndPassword, , loading, error] =
     useCreateUserWithEmailAndPassword(getAuthInstance());
@@ -21,6 +23,7 @@ export default function SignUpForm() {
     if (!error) {
       setEmailError(null);
       setPasswordError(null);
+      setFullNameError(null);
       return;
     }
 
@@ -30,11 +33,7 @@ export default function SignUpForm() {
     }
 
     // email errors
-    if (
-      !email ||
-      error.code === "auth/invalid-email" ||
-      error.code === "auth/internal-error"
-    ) {
+    if (!email || error.code === "auth/invalid-email") {
       setEmailError({
         message: "Please enter a valid email.",
       });
@@ -47,6 +46,9 @@ export default function SignUpForm() {
         message: "Too many requests. Try again later.",
       });
     }
+
+    // name errors
+    if (!fullName) setFullNameError({ message: "Full name cannot be empty" });
   }, [error]);
 
   return (
@@ -65,6 +67,14 @@ export default function SignUpForm() {
         value={email}
         autoComplete="email"
         labelText="Your email"
+        required
+      />
+      <Input
+        error={fullNameError}
+        type="text"
+        onChange={setFullName}
+        value={fullName}
+        labelText="Your full name"
         required
       />
 

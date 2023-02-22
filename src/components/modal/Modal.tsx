@@ -16,7 +16,7 @@ function Modal() {
       }}
     >
       <div
-        className="flex flex-col justify-center items-center overflow-auto rounded bg-white py-11 px-14 shadow-lg relative text-center max-w-[678px] max-h-[695px] w-full h-full animate-fade-scale-in"
+        className="flex flex-col justify-center items-center overflow-auto rounded bg-white py-10 px-14 shadow-lg relative text-center max-w-[678px] max-h-[695px] w-full h-full animate-fade-scale-in"
         id="modal-content"
       >
         <button
