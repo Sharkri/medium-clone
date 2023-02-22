@@ -6,10 +6,12 @@ export default function PasswordInput({
   password,
   error,
   onChange,
+  autoComplete,
 }: {
   password: string;
   error: IError | null;
   onChange: Function;
+  autoComplete: "current-password" | "new-password";
 }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -19,7 +21,7 @@ export default function PasswordInput({
       type={isPasswordVisible ? "text" : "password"}
       onChange={onChange}
       value={password}
-      autoComplete="current-password"
+      autoComplete={autoComplete}
       labelText="Your password"
       className="group"
       required

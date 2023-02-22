@@ -15,7 +15,7 @@ export default function SignUpForm() {
   const [passwordError, setPasswordError] = useState<IError | null>(null);
   const [fullNameError, setFullNameError] = useState<IError | null>(null);
 
-  const [createUserWithEmailAndPassword, , loading, error] =
+  const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(getAuthInstance());
 
   useEffect(() => {
@@ -28,12 +28,12 @@ export default function SignUpForm() {
     }
 
     // password errors
-    if (!password || error.code === "auth/weak-password") {
+    if (error.code === "auth/weak-password") {
       setPasswordError({ message: "Password must be at least 6 characters" });
     }
 
     // email errors
-    if (!email || error.code === "auth/invalid-email") {
+    if (error.code === "auth/invalid-email") {
       setEmailError({
         message: "Please enter a valid email.",
       });
@@ -46,15 +46,28 @@ export default function SignUpForm() {
         message: "Too many requests. Try again later.",
       });
     }
-
-    // name errors
-    if (!fullName) setFullNameError({ message: "Full name cannot be empty" });
   }, [error]);
+
+  useEffect(() => console.log(user), [user]);
+
+  function checkForEmptyInputs() {
+    setFullNameError(
+      fullName ? null : { message: "Full name cannot be empty." }
+    );
+    setPasswordError(
+      password ? null : { message: "Password cannot be empty." }
+    );
+    setEmailError(email ? null : { message: "Email cannot be empty." });
+
+    return !fullName || !email || !password;
+  }
 
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
+        if (checkForEmptyInputs()) return;
+
         createUserWithEmailAndPassword(email, password);
       }}
       noValidate
@@ -75,6 +88,7 @@ export default function SignUpForm() {
         onChange={setFullName}
         value={fullName}
         labelText="Your full name"
+        autoComplete="name"
         required
       />
 
@@ -82,6 +96,7 @@ export default function SignUpForm() {
         error={passwordError}
         password={password}
         onChange={setPassword}
+        autoComplete="new-password"
       />
 
       <LoadingButton type="submit" loading={loading}>

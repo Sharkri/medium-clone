@@ -7,7 +7,12 @@ const mockOnChange = jest.fn();
 
 it("should toggle password visibility", () => {
   render(
-    <PasswordInput password="Jimmy123" error={null} onChange={mockOnChange} />
+    <PasswordInput
+      password="Jimmy123"
+      error={null}
+      onChange={mockOnChange}
+      autoComplete="current-password"
+    />
   );
 
   const passwordInput = screen.getByLabelText(/Your password/i);
@@ -29,7 +34,12 @@ it("should toggle password visibility", () => {
 
 it("should call onChange", () => {
   render(
-    <PasswordInput password="Jimmy123" error={null} onChange={mockOnChange} />
+    <PasswordInput
+      password="Jimmy123"
+      error={null}
+      onChange={mockOnChange}
+      autoComplete="current-password"
+    />
   );
 
   const passwordInput = screen.getByLabelText(/Your password/i);
