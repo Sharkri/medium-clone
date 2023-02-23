@@ -14,10 +14,6 @@ export default function SignInPage() {
         Sign in with Google
       </ButtonWithIcon>
 
-      <ButtonWithIcon icon="fa-brands fa-apple" onClick={() => {}}>
-        Sign in with Apple
-      </ButtonWithIcon>
-
       <ButtonWithIcon
         icon="fa-regular fa-envelope"
         onClick={() => setModalOpen(true, <SignInWithEmail />)}
