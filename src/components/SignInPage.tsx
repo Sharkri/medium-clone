@@ -18,10 +18,6 @@ export default function SignInPage() {
         Sign in with Apple
       </ButtonWithIcon>
 
-      <ButtonWithIcon icon="fa-brands fa-twitter" onClick={() => {}}>
-        Sign in with Twitter
-      </ButtonWithIcon>
-
       <ButtonWithIcon
         icon="fa-regular fa-envelope"
         onClick={() => setModalOpen(true, <SignInWithEmail />)}
