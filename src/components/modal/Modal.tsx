@@ -20,11 +20,11 @@ function Modal() {
         id="modal-content"
       >
         <button
-          className="thin-icon absolute top-2 right-3 text-gray-600 text-2xl transition-colors duration-200 hover:text-black"
+          className="absolute top-2 right-3 text-gray-600 text-2xl transition-colors duration-200 hover:text-black"
           onClick={() => setModalOpen(false)}
           aria-label="close"
         >
-          <i className="fa-solid fa-xmark" />
+          <i className="fa-solid fa-xmark thinner-icon" />
         </button>
 
         {modalContent}

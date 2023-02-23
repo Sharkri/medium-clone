@@ -34,7 +34,7 @@ function App() {
         <UserContext.Provider value={{ user, loading, error }}>
           <Modal />
 
-          {user ? <LoggedInHeader /> : <Header />}
+          {user ? <LoggedInHeader user={user} /> : <Header />}
 
           <Routes>
             <Route element={user ? <LoggedInHomepage /> : <Home />} path="/" />

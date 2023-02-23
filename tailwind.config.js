@@ -7,6 +7,7 @@ module.exports = {
         yellow: "#ffc017",
         lightblack: "rgb(25, 25, 25)",
         lighterblack: "rgb(41, 41, 41)",
+        "subtle-white": "rgb(242, 242, 242)",
       },
 
       fontFamily: {
@@ -27,6 +28,13 @@ module.exports = {
           "sans-serif",
         ],
         sans: ["sohne", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        thin: [
+          "sohne-light",
+          "Helvetica Neue",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
       },
 
       keyframes: {

@@ -12,6 +12,11 @@
   }
 
   @font-face {
+    font-family: sohne-light;
+    src: url("./fonts/söhne/TestSöhne-Leicht.otf");
+  }
+
+  @font-face {
     font-family: sohne-bold;
     src: url("./fonts/söhne/TestSöhne-Dreiviertelfett.otf");
   }
@@ -31,7 +36,11 @@
     -webkit-text-fill-color: transparent;
   }
 
-  .thin-icon {
+  .thin-icon:before {
+    -webkit-text-stroke: 0.3px white;
+  }
+
+  .thinner-icon:before {
     -webkit-text-stroke: 2px white;
   }
 }
