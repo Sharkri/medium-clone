@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useCreateUserWithEmailAndPassword,
+  useUpdateProfile,
+} from "react-firebase-hooks/auth";
 import { getAuthInstance } from "../firebase/firebase-app";
 import Input from "./helper/Input";
 import LoadingButton from "./helper/LoadingButton";
@@ -15,15 +18,18 @@ export default function SignUpForm() {
   const [passwordError, setPasswordError] = useState<IError | null>(null);
   const [fullNameError, setFullNameError] = useState<IError | null>(null);
 
-  const [createUserWithEmailAndPassword, user, loading, error] =
+  const [createUserWithEmailAndPassword, , loading, error] =
     useCreateUserWithEmailAndPassword(getAuthInstance());
+
+  const [updateProfile, updating, updatingError] = useUpdateProfile(
+    getAuthInstance()
+  );
 
   useEffect(() => {
     // if there is no error, hide errors.
     if (!error) {
       setEmailError(null);
       setPasswordError(null);
-      setFullNameError(null);
       return;
     }
 
@@ -48,7 +54,11 @@ export default function SignUpForm() {
     }
   }, [error]);
 
-  useEffect(() => console.log(user), [user]);
+  // if there is an error updating displayName
+  useEffect(() => {
+    if (!updatingError) setFullNameError(null);
+    else setFullNameError({ message: updatingError.message });
+  }, [updatingError]);
 
   function checkForEmptyInputs() {
     setFullNameError(
@@ -68,7 +78,12 @@ export default function SignUpForm() {
         e.preventDefault();
         if (checkForEmptyInputs()) return;
 
-        createUserWithEmailAndPassword(email, password);
+        const success = await createUserWithEmailAndPassword(email, password);
+
+        if (success) {
+          // add fullName to profile
+          updateProfile({ displayName: fullName });
+        }
       }}
       noValidate
       className="flex flex-col gap-1 items-center"
@@ -99,7 +114,7 @@ export default function SignUpForm() {
         autoComplete="new-password"
       />
 
-      <LoadingButton type="submit" loading={loading}>
+      <LoadingButton type="submit" loading={loading || updating}>
         Continue
       </LoadingButton>
     </form>
