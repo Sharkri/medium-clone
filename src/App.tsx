@@ -6,6 +6,7 @@ import UserContext from "./UserContext";
 import Error from "./interfaces/ErrorInterface";
 import User from "./interfaces/UserInterface";
 import { getAuthInstance } from "./firebase/firebase-app";
+import LoggedInHomepage from "./components/LoggedInHomepage";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -18,7 +19,7 @@ function App() {
     <BrowserRouter>
       <UserContext.Provider value={{ user, loading, error }}>
         <Routes>
-          <Route element={<Home />} path="/" />
+          <Route element={user ? <LoggedInHomepage /> : <Home />} path="/" />
         </Routes>
       </UserContext.Provider>
     </BrowserRouter>
