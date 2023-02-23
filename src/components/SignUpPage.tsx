@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { signInWithGoogle } from "../firebase/firebase-app";
 import AuthenticationPage from "./AuthenticationPage";
 import ButtonWithIcon from "./ButtonWithIcon";
 import ModalContext from "./modal/ModalContext";
@@ -9,7 +10,7 @@ export default function SignUpPage() {
 
   return (
     <AuthenticationPage isSignUpPage={true}>
-      <ButtonWithIcon icon="fa-brands fa-google" onClick={() => {}}>
+      <ButtonWithIcon icon="fa-brands fa-google" onClick={signInWithGoogle}>
         Sign up with Google
       </ButtonWithIcon>
 
