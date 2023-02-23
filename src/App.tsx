@@ -7,6 +7,11 @@ import Error from "./interfaces/ErrorInterface";
 import User from "./interfaces/UserInterface";
 import { getAuthInstance } from "./firebase/firebase-app";
 import LoggedInHomepage from "./components/LoggedInHomepage";
+import Header from "./components/Header";
+import useModal from "./components/modal/useModal";
+import ModalContext from "./components/modal/ModalContext";
+import Modal from "./components/modal/Modal";
+import LoggedInHeader from "./components/LoggedInHeader";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -15,13 +20,27 @@ function App() {
   const loading = authState[1];
   const error = authState[2] as Error | undefined;
 
+  const { modalContent, setModalOpen, isModalOpen } = useModal();
+
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ user, loading, error }}>
-        <Routes>
-          <Route element={user ? <LoggedInHomepage /> : <Home />} path="/" />
-        </Routes>
-      </UserContext.Provider>
+      <ModalContext.Provider
+        value={{
+          modalContent,
+          setModalOpen,
+          isModalOpen,
+        }}
+      >
+        <UserContext.Provider value={{ user, loading, error }}>
+          <Modal />
+
+          {user ? <LoggedInHeader /> : <Header />}
+
+          <Routes>
+            <Route element={user ? <LoggedInHomepage /> : <Home />} path="/" />
+          </Routes>
+        </UserContext.Provider>
+      </ModalContext.Provider>
     </BrowserRouter>
   );
 }
