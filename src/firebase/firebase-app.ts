@@ -1,6 +1,6 @@
 import firebaseConfig from "./firebase-config";
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 const getAuthInstance = getAuth;
 
@@ -11,4 +11,10 @@ try {
   console.error("Error initializing:", error);
 }
 
-export { getAuthInstance };
+async function signInWithGoogle() {
+  // Sign in Firebase using popup auth and Google as the identity provider.
+  const provider = new GoogleAuthProvider();
+  await signInWithPopup(getAuthInstance(), provider);
+}
+
+export { getAuthInstance, signInWithGoogle };

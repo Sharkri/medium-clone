@@ -13,10 +13,6 @@ export default function SignUpPage() {
         Sign up with Google
       </ButtonWithIcon>
 
-      <ButtonWithIcon icon="fa-brands fa-square-facebook" onClick={() => {}}>
-        Sign up with Facebook
-      </ButtonWithIcon>
-
       <ButtonWithIcon
         icon="fa-regular fa-envelope"
         onClick={() => setModalOpen(true, <SignUpWithEmail />)}

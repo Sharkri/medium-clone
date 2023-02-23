@@ -3,18 +3,15 @@ import AuthenticationPage from "./AuthenticationPage";
 import { useContext } from "react";
 import ModalContext from "./modal/ModalContext";
 import SignInWithEmail from "./SignInWithEmail";
+import { signInWithGoogle } from "../firebase/firebase-app";
 
 export default function SignInPage() {
   const { setModalOpen } = useContext(ModalContext);
 
   return (
     <AuthenticationPage isSignUpPage={false}>
-      <ButtonWithIcon icon="fa-brands fa-google" onClick={() => {}}>
+      <ButtonWithIcon icon="fa-brands fa-google" onClick={signInWithGoogle}>
         Sign in with Google
-      </ButtonWithIcon>
-
-      <ButtonWithIcon icon="fa-brands fa-square-facebook" onClick={() => {}}>
-        Sign in with Facebook
       </ButtonWithIcon>
 
       <ButtonWithIcon icon="fa-brands fa-apple" onClick={() => {}}>
