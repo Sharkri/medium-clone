@@ -28,13 +28,6 @@ module.exports = {
           "sans-serif",
         ],
         sans: ["sohne", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
-        thin: [
-          "sohne-light",
-          "Helvetica Neue",
-          "Helvetica",
-          "Arial",
-          "sans-serif",
-        ],
       },
 
       keyframes: {

@@ -3,22 +3,17 @@
 @layer base {
   @font-face {
     font-family: gt-super;
-    src: url("./fonts/GT-Super/GT-Super-Text-Book-Trial.otf");
+    src: url("./fonts/gt-super/gt-super-400-normal.woff");
   }
 
   @font-face {
     font-family: sohne;
-    src: url("./fonts/söhne/TestSöhne-Buch.otf");
-  }
-
-  @font-face {
-    font-family: sohne-light;
-    src: url("./fonts/söhne/TestSöhne-Leicht.otf");
+    src: url("./fonts/sohne/sohne-400-normal.woff");
   }
 
   @font-face {
     font-family: sohne-bold;
-    src: url("./fonts/söhne/TestSöhne-Dreiviertelfett.otf");
+    src: url("./fonts/sohne/sohne-700-normal.woff");
   }
   /* Apply color to google icon */
   .fa-google {
@@ -41,6 +36,10 @@
   }
 
   .thinner-icon:before {
+    -webkit-text-stroke: 0.9px white;
+  }
+
+  .thinnest-icon:before {
     -webkit-text-stroke: 2px white;
   }
 }
