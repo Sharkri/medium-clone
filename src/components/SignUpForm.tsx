@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   useCreateUserWithEmailAndPassword,
   useUpdateProfile,
@@ -8,6 +8,7 @@ import Input from "./helper/Input";
 import LoadingButton from "./helper/LoadingButton";
 import PasswordInput from "./helper/PasswordInput";
 import IError from "./interfaces/ErrorInterface";
+import ModalContext from "./modal/ModalContext";
 
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
@@ -24,6 +25,8 @@ export default function SignUpForm() {
   const [updateProfile, updating, updatingError] = useUpdateProfile(
     getAuthInstance()
   );
+
+  const { setModalOpen } = useContext(ModalContext);
 
   useEffect(() => {
     // if there is no error, hide errors.
@@ -83,6 +86,7 @@ export default function SignUpForm() {
         if (success) {
           // add fullName to profile
           updateProfile({ displayName: fullName });
+          setModalOpen(false);
         }
       }}
       noValidate

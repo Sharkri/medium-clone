@@ -10,7 +10,13 @@ export default function SignUpPage() {
 
   return (
     <AuthenticationPage isSignUpPage={true}>
-      <ButtonWithIcon icon="fa-brands fa-google" onClick={signInWithGoogle}>
+      <ButtonWithIcon
+        icon="fa-brands fa-google"
+        onClick={async () => {
+          await signInWithGoogle();
+          setModalOpen(false);
+        }}
+      >
         Sign up with Google
       </ButtonWithIcon>
 

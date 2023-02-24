@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { getAuthInstance } from "../firebase/firebase-app";
 import Input from "./helper/Input";
 import LoadingButton from "./helper/LoadingButton";
 import PasswordInput from "./helper/PasswordInput";
 import IError from "./interfaces/ErrorInterface";
+import ModalContext from "./modal/ModalContext";
 
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
@@ -15,6 +16,8 @@ export default function SignUpForm() {
 
   const [signInWithEmailAndPassword, , loading, error] =
     useSignInWithEmailAndPassword(getAuthInstance());
+
+  const { setModalOpen } = useContext(ModalContext);
 
   useEffect(() => {
     // if there is no error, hide errors.
@@ -51,7 +54,9 @@ export default function SignUpForm() {
     <form
       onSubmit={async (e) => {
         e.preventDefault();
-        signInWithEmailAndPassword(email, password);
+        const success = await signInWithEmailAndPassword(email, password);
+
+        if (success) setModalOpen(false);
       }}
       noValidate
       className="flex flex-col gap-1 items-center"
