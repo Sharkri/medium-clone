@@ -12,6 +12,7 @@ import useModal from "./components/modal/useModal";
 import ModalContext from "./components/modal/ModalContext";
 import Modal from "./components/modal/Modal";
 import LoggedInHeader from "./components/LoggedInHeader";
+import CreatePost from "./components/CreatePost";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -38,6 +39,8 @@ function App() {
 
           <Routes>
             <Route element={user ? <LoggedInHomepage /> : <Home />} path="/" />
+
+            <Route element={<CreatePost />} path="/new-story" />
           </Routes>
         </UserContext.Provider>
       </ModalContext.Provider>
