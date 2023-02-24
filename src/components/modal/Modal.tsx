@@ -24,7 +24,7 @@ function Modal() {
           onClick={() => setModalOpen(false)}
           aria-label="close"
         >
-          <i className="fa-solid fa-xmark thinner-icon" />
+          <i className="fa-solid fa-xmark thinnest-icon" />
         </button>
 
         {modalContent}
