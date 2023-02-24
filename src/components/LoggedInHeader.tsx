@@ -10,8 +10,12 @@ export default function LoggedInHeader({ user }: { user: User }) {
 
   // event listener for when click outside of dropdown
   useEffect(() => {
-    function handleClick() {
-      if (isDropdownOpen) setIsDropdownOpen(false);
+    function handleClick(e: MouseEvent) {
+      const clickedOutsideDropdown =
+        (e.target as HTMLElement).closest("#dropdown-menu") === null;
+
+      // if clicked outside of dropdown menu, close it.
+      if (clickedOutsideDropdown) setIsDropdownOpen(false);
     }
 
     window.addEventListener("click", handleClick);
@@ -63,7 +67,10 @@ export default function LoggedInHeader({ user }: { user: User }) {
           </button>
 
           {isDropdownOpen && (
-            <div className="absolute bg-white right-0 w-[264px] shadow-md border-[1px] border-neutral-200 rounded-[4px] overflow-y-auto m-h-[1167px]">
+            <div
+              id="dropdown-menu"
+              className="absolute bg-white right-0 w-[264px] shadow-md border-[1px] border-neutral-200 rounded-[4px] overflow-y-auto m-h-[1167px]"
+            >
               <div className="flex flex-col py-4 border-b-[1px] border-b-neutral-200">
                 <Link
                   to="/profile"
