@@ -13,7 +13,7 @@ it('navigates to <SignUpPage /> when "No account? Create one" is clicked', () =>
   expect(openModalButton.mock.calls[0][0]).toMatchInlineSnapshot(`
     Object {
       "children": <b
-        className="text-green-700 leading-6 font-bold"
+        className="text-[#1a8917] hover:text-[#0f730c] leading-6 font-bold"
       >
         Create one
       </b>,
