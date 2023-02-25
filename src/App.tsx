@@ -13,17 +13,22 @@ import ModalContext from "./components/modal/ModalContext";
 import Modal from "./components/modal/Modal";
 import LoggedInHeader from "./components/LoggedInHeader";
 import CreatePost from "./components/CreatePost";
+import AuthenticatedRoute from "./AuthenticatedRoute";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
 
-  const user = authState[0] as User;
-  const loading = authState[1];
-  const error = authState[2] as Error | undefined;
+  const [user, loading, error] = [
+    authState[0] as User,
+    authState[1],
+    authState[2] as Error | undefined,
+  ];
 
   const { modalContent, setModalOpen, isModalOpen } = useModal();
 
   if (loading) return null;
+
+  const isLoggedIn = !!user;
 
   return (
     <BrowserRouter>
@@ -42,7 +47,14 @@ function App() {
           <Routes>
             <Route element={user ? <LoggedInHomepage /> : <Home />} path="/" />
 
-            <Route element={<CreatePost />} path="/new-story" />
+            <Route
+              element={
+                <AuthenticatedRoute isLoggedIn={isLoggedIn}>
+                  <CreatePost />
+                </AuthenticatedRoute>
+              }
+              path="/new-story"
+            />
           </Routes>
         </UserContext.Provider>
       </ModalContext.Provider>
