@@ -45,6 +45,15 @@ module.exports = {
           "Times",
           "serif",
         ],
+
+        "source-serif-pro": [
+          "source-serif-pro",
+          "Georgia",
+          "Cambria",
+          "Times New Roman",
+          "Times",
+          "serif",
+        ],
       },
 
       keyframes: {

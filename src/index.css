@@ -26,6 +26,11 @@
     src: url("./fonts/content-font.woff");
   }
 
+  @font-face {
+    font-family: source-serif-pro;
+    src: url("./fonts/source-serif-pro-400-normal.woff");
+  }
+
   html,
   body,
   #root {
@@ -35,10 +40,6 @@
   #root {
     display: flex;
     flex-direction: column;
-  }
-
-  .markdown > * {
-    all: revert;
   }
 
   /* Apply color to google icon */

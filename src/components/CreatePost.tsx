@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import BlogMarkdown from "./BlogMarkdown";
+import TextareaAutosize from "react-textarea-autosize";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [isEditing, setIsEditing] = useState(true);
 
   useEffect(() => {
     function onBeforeClose(e: BeforeUnloadEvent) {
@@ -22,27 +24,38 @@ export default function CreatePost() {
   }, [text, title]);
 
   return (
-    <div className="flex justify-center grow">
-      <div className="flex flex-col max-w-[740px] gap-3 p-5">
-        <input
-          type="text"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="font-title text-[42px] leading-[52.5px] border-none outline-none"
-        />
-        <textarea
-          className="font-content-serif text-[21px] leading-[33.18px] border-none outline-none h-full resize-none"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Tell your story..."
-          autoFocus
-        ></textarea>
+    <div className="flex flex-col items-center grow">
+      <div className="flex gap-3">
+        <button className="bg-red-500" onClick={() => setIsEditing(true)}>
+          Edit
+        </button>
+        <button className="bg-red-500" onClick={() => setIsEditing(false)}>
+          Preview
+        </button>
+      </div>
 
-        <div className="prose font-content-serif">
+      {isEditing ? (
+        <div className="grow flex flex-col w-full max-w-[740px] gap-3 p-5">
+          <TextareaAutosize
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value.replace(/\n/g, ""))}
+            className="font-title text-[42px] leading-[52.5px] outline-none resize-none"
+          />
+          <TextareaAutosize
+            className="font-content-serif text-[21px] leading-[33.18px] outline-none resize-none"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Tell your story..."
+            autoFocus
+          />
+        </div>
+      ) : (
+        <div className="prose font-source-serif-pro">
+          <h1 className="font-bold text-3xl">{title}</h1>
           <BlogMarkdown text={text} />
         </div>
-      </div>
+      )}
     </div>
   );
 }

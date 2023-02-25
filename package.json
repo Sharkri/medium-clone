@@ -19,7 +19,8 @@
     "react-markdown": "^8.0.5",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
-    "react-syntax-highlighter": "^15.5.0"
+    "react-syntax-highlighter": "^15.5.0",
+    "react-textarea-autosize": "^8.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
