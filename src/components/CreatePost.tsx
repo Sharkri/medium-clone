@@ -23,6 +23,20 @@ export default function CreatePost() {
     return () => window.removeEventListener("beforeunload", onBeforeClose);
   }, [text, title]);
 
+  useEffect(() => {
+    function onBeforeClose(e: BeforeUnloadEvent) {
+      // if nothing was typed, close with no confirmation
+      if (!title && !text) return;
+
+      // confirm to close with unsaved changes
+      e.preventDefault();
+    }
+
+    window.addEventListener("beforeunload", onBeforeClose);
+
+    return () => window.removeEventListener("beforeunload", onBeforeClose);
+  }, [text, title]);
+
   return (
     <div className="flex flex-col items-center grow">
       <div className="flex gap-3">
