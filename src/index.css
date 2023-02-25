@@ -15,6 +15,18 @@
     font-family: sohne-bold;
     src: url("./fonts/sohne/sohne-700-normal.woff");
   }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+  }
+
   /* Apply color to google icon */
   .fa-google {
     background: conic-gradient(
