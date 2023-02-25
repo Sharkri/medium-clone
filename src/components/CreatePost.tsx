@@ -51,7 +51,7 @@ export default function CreatePost() {
           />
         </div>
       ) : (
-        <div className="prose font-source-serif-pro">
+        <div className="prose prose-lg prose-img:w-full prose-img:m-auto prose-img:max-w-[600px] prose-pre:bg-[#282c34] prose-headings:font-sans font-source-serif-pro">
           <h1 className="font-bold text-3xl">{title}</h1>
           <BlogMarkdown text={text} />
         </div>
