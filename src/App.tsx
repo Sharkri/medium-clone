@@ -23,6 +23,8 @@ function App() {
 
   const { modalContent, setModalOpen, isModalOpen } = useModal();
 
+  if (loading) return null;
+
   return (
     <BrowserRouter>
       <ModalContext.Provider
