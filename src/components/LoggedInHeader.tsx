@@ -59,6 +59,7 @@ export default function LoggedInHeader({ user }: { user: User }) {
             <img
               src={user.photoURL || defaultProfilePic}
               alt={user.displayName}
+              referrerPolicy="no-referrer"
               width="31"
               height="31"
               className="rounded-full"
