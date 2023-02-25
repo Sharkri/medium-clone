@@ -1,9 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BlogMarkdown from "./BlogMarkdown";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    function onBeforeClose(e: BeforeUnloadEvent) {
+      // if nothing was typed, close with no confirmation
+      if (!title && !text) return;
+
+      // confirm to close with unsaved changes
+      e.preventDefault();
+    }
+
+    window.addEventListener("beforeunload", onBeforeClose);
+
+    return () => window.removeEventListener("beforeunload", onBeforeClose);
+  }, [text, title]);
 
   return (
     <div className="flex justify-center grow">
