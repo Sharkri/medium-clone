@@ -28,6 +28,23 @@ module.exports = {
           "sans-serif",
         ],
         sans: ["sohne", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+        title: [
+          "fell",
+          "Georgia",
+          "Cambria",
+          "Times New Roman",
+          "Times",
+          "serif",
+        ],
+
+        "content-serif": [
+          "content-font",
+          "Georgia",
+          "Cambria",
+          "Times New Roman",
+          "Times",
+          "serif",
+        ],
       },
 
       keyframes: {
@@ -81,5 +98,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
