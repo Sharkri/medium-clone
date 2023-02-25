@@ -25,7 +25,7 @@ export default function LoggedInHeader({ user }: { user: User }) {
 
   return (
     <header className="px-6 h-[57px] border-b-[1px] border-b-subtle-white flex items-center">
-      <div className="grow">
+      <div className="grow flex">
         <Link to="/">
           <LogoWithoutText />
         </Link>
