@@ -1,4 +1,4 @@
-import Error from "./ErrorInterface";
+import { FirebaseError } from "firebase/app";
 import User from "./UserInterface";
 
 // will add other stuff to User later
@@ -6,5 +6,5 @@ import User from "./UserInterface";
 export default interface IUserContext {
   user: User | null | undefined;
   loading: Boolean;
-  error?: Error;
+  error?: FirebaseError;
 }

@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  useCreateUserWithEmailAndPassword,
-  useUpdateProfile,
-} from "react-firebase-hooks/auth";
-import { getAuthInstance } from "../firebase/firebase-app";
+import { FirebaseError } from "firebase/app";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useContext, useState } from "react";
+import { addUser, getAuthInstance } from "../firebase/firebase-app";
 import Input from "./helper/Input";
 import LoadingButton from "./helper/LoadingButton";
 import PasswordInput from "./helper/PasswordInput";
@@ -19,49 +17,9 @@ export default function SignUpForm() {
   const [passwordError, setPasswordError] = useState<IError | null>(null);
   const [fullNameError, setFullNameError] = useState<IError | null>(null);
 
-  const [createUserWithEmailAndPassword, , loading, error] =
-    useCreateUserWithEmailAndPassword(getAuthInstance());
-
-  const [updateProfile, updating, updatingError] = useUpdateProfile(
-    getAuthInstance()
-  );
+  const [isLoading, setIsLoading] = useState(false);
 
   const { setModalOpen } = useContext(ModalContext);
-
-  useEffect(() => {
-    // if there is no error, hide errors.
-    if (!error) {
-      setEmailError(null);
-      setPasswordError(null);
-      return;
-    }
-
-    // password errors
-    if (error.code === "auth/weak-password") {
-      setPasswordError({ message: "Password must be at least 6 characters" });
-    }
-
-    // email errors
-    if (error.code === "auth/invalid-email") {
-      setEmailError({
-        message: "Please enter a valid email.",
-      });
-    } else if (error.code === "auth/email-already-in-use") {
-      setEmailError({
-        message: "Email is already in use",
-      });
-    } else if (error.code === "auth/too-many-requests") {
-      setEmailError({
-        message: "Too many requests. Try again later.",
-      });
-    }
-  }, [error]);
-
-  // if there is an error updating displayName
-  useEffect(() => {
-    if (!updatingError) setFullNameError(null);
-    else setFullNameError({ message: updatingError.message });
-  }, [updatingError]);
 
   function checkForEmptyInputs() {
     setFullNameError(
@@ -75,19 +33,61 @@ export default function SignUpForm() {
     return !fullName || !email || !password;
   }
 
+  function handleErrors(error: FirebaseError) {
+    switch (error.code) {
+      case "auth/weak-password":
+        setPasswordError({
+          message: "Password must be at least 6 characters",
+        });
+        break;
+
+      case "auth/invalid-email":
+        setEmailError({
+          message: "Please enter a valid email.",
+        });
+        break;
+
+      case "auth/too-many-requests":
+        setEmailError({
+          message: "Too many requests. Try again later.",
+        });
+        break;
+
+      case "auth/email-already-in-use":
+        setEmailError({
+          message: "Email is already in use",
+        });
+    }
+  }
+
   return (
     <form
       onSubmit={async (e) => {
         e.preventDefault();
         if (checkForEmptyInputs()) return;
 
-        const success = await createUserWithEmailAndPassword(email, password);
+        setIsLoading(true);
 
-        if (success) {
-          // add fullName to profile
-          updateProfile({ displayName: fullName });
+        try {
+          const { user } = await createUserWithEmailAndPassword(
+            getAuthInstance(),
+            email,
+            password
+          );
+
+          await updateProfile(user, { displayName: fullName });
+
+          // add user to database
+          await addUser(user);
+
           setModalOpen(false);
+        } catch (error: unknown) {
+          if (error instanceof FirebaseError) {
+            handleErrors(error);
+          } else console.error("Something went wrong: ", error);
         }
+
+        setIsLoading(false);
       }}
       noValidate
       className="flex flex-col gap-1 items-center"
@@ -118,7 +118,7 @@ export default function SignUpForm() {
         autoComplete="new-password"
       />
 
-      <LoadingButton type="submit" loading={loading || updating}>
+      <LoadingButton type="submit" loading={isLoading}>
         Continue
       </LoadingButton>
     </form>

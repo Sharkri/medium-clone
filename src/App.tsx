@@ -3,7 +3,6 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Home from "./components/Home";
 import { useAuthState } from "react-firebase-hooks/auth";
 import UserContext from "./UserContext";
-import Error from "./interfaces/ErrorInterface";
 import User from "./interfaces/UserInterface";
 import { getAuthInstance } from "./firebase/firebase-app";
 import LoggedInHomepage from "./components/LoggedInHomepage";
@@ -14,6 +13,7 @@ import Modal from "./components/modal/Modal";
 import LoggedInHeader from "./components/LoggedInHeader";
 import CreatePost from "./components/CreatePost";
 import AuthenticatedRoute from "./AuthenticatedRoute";
+import { FirebaseError } from "firebase/app";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -21,7 +21,7 @@ function App() {
   const [user, loading, error] = [
     authState[0] as User,
     authState[1],
-    authState[2] as Error | undefined,
+    authState[2] as FirebaseError,
   ];
 
   const { modalContent, setModalOpen, isModalOpen } = useModal();
