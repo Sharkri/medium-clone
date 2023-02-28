@@ -81,7 +81,7 @@ export default function PublishPost({
         <div className="grow p-10">
           <p className="text-[19px] text-black/75 line-clamp-1 break-all mb-5">
             Publishing to:{" "}
-            <b className="font-content-sans-bold">{user!.displayName}</b>
+            <b className="font-content-sans-bold">{user?.displayName}</b>
           </p>
 
           <div className="flex">
