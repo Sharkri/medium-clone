@@ -20,7 +20,7 @@ module.exports = {
           "Times",
           "serif",
         ],
-        bold: [
+        "sohne-bold": [
           "sohne-bold",
           "Helvetica Neue",
           "Helvetica",
@@ -38,7 +38,7 @@ module.exports = {
         ],
 
         "content-serif": [
-          "content-font",
+          "content-serif",
           "Georgia",
           "Cambria",
           "Times New Roman",
@@ -53,6 +53,33 @@ module.exports = {
           "Times New Roman",
           "Times",
           "serif",
+        ],
+        "content-sans": [
+          "content-sans",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Oxygen",
+          "Ubuntu",
+          "Cantarell",
+          "Open Sans",
+          "Helvetica Neue",
+          "sans-serif",
+        ],
+
+        "content-sans-bold": [
+          "content-sans-bold",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Oxygen",
+          "Ubuntu",
+          "Cantarell",
+          "Open Sans",
+          "Helvetica Neue",
+          "sans-serif",
         ],
       },
 

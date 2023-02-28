@@ -26,7 +26,7 @@ export default function AuthenticationPage({
           <OpenModalButton
             element={isSignUpPage ? <SignInPage /> : <SignUpPage />}
           >
-            <b className="text-[#1a8917] hover:text-[#0f730c] leading-6 font-bold">
+            <b className="text-[#1a8917] hover:text-[#0f730c] leading-6 font-sohne-bold">
               {isSignUpPage ? "Sign In" : "Create one"}
             </b>
           </OpenModalButton>

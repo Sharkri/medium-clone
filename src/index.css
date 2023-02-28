@@ -22,13 +22,34 @@
   }
 
   @font-face {
-    font-family: content-font;
-    src: url("./fonts/content-font.woff");
+    font-family: content-serif;
+    src: url("./fonts/content-serif.woff");
+  }
+
+  @font-face {
+    font-family: content-sans;
+    src: url("./fonts/content-sans.woff");
+  }
+
+  @font-face {
+    font-family: content-sans-bold;
+    src: url("./fonts/content-sans-bold.woff");
   }
 
   @font-face {
     font-family: source-serif-pro;
     src: url("./fonts/source-serif-pro-400-normal.woff");
+  }
+
+  body,
+  html,
+  #root {
+    height: 100%;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
   }
 
   /* Apply color to google icon */

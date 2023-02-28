@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import BlogMarkdown from "./BlogMarkdown";
 import TextareaAutosize from "react-textarea-autosize";
+import PublishPost from "./PublishPost";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [isEditing, setIsEditing] = useState(true);
+  const [isPublishing, setIsPublishing] = useState(false);
 
   useEffect(() => {
     function onBeforeClose(e: BeforeUnloadEvent) {
@@ -23,6 +25,16 @@ export default function CreatePost() {
     return () => window.removeEventListener("beforeunload", onBeforeClose);
   }, [text, title]);
 
+  if (isPublishing)
+    return (
+      <PublishPost
+        title={title}
+        blogText={text}
+        onGoBack={() => setIsPublishing(false)}
+        onTitleChange={setTitle}
+      />
+    );
+
   return (
     <div className="flex flex-col items-center grow">
       <div className="flex gap-3">
@@ -32,6 +44,7 @@ export default function CreatePost() {
         <button className="bg-red-500" onClick={() => setIsEditing(false)}>
           Preview
         </button>
+        <button onClick={() => setIsPublishing(true)}>Publish</button>
       </div>
 
       {isEditing ? (
