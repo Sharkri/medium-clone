@@ -3,8 +3,7 @@ import AuthenticationPage from "./AuthenticationPage";
 import { useContext } from "react";
 import ModalContext from "./modal/ModalContext";
 import SignInWithEmail from "./SignInWithEmail";
-import { addUser, isNewUser, signInWithGoogle } from "../firebase/firebase-app";
-import { UserCredential } from "firebase/auth";
+import { signInWithGoogle } from "../firebase/firebase-app";
 
 export default function SignInPage() {
   const { setModalOpen } = useContext(ModalContext);
@@ -14,10 +13,7 @@ export default function SignInPage() {
       <ButtonWithIcon
         icon="fa-brands fa-google"
         onClick={async () => {
-          const userCredential: UserCredential = await signInWithGoogle();
-          // if is new user, add user to database
-          if (isNewUser(userCredential)) await addUser(userCredential.user);
-
+          await signInWithGoogle();
           setModalOpen(false);
         }}
       >
