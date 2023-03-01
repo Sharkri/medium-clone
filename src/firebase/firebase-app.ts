@@ -15,6 +15,10 @@ import {
   addDoc,
   doc,
   getDoc,
+  query,
+  where,
+  limit,
+  getDocs,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -23,29 +27,58 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import Post from "../interfaces/PostInterface";
+import generateUniqueUsername from "../helper-functions/generateUniqueUsername";
 
 const getAuthInstance = getAuth;
 
-async function signInWithGoogle() {
-  // Sign in Firebase using popup auth and Google as the identity provider.
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(getAuthInstance(), provider);
-}
+const isNewUser = (user: UserCredential) =>
+  getAdditionalUserInfo(user)?.isNewUser;
 
-function isNewUser(user: UserCredential) {
-  return getAdditionalUserInfo(user)?.isNewUser;
+const getCollectionRef = (name: string) => collection(getFirestore(), name);
+
+async function isUniqueUsername(username: string) {
+  const lowercaseUsername = username.toLowerCase();
+
+  const docs = await getDocs(
+    query(
+      getCollectionRef("users"),
+      where("lowercaseUsername", "==", lowercaseUsername),
+      limit(1)
+    )
+  );
+
+  return docs.empty;
 }
 
 async function addUser(user: User) {
+  if (!user.email) return;
+
   try {
-    await addDoc(collection(getFirestore(), `users`), {
+    const username = await generateUniqueUsername(user.email);
+
+    await addDoc(getCollectionRef("users"), {
       uid: user.uid,
       displayName: user.displayName,
+      username,
+      // for case-insensitive search purposes
+      lowercaseUsername: username?.toLowerCase(),
+      photoURL: user.photoURL,
       email: user.email,
     });
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
+}
+
+async function signInWithGoogle() {
+  // Sign in Firebase using popup auth and Google as the identity provider.
+  const provider = new GoogleAuthProvider();
+  const userCredential: UserCredential = await signInWithPopup(
+    getAuthInstance(),
+    provider
+  );
+  // if is new user, add user to database
+  if (isNewUser(userCredential)) await addUser(userCredential.user);
 }
 
 async function getDocData(path: string) {
@@ -69,7 +102,7 @@ async function getImageUrl(file: File, filePath: string) {
 
 async function addPost(post: Post) {
   try {
-    return await addDoc(collection(getFirestore(), "posts"), post);
+    return await addDoc(getCollectionRef("posts"), post);
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
@@ -85,8 +118,8 @@ export {
   signInWithGoogle,
   signOutUser,
   addUser,
-  isNewUser,
   addPost,
   getDocData,
   getImageUrl,
+  isUniqueUsername,
 };
