@@ -1,8 +1,9 @@
-import User from "./UserInterface";
+import { FieldValue } from "firebase/firestore";
 
 export default interface Post {
   title: string;
-  author: User;
-  date: Date;
-  id: string | number;
+  postContent: string;
+  thumbnail: string;
+  authorUid: string;
+  timestamp: FieldValue;
 }

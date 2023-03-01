@@ -1,32 +1,51 @@
+import { serverTimestamp, updateDoc } from "firebase/firestore";
 import { MouseEventHandler, useContext, useEffect, useState } from "react";
+import { addPost, getImageUrl } from "../firebase/firebase-app";
 import UserContext from "../UserContext";
 
 export default function PublishPost({
   title,
-  blogText,
+  postContent,
   onGoBack,
   onTitleChange,
 }: {
   title: string;
-  blogText: string;
+  postContent: string;
   onGoBack: MouseEventHandler;
   onTitleChange: Function;
 }) {
   const { user } = useContext(UserContext);
   const [file, setFile] = useState<File>();
-  const [imageUrl, setImageUrl] = useState("");
-
-  if (blogText) console.log("eyo");
+  const [previewImage, setPreviewImage] = useState("");
+  const placeholderThumbnail = require("../assets/images/placeholder-thumbnail.jpg");
 
   useEffect(() => {
     if (!file) return;
     // create the preview
     const objectUrl = URL.createObjectURL(file);
-    setImageUrl(objectUrl);
+    setPreviewImage(objectUrl);
 
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
   }, [file]);
+
+  async function handlePublishPost() {
+    if (!user?.uid) throw new Error("User does not exist.");
+
+    const postRef = await addPost({
+      title,
+      postContent,
+      authorUid: user.uid,
+      timestamp: serverTimestamp(),
+      thumbnail: placeholderThumbnail,
+    });
+
+    if (file && postRef) {
+      const imageUrl = await getImageUrl(file, `posts/${postRef.id}/thumbnail`);
+      // update with new thumbnail
+      updateDoc(postRef, { thumbnail: imageUrl });
+    }
+  }
 
   return (
     <div className="grow grid place-items-center font-content-sans">
@@ -37,8 +56,8 @@ export default function PublishPost({
           </b>
           <div className="flex flex-col gap-4 items-center justify-center">
             <div className="w-[112px] h-[112px] bg-zinc-50 flex items-center justify-center">
-              {imageUrl ? (
-                <img src={imageUrl} alt={title} className="w-full h-full" />
+              {previewImage ? (
+                <img src={previewImage} alt={title} className="w-full h-full" />
               ) : (
                 <span className="text-center text-black/50 text-[13.3px] px-2">
                   Thumbnail (112x112px)
@@ -88,6 +107,7 @@ export default function PublishPost({
             <button
               type="button"
               className="bg-[#1a8917] border-[1px] border-[#1a8917] rounded-full py-[5.5px] px-4 text-white transition-colors duration-100 hover:bg-[#0f730c] hover:border-[#0f730c]"
+              onClick={handlePublishPost}
             >
               Publish now
             </button>

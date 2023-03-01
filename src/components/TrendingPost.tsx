@@ -1,15 +1,18 @@
-import Post from "../interfaces/PostInterface";
+// import Post from "../interfaces/PostInterface";
 
-function TrendingPost({ post }: { post: Post }) {
-  const { title, author } = post;
+// function TrendingPost({ post }: { post: Post }) {
+//   const { title, user } = post;
 
-  return (
-    <div>
-      <p>{title}</p>
-      <p>{author.displayName}</p>
-      <img src={author.photoURL} alt="user avatar" />
-    </div>
-  );
-}
+//   return (
+//     <div>
+//       <p>{title}</p>
+//       <p>{author.displayName}</p>
+//       <img src={author.photoURL} alt="user avatar" />
+//     </div>
+//   );
+// }
 
-export default TrendingPost;
+// export default TrendingPost;
+
+// FIX LATER!!!!
+export default () => <div></div>;

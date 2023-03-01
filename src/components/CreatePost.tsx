@@ -5,14 +5,14 @@ import PublishPost from "./PublishPost";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [postContent, setPostContent] = useState("");
   const [isEditing, setIsEditing] = useState(true);
   const [isPublishing, setIsPublishing] = useState(false);
 
   useEffect(() => {
     function onBeforeClose(e: BeforeUnloadEvent) {
       // if nothing was typed, close with no confirmation
-      if (!title && !text) return;
+      if (!title && !postContent) return;
 
       // confirm to close with unsaved changes
       e.preventDefault();
@@ -23,13 +23,13 @@ export default function CreatePost() {
     window.addEventListener("beforeunload", onBeforeClose);
 
     return () => window.removeEventListener("beforeunload", onBeforeClose);
-  }, [text, title]);
+  }, [postContent, title]);
 
   if (isPublishing)
     return (
       <PublishPost
         title={title}
-        blogText={text}
+        postContent={postContent}
         onGoBack={() => setIsPublishing(false)}
         onTitleChange={setTitle}
       />
@@ -57,8 +57,8 @@ export default function CreatePost() {
           />
           <TextareaAutosize
             className="font-content-serif text-[21px] leading-[33.18px] outline-none resize-none"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
+            value={postContent}
+            onChange={(e) => setPostContent(e.target.value)}
             placeholder="Tell your story..."
             autoFocus
           />
@@ -66,7 +66,7 @@ export default function CreatePost() {
       ) : (
         <div className="prose prose-lg prose-img:w-full prose-img:m-auto prose-img:max-w-[600px] prose-pre:bg-[#282c34] prose-headings:font-sans font-source-serif-pro">
           <h1 className="font-bold text-3xl">{title}</h1>
-          <BlogMarkdown text={text} />
+          <BlogMarkdown text={postContent} />
         </div>
       )}
     </div>

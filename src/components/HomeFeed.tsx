@@ -1,3 +1,4 @@
+import { serverTimestamp } from "firebase/firestore";
 import HomeFeedPosts from "./HomeFeedPosts";
 import TrendingPosts from "./TrendingPosts";
 
@@ -9,9 +10,10 @@ function HomeFeed() {
           posts={[
             {
               title: "test",
-              author: { displayName: "barack obama", photoURL: "" },
-              date: new Date(),
-              id: "test",
+              postContent: "a",
+              authorUid: "123",
+              timestamp: serverTimestamp(),
+              thumbnail: ".aa",
             },
           ]}
         />
