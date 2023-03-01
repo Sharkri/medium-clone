@@ -38,6 +38,7 @@ export default function PublishPost({
       authorUid: user.uid,
       timestamp: serverTimestamp(),
       thumbnail: placeholderThumbnail,
+      likes: 0,
     });
 
     if (file && postRef) {
