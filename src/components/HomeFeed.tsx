@@ -9,7 +9,7 @@ function HomeFeed() {
           posts={[
             {
               title: "test",
-              author: { name: "barack obama", avatar: "" },
+              author: { displayName: "barack obama", photoURL: "" },
               date: new Date(),
               id: "test",
             },

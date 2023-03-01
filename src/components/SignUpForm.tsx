@@ -5,7 +5,7 @@ import { addUser, getAuthInstance } from "../firebase/firebase-app";
 import Input from "./helper/Input";
 import LoadingButton from "./helper/LoadingButton";
 import PasswordInput from "./helper/PasswordInput";
-import IError from "./interfaces/ErrorInterface";
+import IError from "../interfaces/ErrorInterface";
 import ModalContext from "./modal/ModalContext";
 
 export default function SignUpForm() {

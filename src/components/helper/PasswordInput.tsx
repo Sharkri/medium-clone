@@ -1,5 +1,5 @@
 import { useState } from "react";
-import IError from "../interfaces/ErrorInterface";
+import IError from "../../interfaces/ErrorInterface";
 import Input from "./Input";
 
 export default function PasswordInput({

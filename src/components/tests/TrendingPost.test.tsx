@@ -7,7 +7,7 @@ it("should render a trending post", () => {
     <TrendingPost
       post={{
         title: "title name",
-        author: { name: "barack obama", avatar: "obama.jpg" },
+        author: { displayName: "barack obama", photoURL: "obama.jpg" },
         date: new Date("1998-24-12"),
         id: "1234",
       }}

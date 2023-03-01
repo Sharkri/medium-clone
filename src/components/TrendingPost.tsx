@@ -1,11 +1,13 @@
-import Post from "./interfaces/PostInterface";
+import Post from "../interfaces/PostInterface";
 
 function TrendingPost({ post }: { post: Post }) {
+  const { title, author } = post;
+
   return (
     <div>
-      <p>{post.title}</p>
-      <p>{post.author.name}</p>
-      <img src={post.author.avatar} alt="user avatar" />
+      <p>{title}</p>
+      <p>{author.displayName}</p>
+      <img src={author.photoURL} alt="user avatar" />
     </div>
   );
 }
