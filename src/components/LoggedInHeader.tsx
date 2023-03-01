@@ -5,7 +5,7 @@ import User from "../interfaces/UserInterface";
 import LogoWithoutText from "./helper/LogoWithoutText";
 
 export default function LoggedInHeader({ user }: { user: User }) {
-  const defaultProfilePic = require("../assets/default-profile.png");
+  const defaultProfilePic = require("../assets/images/default-profile.png");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // event listener for when click outside of dropdown

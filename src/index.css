@@ -3,42 +3,42 @@
 @layer base {
   @font-face {
     font-family: gt-super;
-    src: url("./fonts/gt-super-400-normal.woff");
+    src: url("./assets/fonts/gt-super-400-normal.woff");
   }
 
   @font-face {
     font-family: sohne;
-    src: url("./fonts/sohne-400-normal.woff");
+    src: url("./assets/fonts/sohne-400-normal.woff");
   }
 
   @font-face {
     font-family: sohne-bold;
-    src: url("./fonts/sohne-700-normal.woff");
+    src: url("./assets/fonts/sohne-700-normal.woff");
   }
 
   @font-face {
     font-family: fell;
-    src: url("./fonts/fell-400-normal.woff");
+    src: url("./assets/fonts/fell-400-normal.woff");
   }
 
   @font-face {
     font-family: content-serif;
-    src: url("./fonts/content-serif.woff");
+    src: url("./assets/fonts/content-serif.woff");
   }
 
   @font-face {
     font-family: content-sans;
-    src: url("./fonts/content-sans.woff");
+    src: url("./assets/fonts/content-sans.woff");
   }
 
   @font-face {
     font-family: content-sans-bold;
-    src: url("./fonts/content-sans-bold.woff");
+    src: url("./assets/fonts/content-sans-bold.woff");
   }
 
   @font-face {
     font-family: source-serif-pro;
-    src: url("./fonts/source-serif-pro-400-normal.woff");
+    src: url("./assets/fonts/source-serif-pro-400-normal.woff");
   }
 
   body,
