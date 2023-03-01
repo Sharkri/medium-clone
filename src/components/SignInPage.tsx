@@ -14,7 +14,6 @@ export default function SignInPage() {
       <ButtonWithIcon
         icon="fa-brands fa-google"
         onClick={async () => {
-          await signInWithGoogle();
           const userCredential: UserCredential = await signInWithGoogle();
           // if is new user, add user to database
           if (isNewUser(userCredential)) await addUser(userCredential.user);
