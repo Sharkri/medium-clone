@@ -23,14 +23,8 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import Post from "../interfaces/PostInterface";
-const getAuthInstance = getAuth;
 
-// Initialize Firebase
-try {
-  initializeApp(firebaseConfig);
-} catch (error) {
-  console.error("Error initializing:", error);
-}
+const getAuthInstance = getAuth;
 
 async function signInWithGoogle() {
   // Sign in Firebase using popup auth and Google as the identity provider.
@@ -44,7 +38,7 @@ function isNewUser(user: UserCredential) {
 
 async function addUser(user: User) {
   try {
-    await addDoc(collection(getFirestore(), `users/${user.uid}/userData`), {
+    await addDoc(collection(getFirestore(), `users`), {
       uid: user.uid,
       displayName: user.displayName,
       email: user.email,
@@ -82,6 +76,9 @@ async function addPost(post: Post) {
 }
 
 const signOutUser = () => signOut(getAuthInstance());
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
 
 export {
   getAuthInstance,
