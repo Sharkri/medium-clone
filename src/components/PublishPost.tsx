@@ -7,16 +7,16 @@ export default function PublishPost({
   title,
   blogContents,
   onGoBack,
-  onTitleChange,
 }: {
   title: string;
   blogContents: string;
   onGoBack: MouseEventHandler;
-  onTitleChange: Function;
 }) {
   const { user } = useContext(UserContext);
   const [file, setFile] = useState<File>();
   const [previewImage, setPreviewImage] = useState("");
+  const [description, setDescription] = useState("");
+
   const placeholderThumbnail = require("../assets/images/placeholder-thumbnail.jpg");
 
   useEffect(() => {
@@ -34,6 +34,7 @@ export default function PublishPost({
 
     const postRef = await addPost({
       title,
+      description,
       blogContents,
       authorUid: user.uid,
       timestamp: serverTimestamp(),
@@ -91,10 +92,10 @@ export default function PublishPost({
 
           <input
             type="text"
-            value={title}
-            placeholder="Write a preview title"
+            value={description}
+            placeholder="Write a preview description"
             className="mt-5 text-black/80 tracking-[-.29px] font-content-sans-bold text-[21px] border-b-[1px] placeholder-[#b3b3b1] border-black/[.15] outline-none"
-            onChange={(e) => onTitleChange(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
 
@@ -107,11 +108,12 @@ export default function PublishPost({
           <div className="flex">
             <button
               type="button"
-              className="bg-[#1a8917] border-[1px] border-[#1a8917] rounded-full py-[5.5px] px-4 text-white transition-colors duration-100 hover:bg-[#0f730c] hover:border-[#0f730c]"
+              className="bg-[#1a8917] rounded-full py-[5.5px] px-4 text-white transition-colors duration-100 hover:bg-[#0f730c]"
               onClick={handlePublishPost}
             >
               Publish now
             </button>
+
             <button
               type="button"
               onClick={onGoBack}

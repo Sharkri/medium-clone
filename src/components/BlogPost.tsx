@@ -21,9 +21,6 @@ export default function BlogPost() {
         fetchedPost.authorUid
       )) as UserData;
 
-      fetchedPost.blogContents =
-        "# Heading 1\n## Heading 2\n### Heading 3\n#### Heading 4\n##### Heading 5\n###### Heading 6\nDefault Text";
-
       setPost(fetchedPost);
       setAuthor(fetchedAuthor);
     }
@@ -65,7 +62,14 @@ export default function BlogPost() {
           </header>
 
           <div className="prose max-sm:prose-p:text-[18px] max-sm:prose-h1:text-[20px] max-sm:prose-h2:text-[18px] max-w-full prose-img:mx-auto prose-pre:bg-[#282c34] font-content-sans prose-headings:font-sohne-bold">
-            <h1 className="!text-[32px] tracking-[-0.256px]">{post.title}</h1>
+            <div className="not-prose ">
+              <h1 className="text-[32px] tracking-[-0.256px] font-sohne-bold">
+                {post.title}
+              </h1>
+              <h2 className="text-[#757575] text-[22px] font-sans">
+                {post.description}
+              </h2>
+            </div>
             <img src={post.thumbnail} alt="" />
             <BlogMarkdown text={post.blogContents} />
           </div>

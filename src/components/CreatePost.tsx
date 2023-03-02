@@ -31,7 +31,6 @@ export default function CreatePost() {
         title={title}
         blogContents={blogContents}
         onGoBack={() => setIsPublishing(false)}
-        onTitleChange={setTitle}
       />
     );
 
