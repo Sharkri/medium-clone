@@ -20,5 +20,8 @@ export default async function generateUniqueUsername(email: string) {
 
   if (name === email) throw new Error("Invalid email");
 
+  // if original username is already unique
+  if (await isUniqueUsername(name)) return name;
+
   return getUniqueUsername(name);
 }

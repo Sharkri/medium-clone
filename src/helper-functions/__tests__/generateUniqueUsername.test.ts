@@ -15,6 +15,7 @@ it("should generate username with random 4 characters", async () => {
   // should reject first username and accept second username
   (isUniqueUsername as jest.Mock)
     .mockReturnValueOnce(Promise.resolve(false))
+    .mockReturnValueOnce(Promise.resolve(false))
     .mockReturnValueOnce(Promise.resolve(true));
 
   const result = await generateUniqueUsername("john@gmail.com");
@@ -25,6 +26,14 @@ it("should generate username with random 4 characters", async () => {
     4,
     expect.stringMatching(/^[a-z0-9]*$/)
   );
+});
+
+it("should give original name if username is already unique", async () => {
+  (isUniqueUsername as jest.Mock).mockReturnValueOnce(Promise.resolve(true));
+
+  const result = await generateUniqueUsername("john@gmail.com");
+
+  expect(result).toBe("john");
 });
 
 it("should throw error for invalid email", async () => {
