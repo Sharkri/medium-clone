@@ -2,6 +2,10 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
+    screens: {
+      lg: "903.98px",
+    },
+
     extend: {
       colors: {
         yellow: "#ffc017",
@@ -22,6 +26,13 @@ module.exports = {
         ],
         "sohne-bold": [
           "sohne-bold",
+          "Helvetica Neue",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
+        "sohne-semibold": [
+          "sohne-semibold",
           "Helvetica Neue",
           "Helvetica",
           "Arial",

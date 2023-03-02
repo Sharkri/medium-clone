@@ -5,12 +5,12 @@ import UserContext from "../UserContext";
 
 export default function PublishPost({
   title,
-  postContent,
+  blogContents,
   onGoBack,
   onTitleChange,
 }: {
   title: string;
-  postContent: string;
+  blogContents: string;
   onGoBack: MouseEventHandler;
   onTitleChange: Function;
 }) {
@@ -34,7 +34,7 @@ export default function PublishPost({
 
     const postRef = await addPost({
       title,
-      postContent,
+      blogContents,
       authorUid: user.uid,
       timestamp: serverTimestamp(),
       thumbnail: placeholderThumbnail,

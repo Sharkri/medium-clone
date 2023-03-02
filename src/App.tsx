@@ -3,7 +3,6 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Home from "./components/Home";
 import { useAuthState } from "react-firebase-hooks/auth";
 import UserContext from "./UserContext";
-import User from "./interfaces/UserInterface";
 import { getAuthInstance } from "./firebase/firebase-app";
 import LoggedInHomepage from "./components/LoggedInHomepage";
 import Header from "./components/Header";
@@ -14,12 +13,14 @@ import LoggedInHeader from "./components/LoggedInHeader";
 import CreatePost from "./components/CreatePost";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import { FirebaseError } from "firebase/app";
+import BlogPost from "./components/BlogPost";
+import { User } from "firebase/auth";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
 
   const [user, loading, error] = [
-    authState[0] as User,
+    authState[0] as User | null,
     authState[1],
     authState[2] as FirebaseError,
   ];
@@ -55,6 +56,8 @@ function App() {
               }
               path="/new-story"
             />
+
+            <Route element={<BlogPost />} path=":username/posts/:title" />
           </Routes>
         </UserContext.Provider>
       </ModalContext.Provider>

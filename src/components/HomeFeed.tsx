@@ -10,7 +10,7 @@ function HomeFeed() {
           posts={[
             {
               title: "test",
-              postContent: "a",
+              blogContents: "a",
               authorUid: "123",
               timestamp: serverTimestamp(),
               thumbnail: ".aa",

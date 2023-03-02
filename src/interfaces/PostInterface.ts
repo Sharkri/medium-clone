@@ -1,5 +1,3 @@
-import { FieldValue } from "firebase/firestore";
-
 interface Comment {
   likes: number;
   text: string;
@@ -9,10 +7,10 @@ interface Comment {
 
 export default interface Post {
   title: string;
-  postContent: string;
+  blogContents: string;
   thumbnail: string;
   authorUid: string;
-  timestamp: FieldValue;
+  timestamp: any;
   likes: number;
   comments?: Comment[];
 }

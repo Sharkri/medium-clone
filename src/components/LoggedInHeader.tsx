@@ -1,11 +1,11 @@
+import { User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { signOutUser } from "../firebase/firebase-app";
-import User from "../interfaces/UserInterface";
 import LogoWithoutText from "./helper/LogoWithoutText";
+import ProfilePicture from "./helper/ProfilePicture";
 
 export default function LoggedInHeader({ user }: { user: User }) {
-  const defaultProfilePic = require("../assets/images/default-profile.png");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // event listener for when click outside of dropdown
@@ -24,7 +24,7 @@ export default function LoggedInHeader({ user }: { user: User }) {
   }, []);
 
   return (
-    <header className="px-6 h-[57px] border-b-[1px] border-b-subtle-white flex items-center">
+    <header className="bg-white px-6 py-3 border-b-2 border-b-subtle-white flex items-center">
       <div className="grow flex">
         <Link to="/">
           <LogoWithoutText />
@@ -56,13 +56,9 @@ export default function LoggedInHeader({ user }: { user: User }) {
               setIsDropdownOpen(!isDropdownOpen);
             }}
           >
-            <img
-              src={user.photoURL || defaultProfilePic}
-              alt={user.displayName}
-              referrerPolicy="no-referrer"
-              width="31"
-              height="31"
-              className="rounded-full"
+            <ProfilePicture
+              className="rounded-full h-[31px] w-[31px]"
+              src={user.photoURL}
             />
             <i className="fa-solid fa-chevron-down text-[8.7px] thin-icon ml-2" />
           </button>

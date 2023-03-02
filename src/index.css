@@ -17,6 +17,11 @@
   }
 
   @font-face {
+    font-family: sohne-semibold;
+    src: url("./assets/fonts/sohne-500-normal.woff");
+  }
+
+  @font-face {
     font-family: fell;
     src: url("./assets/fonts/fell-400-normal.woff");
   }

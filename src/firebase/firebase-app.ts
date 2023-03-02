@@ -13,8 +13,6 @@ import {
   getFirestore,
   collection,
   addDoc,
-  doc,
-  getDoc,
   query,
   where,
   limit,
@@ -81,11 +79,26 @@ async function signInWithGoogle() {
   if (isNewUser(userCredential)) await addUser(userCredential.user);
 }
 
-async function getDocData(path: string) {
-  const reference = doc(getFirestore(), path);
-  const docInfo = await getDoc(reference);
-  return docInfo.data();
+async function getDoc(
+  collectionToSearch: string,
+  field: string,
+  equalTo: string
+) {
+  const docs = await getDocs(
+    query(
+      getCollectionRef(collectionToSearch),
+      where(field, "==", equalTo),
+      limit(1)
+    )
+  );
+
+  if (docs.empty) return null;
+
+  return docs.docs[0].data();
 }
+
+const getPostByTitle = async (title: string) => getDoc("posts", "title", title);
+const getUserById = async (uid: string) => getDoc("users", "uid", uid);
 
 async function getImageUrl(file: File, filePath: string) {
   try {
@@ -119,7 +132,8 @@ export {
   signOutUser,
   addUser,
   addPost,
-  getDocData,
   getImageUrl,
   isUniqueUsername,
+  getPostByTitle,
+  getUserById,
 };
