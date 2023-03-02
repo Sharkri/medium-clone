@@ -3,6 +3,7 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     screens: {
+      sm: "551.98px",
       lg: "903.98px",
     },
 
@@ -12,6 +13,25 @@ module.exports = {
         lightblack: "rgb(25, 25, 25)",
         lighterblack: "rgb(41, 41, 41)",
         "subtle-white": "rgb(242, 242, 242)",
+      },
+
+      typography: {
+        DEFAULT: {
+          css: {
+            h1: {
+              fontSize: "22px",
+            },
+            h2: {
+              fontSize: "20px",
+            },
+            h3: {
+              fontSize: "18px",
+            },
+            p: {
+              fontSize: "20px",
+            },
+          },
+        },
       },
 
       fontFamily: {
