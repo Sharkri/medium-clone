@@ -5,6 +5,7 @@ import Post from "../interfaces/PostInterface";
 import UserData from "../interfaces/UserDataInterface";
 import BlogMarkdown from "./BlogMarkdown";
 import ProfilePicture from "./helper/ProfilePicture";
+import { format, isThisYear } from "date-fns";
 
 export default function BlogPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -29,6 +30,12 @@ export default function BlogPost() {
 
   if (post == null || author == null) return null;
 
+  const date = post.timestamp.toDate();
+  const formattedDate = format(
+    date,
+    `${isThisYear(date) ? "MMM d" : "MMM d, yyyy"}`
+  );
+
   return (
     <div className="flex">
       <article className="grow m-6">
@@ -46,10 +53,7 @@ export default function BlogPost() {
             </Link>
 
             <div className="flex text-sm text-[#757575]">
-              <span>
-                {/* {post.timestamp.toDate().toString()} */}
-                Dec 31, 2022
-              </span>
+              <span>{formattedDate}</span>
 
               <div className="px-2">·</div>
 
