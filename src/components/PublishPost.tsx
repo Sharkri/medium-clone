@@ -17,8 +17,6 @@ export default function PublishPost({
   const [previewImage, setPreviewImage] = useState("");
   const [description, setDescription] = useState("");
 
-  const placeholderThumbnail = require("../assets/images/placeholder-thumbnail.jpg");
-
   useEffect(() => {
     if (!file) return;
     // create the preview
@@ -38,7 +36,7 @@ export default function PublishPost({
       blogContents,
       authorUid: user.uid,
       timestamp: serverTimestamp(),
-      thumbnail: placeholderThumbnail,
+      thumbnail: "",
       likes: 0,
     });
 
