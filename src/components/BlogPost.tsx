@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getPostByTitle, getUserById } from "../firebase/firebase-app";
+import { getPostById, getUserById } from "../firebase/firebase-app";
 import Post from "../interfaces/PostInterface";
 import UserData from "../interfaces/UserDataInterface";
 import BlogMarkdown from "./BlogMarkdown";
@@ -12,11 +12,13 @@ export default function BlogPost() {
   const [author, setAuthor] = useState<UserData | null>(null);
   const { title } = useParams();
 
+  const postId = title?.split("-")[1];
+
   useEffect(() => {
     async function fetchInfo() {
-      if (!title) return;
+      if (!postId) return;
 
-      const fetchedPost = (await getPostByTitle(title)) as Post;
+      const fetchedPost = (await getPostById(postId)) as Post;
       const fetchedAuthor = (await getUserById(
         fetchedPost.authorUid
       )) as UserData;
@@ -26,7 +28,7 @@ export default function BlogPost() {
     }
 
     fetchInfo();
-  }, [title]);
+  }, [postId]);
 
   if (post == null || author == null) return null;
 

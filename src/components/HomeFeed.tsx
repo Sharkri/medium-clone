@@ -16,6 +16,7 @@ function HomeFeed() {
               timestamp: serverTimestamp(),
               thumbnail: ".aa",
               likes: 0,
+              id: ".",
             },
           ]}
         />

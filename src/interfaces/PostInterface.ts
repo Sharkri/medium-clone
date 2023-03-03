@@ -14,4 +14,5 @@ export default interface Post {
   timestamp: any;
   likes: number;
   comments?: Comment[];
+  id: string;
 }

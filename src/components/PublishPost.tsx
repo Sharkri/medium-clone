@@ -1,6 +1,7 @@
 import { serverTimestamp, updateDoc } from "firebase/firestore";
 import { MouseEventHandler, useContext, useEffect, useState } from "react";
 import { addPost, getImageUrl } from "../firebase/firebase-app";
+import getRandomId from "../helper-functions/getRandomId";
 import UserContext from "../UserContext";
 
 export default function PublishPost({
@@ -38,6 +39,7 @@ export default function PublishPost({
       timestamp: serverTimestamp(),
       thumbnail: "",
       likes: 0,
+      id: getRandomId(12),
     });
 
     if (file && postRef) {

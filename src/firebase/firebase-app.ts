@@ -97,7 +97,7 @@ async function getDoc(
   return docs.docs[0].data();
 }
 
-const getPostByTitle = async (title: string) => getDoc("posts", "title", title);
+const getPostById = async (id: string) => getDoc("posts", "id", id);
 const getUserById = async (uid: string) => getDoc("users", "uid", uid);
 
 async function getImageUrl(file: File, filePath: string) {
@@ -134,6 +134,6 @@ export {
   addPost,
   getImageUrl,
   isUniqueUsername,
-  getPostByTitle,
+  getPostById,
   getUserById,
 };

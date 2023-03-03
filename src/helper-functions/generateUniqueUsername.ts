@@ -1,11 +1,7 @@
 import { isUniqueUsername } from "../firebase/firebase-app";
 import getRandomId from "./getRandomId";
-
-// [a-z0-9]
-const CHAR_SET = "abcdefghijklmnopqrstuvwxyz0123456789";
-
 async function getUniqueUsername(name: string): Promise<string> {
-  const id = getRandomId(4, CHAR_SET);
+  const id = getRandomId(4);
   const username = `${name}_${id}`;
 
   const isUnique = await isUniqueUsername(username);

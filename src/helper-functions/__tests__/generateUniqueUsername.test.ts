@@ -22,10 +22,7 @@ it("should generate username with random 4 characters", async () => {
 
   expect(result).toBe("john_amog");
 
-  expect(getRandomId).toHaveBeenCalledWith(
-    4,
-    expect.stringMatching(/^[a-z0-9]*$/)
-  );
+  expect(getRandomId).toHaveBeenCalledWith(4);
 });
 
 it("should give original name if username is already unique", async () => {
