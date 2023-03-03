@@ -15,7 +15,7 @@ module.exports = {
         "subtle-white": "rgb(242, 242, 242)",
         green: "#1a8917",
         "dark-green": "#0f730c",
-        gray: "#757575",
+        grey: "#757575",
       },
 
       typography: {

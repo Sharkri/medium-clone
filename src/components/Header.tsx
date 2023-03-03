@@ -31,7 +31,7 @@ export default function Header({ user }: { user: User | null }) {
 
           <OpenModalButton
             element={<SignInPage />}
-            className="text-gray hover:text-lightblack text-[15px] ml-4"
+            className="text-grey hover:text-lightblack text-[15px] ml-4"
           >
             Sign In
           </OpenModalButton>

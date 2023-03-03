@@ -40,7 +40,7 @@ export default function PostPreview({ post }: { post: Post }) {
             </p>
           </Link>
           <div className="mx-1 text-sm">·</div>
-          <span className="text-gray text-sm whitespace-nowrap">
+          <span className="text-grey text-sm whitespace-nowrap">
             {formatDate(post.timestamp.toDate())}
           </span>
         </div>
