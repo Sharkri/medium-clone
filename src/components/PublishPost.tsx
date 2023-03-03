@@ -50,7 +50,7 @@ export default function PublishPost({
   }
 
   return (
-    <div className="grow grid place-items-center font-content-sans">
+    <div className="h-[calc(100vh-57px)] grid place-items-center font-content-sans">
       <div className="w-full max-w-[1040px] flex flex-wrap">
         <div className="grow p-10 flex flex-col gap-2">
           <b className="text-[19px] text-center text-black/75 font-content-sans-bold">

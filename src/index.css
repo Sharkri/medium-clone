@@ -46,17 +46,6 @@
     src: url("./assets/fonts/source-serif-pro-400-normal.woff");
   }
 
-  body,
-  html,
-  #root {
-    height: 100%;
-  }
-
-  #root {
-    display: flex;
-    flex-direction: column;
-  }
-
   /* Apply color to google icon */
   .fa-google {
     background: conic-gradient(
