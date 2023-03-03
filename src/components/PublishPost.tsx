@@ -59,7 +59,11 @@ export default function PublishPost({
           <div className="flex flex-col gap-4 items-center justify-center">
             <div className="w-[112px] h-[112px] bg-zinc-50 flex items-center justify-center">
               {previewImage ? (
-                <img src={previewImage} alt={title} className="w-full h-full" />
+                <img
+                  src={previewImage}
+                  alt={title}
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 <span className="text-center text-black/50 text-[13.3px] px-2">
                   Thumbnail (112x112px)

@@ -60,7 +60,7 @@ export default function PostPreview({ post }: { post: Post }) {
             <img
               src={post.thumbnail}
               alt={post.title}
-              className="w-[112px] h-[112px]"
+              className="w-[112px] h-[112px] object-cover"
             />
           </Link>
         )}
