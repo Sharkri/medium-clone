@@ -108,7 +108,7 @@ export default function PublishPost({
           <div className="flex">
             <button
               type="button"
-              className="bg-[#1a8917] rounded-full py-[5.5px] px-4 text-white transition-colors duration-100 hover:bg-[#0f730c]"
+              className="bg-green hover:bg-dark-green rounded-full py-[5.5px] px-4 text-white transition-colors duration-100"
               onClick={handlePublishPost}
             >
               Publish now

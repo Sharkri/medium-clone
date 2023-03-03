@@ -55,7 +55,7 @@ export default function BlogPost() {
                 <h2 className="text-lighterblack mb-1">{author.displayName}</h2>
               </Link>
 
-              <div className="flex text-sm text-[#757575]">
+              <div className="flex text-sm text-gray">
                 <span>{formattedDate}</span>
                 <div className="px-2">·</div>
                 <span>3 min read</span>
@@ -68,7 +68,7 @@ export default function BlogPost() {
               <h1 className="text-[32px] tracking-[-0.256px] font-sohne-bold">
                 {post.title}
               </h1>
-              <h2 className="text-[#757575] text-[22px] font-sans">
+              <h2 className="text-gray text-[22px] font-sans">
                 {post.description}
               </h2>
             </div>
@@ -97,11 +97,11 @@ export default function BlogPost() {
 
           <Link
             to={`/${author.username}/followers`}
-            className="text-[#757575] hover:text-lightblack mt-1 inline-block"
+            className="text-gray hover:text-lightblack mt-1 inline-block"
           >
             <span>69420 followers</span>
           </Link>
-          <p className="text-[#757575] text-sm mt-3">
+          <p className="text-gray text-sm mt-3">
             CTO & Co-founder @Kravve | Talks about #tech, #web3, #crypto |
             Writer for Level Up Coding & Geek Culture
           </p>
