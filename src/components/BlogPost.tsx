@@ -12,7 +12,7 @@ export default function BlogPost() {
   const [author, setAuthor] = useState<UserData | null>(null);
   const { title } = useParams();
 
-  const postId = title?.split("-")[1];
+  const postId = title?.split("-").pop();
 
   useEffect(() => {
     async function fetchInfo() {

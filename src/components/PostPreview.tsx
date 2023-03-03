@@ -15,6 +15,14 @@ export default function PostPreview({ post }: { post: Post }) {
 
   if (!author) return null;
 
+  // lowercase title + trim extra whitespace + remove non-alphanumeric + convert spaces to dash
+  const linkSafeTitle = post.title
+    .toLowerCase()
+    .replace(/[\W_]+/g, "")
+    .replace(/ /g, "-");
+
+  const postLink = `/${author.username}/posts/${linkSafeTitle}-${post.id}`;
+
   return (
     <article className="max-w-[680px] mx-6">
       <div className="flex gap-2">
@@ -38,22 +46,23 @@ export default function PostPreview({ post }: { post: Post }) {
         </div>
       </div>
       <div className="flex mt-3">
-        <div className="text-lighterblack">
+        <Link to={postLink} className="text-lighterblack">
           <h2 className="pb-2 font-sohne-bold  text-[22px] leading-7 line-clamp-3 max-sm:line-clamp-2 max-sm:text-base">
             {post.title}
           </h2>
           <p className="line-clamp-3 font-source-serif-pro max-sm:hidden">
             {post.description}
           </p>
-        </div>
+        </Link>
+
         {post.thumbnail && (
-          <div className="ml-[60px] min-w-[112px]">
+          <Link to={postLink} className="ml-[60px] min-w-[112px]">
             <img
               src={post.thumbnail}
               alt={post.title}
               className="w-[112px] h-[112px]"
             />
-          </div>
+          </Link>
         )}
       </div>
     </article>
