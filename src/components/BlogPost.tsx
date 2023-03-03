@@ -6,6 +6,7 @@ import UserData from "../interfaces/UserDataInterface";
 import BlogMarkdown from "./BlogMarkdown";
 import ProfilePicture from "./helper/ProfilePicture";
 import formatDate from "../helper-functions/formatDate";
+import Sidebar from "./Sidebar";
 
 export default function BlogPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -74,7 +75,7 @@ export default function BlogPost() {
         </main>
       </article>
 
-      <aside className="h-screen sticky top-0 max-w-[368px] grow flex justify-center pl-8 pr-6 border-l-[1px] border-subtle-white max-lg:hidden">
+      <Sidebar>
         <div className="mt-10">
           <Link to={`/${author.username}`}>
             <ProfilePicture
@@ -104,7 +105,7 @@ export default function BlogPost() {
             Follow
           </button>
         </div>
-      </aside>
+      </Sidebar>
     </div>
   );
 }
