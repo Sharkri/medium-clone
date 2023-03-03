@@ -10,7 +10,7 @@ import SignInPage from "./SignInPage";
 
 export default function Header({ user }: { user: User | null }) {
   return (
-    <header className="sticky top-0 z-10 min-h-[57px] bg-white px-6 border-b-2 border-b-subtle-white flex items-center">
+    <header className="sticky top-0 z-10 min-h-[57px] bg-white px-6 border-b border-b-subtle-white flex items-center">
       <div className="grow flex">
         <Link to="/">
           <LogoWithoutText />
