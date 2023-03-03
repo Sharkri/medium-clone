@@ -16,13 +16,15 @@ export default function LoggedInHomepage() {
   if (posts == null) return null;
 
   return (
-    <div className="flex justify-evenly">
-      <main className="pt-[50px] max-w-[728px] flex flex-col gap-6">
-        {posts.map((post) => (
-          <PostPreview post={post} />
-        ))}
-      </main>
-      <Sidebar>siderbar!~!! !</Sidebar>
+    <div className="max-w-[1336px] m-auto">
+      <div className="flex justify-evenly">
+        <main className="pt-[50px] max-w-[728px] flex flex-col gap-6">
+          {posts.map((post) => (
+            <PostPreview post={post} />
+          ))}
+        </main>
+        <Sidebar>siderbar!~!! !</Sidebar>
+      </div>
     </div>
   );
 }
