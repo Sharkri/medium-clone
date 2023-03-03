@@ -18,7 +18,8 @@ export default function PostPreview({ post }: { post: Post }) {
   // lowercase title + trim extra whitespace + remove non-alphanumeric + convert spaces to dash
   const linkSafeTitle = post.title
     .toLowerCase()
-    .replace(/[\W_]+/g, "")
+    .replace(/[\W_]+/g, " ")
+    .trim()
     .replace(/ /g, "-");
 
   const postLink = `/${author.username}/posts/${linkSafeTitle}-${post.id}`;
