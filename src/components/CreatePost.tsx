@@ -47,7 +47,7 @@ export default function CreatePost() {
       </div>
 
       {isEditing ? (
-        <div className="grow flex flex-col w-full max-w-[740px] gap-3 p-5">
+        <div className="grow flex flex-col w-full max-w-[740px] gap-3">
           <TextareaAutosize
             placeholder="Title"
             value={title}

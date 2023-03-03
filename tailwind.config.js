@@ -32,6 +32,7 @@ module.exports = {
             },
             p: {
               fontSize: "20px",
+              overflowWrap: "anywhere",
             },
           },
         },

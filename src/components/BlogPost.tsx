@@ -34,9 +34,9 @@ export default function BlogPost() {
   if (post == null || author == null) return null;
 
   return (
-    <div className="flex">
-      <article className="grow m-6">
-        <main className="max-w-[728px] m-auto">
+    <div className="flex max-lg:block max-w-[1336px] mx-auto">
+      <article className="mx-6 mb-16">
+        <main className="mx-auto max-w-[680px]">
           <header className="mb-8 mt-4 flex gap-4">
             <Link to={`/${author.username}`}>
               <ProfilePicture
@@ -44,12 +44,10 @@ export default function BlogPost() {
                 src={author.photoURL}
               />
             </Link>
-
             <div>
               <Link to={`/${author.username}`}>
                 <h2 className="text-lighterblack mb-1">{author.displayName}</h2>
               </Link>
-
               <div className="flex text-sm text-grey">
                 <span>{formatDate(post.timestamp.toDate())}</span>
                 <div className="px-2">·</div>
@@ -57,8 +55,7 @@ export default function BlogPost() {
               </div>
             </div>
           </header>
-
-          <div className="prose max-sm:prose-p:text-[18px] max-sm:prose-h1:text-[20px] max-sm:prose-h2:text-[18px] max-w-full prose-img:mx-auto prose-img:max-h-[696px] prose-pre:bg-[#282c34] font-content-sans prose-headings:font-sohne-bold">
+          <div className="prose max-sm:prose-p:text-[18px] max-sm:prose-h1:text-[20px] max-sm:prose-h2:text-[18px] max-w-full prose-img:mx-auto prose-img:max-h-[696px] prose-pre:bg-[#282c34] font-source-serif-pro prose-headings:font-sohne-bold">
             <div className="not-prose">
               <h1 className="text-[32px] tracking-[-0.256px] font-sohne-bold">
                 {post.title}
@@ -67,9 +64,7 @@ export default function BlogPost() {
                 {post.description}
               </h2>
             </div>
-
             {post.thumbnail && <img src={post.thumbnail} alt="" />}
-
             <BlogMarkdown text={post.blogContents} />
           </div>
         </main>
