@@ -121,6 +121,13 @@ async function addPost(post: Post) {
   }
 }
 
+// refactor later to only get 4-12 posts and infinite scrolling
+async function getAllPosts() {
+  const { docs } = await getDocs(collection(getFirestore(), "posts"));
+
+  return docs.map((document) => document.data());
+}
+
 const signOutUser = () => signOut(getAuthInstance());
 
 // Initialize Firebase
@@ -136,4 +143,5 @@ export {
   isUniqueUsername,
   getPostById,
   getUserById,
+  getAllPosts,
 };
