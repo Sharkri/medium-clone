@@ -66,7 +66,7 @@ export default function LoggedInHeader({ user }: { user: User }) {
           {isDropdownOpen && (
             <div
               id="dropdown-menu"
-              className="absolute bg-white right-0 w-[264px] shadow-md border-[1px] border-neutral-200 rounded-[4px] overflow-y-auto m-h-[1167px]"
+              className="absolute z-10 bg-white right-0 w-[264px] shadow-md border-[1px] border-neutral-200 rounded-[4px] overflow-y-auto m-h-[1167px]"
             >
               <div className="flex flex-col py-4 border-b-[1px] border-b-neutral-200">
                 <Link
