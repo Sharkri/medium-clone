@@ -8,7 +8,7 @@ import SignInPage from "./SignInPage";
 function Home() {
   return (
     <>
-      <header className="py-[25px] px-[18px] flex justify-center border-b-[1px] border-lighterblack bg-yellow">
+      <header className="py-[25px] px-[18px] flex justify-center border-b border-lighterblack bg-yellow">
         <div className="flex justify-between max-w-[1192px] grow">
           <Link to="/" aria-label="logo">
             <Logo />

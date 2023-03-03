@@ -98,7 +98,7 @@ export default function PublishPost({
             type="text"
             value={description}
             placeholder="Write a preview description"
-            className="mt-5 text-black/80 tracking-[-.29px] font-content-sans-bold text-[21px] border-b-[1px] placeholder-[#b3b3b1] border-black/[.15] outline-none"
+            className="mt-5 text-black/80 tracking-[-.29px] font-content-sans-bold text-[21px] border-b placeholder-[#b3b3b1] border-black/[.15] outline-none"
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>

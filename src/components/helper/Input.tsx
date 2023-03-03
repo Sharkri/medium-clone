@@ -44,7 +44,7 @@ export default function Input({
           type={type}
           autoComplete={autoComplete}
           required={required}
-          className={`pb-[3px] text-lighterblack outline-none border-b-[1px] border-neutral-400 w-[270px] text-center transition-colors duration-300 hover:border-neutral-600 focus:border-lighterblack ${
+          className={`pb-[3px] text-lighterblack outline-none border-b border-neutral-400 w-[270px] text-center transition-colors duration-300 hover:border-neutral-600 focus:border-lighterblack ${
             error ? "animate-shake !border-red-500" : ""
           }`}
         />

@@ -101,7 +101,7 @@ export default function BlogPost() {
             Writer for Level Up Coding & Geek Culture
           </p>
 
-          <button className="mt-6 bg-blue-500 border-[1px] border-blue-500 text-sm text-white rounded-full px-5 py-2">
+          <button className="mt-6 bg-blue-500 border border-blue-500 text-sm text-white rounded-full px-5 py-2">
             Follow
           </button>
         </div>

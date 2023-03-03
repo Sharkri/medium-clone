@@ -14,7 +14,7 @@ function Hero() {
 
         <OpenModalButton
           element={<SignUpPage />}
-          className="text-[20px] bg-lightblack border-[1px] border-lightblack text-white rounded-full transition duration-[0.25s] w-[213px] leading-6 pt-[7px] px-[20px] pb-[9px] hover:bg-black hover:border-black"
+          className="text-[20px] bg-lightblack border border-lightblack text-white rounded-full transition duration-[0.25s] w-[213px] leading-6 pt-[7px] px-[20px] pb-[9px] hover:bg-black hover:border-black"
         >
           Start reading
         </OpenModalButton>
