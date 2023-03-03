@@ -77,18 +77,16 @@ export default function BlogPost() {
 
       <Sidebar>
         <div className="mt-10">
-          <Link to={`/${author.username}`}>
+          <Link to={`/${author.username}`} className="block w-[88px] h-[88px]">
             <ProfilePicture
-              className="rounded-full w-[88px] h-[88px]"
+              className="rounded-full w-full h-full"
               src={author.photoURL}
             />
           </Link>
 
-          <Link to={`/${author.username}`}>
-            <h2 className="text-lighterblack font-sohne-semibold mt-4">
-              {author.displayName}
-            </h2>
-          </Link>
+          <h2 className="text-lighterblack font-sohne-semibold mt-4">
+            <Link to={`/${author.username}`}>{author.displayName} </Link>
+          </h2>
 
           <Link
             to={`/${author.username}/followers`}
