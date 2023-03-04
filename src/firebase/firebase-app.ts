@@ -62,6 +62,7 @@ async function addUser(user: User) {
       lowercaseUsername: username?.toLowerCase(),
       photoURL: user.photoURL,
       email: user.email,
+      followers: [],
     });
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
@@ -99,6 +100,7 @@ async function getDoc(
 
 const getPostById = async (id: string) => getDoc("posts", "id", id);
 const getUserById = async (uid: string) => getDoc("users", "uid", uid);
+const getUserByName = async (name: string) => getDoc("users", "username", name);
 
 async function getImageUrl(file: File, filePath: string) {
   try {
@@ -128,6 +130,14 @@ async function getAllPosts() {
   return docs.map((document) => document.data());
 }
 
+async function getAllPostsByUser(uid: string) {
+  const { docs } = await getDocs(
+    query(getCollectionRef("posts"), where("authorUid", "==", uid))
+  );
+
+  return docs.map((document) => document.data());
+}
+
 const signOutUser = () => signOut(getAuthInstance());
 
 // Initialize Firebase
@@ -144,4 +154,6 @@ export {
   getPostById,
   getUserById,
   getAllPosts,
+  getUserByName,
+  getAllPostsByUser,
 };

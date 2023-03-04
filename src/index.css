@@ -73,6 +73,10 @@
   .thinnest-icon:before {
     -webkit-text-stroke: 2px white;
   }
+
+  .break-word {
+    word-break: break-word;
+  }
 }
 
 @tailwind components;

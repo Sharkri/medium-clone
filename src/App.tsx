@@ -14,6 +14,7 @@ import AuthenticatedRoute from "./AuthenticatedRoute";
 import { FirebaseError } from "firebase/app";
 import BlogPost from "./components/BlogPost";
 import { User } from "firebase/auth";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -67,6 +68,15 @@ function App() {
           />
 
           <Route element={<BlogPost />} path=":username/posts/:title" />
+
+          <Route
+            element={<ProfilePage page={"profile"} />}
+            path="u/:username"
+          />
+          <Route
+            element={<ProfilePage page={"about"} />}
+            path="u/:username/about"
+          />
         </Routes>
       </UserContext.Provider>
     </ModalContext.Provider>

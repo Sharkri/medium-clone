@@ -6,7 +6,13 @@ import Post from "../interfaces/PostInterface";
 import UserData from "../interfaces/UserDataInterface";
 import ProfilePicture from "./helper/ProfilePicture";
 
-export default function PostPreview({ post }: { post: Post }) {
+export default function PostPreview({
+  post,
+  omitProfile,
+}: {
+  post: Post;
+  omitProfile?: Boolean;
+}) {
   const [author, setAuthor] = useState<UserData | null>(null);
 
   useEffect(() => {
@@ -27,20 +33,26 @@ export default function PostPreview({ post }: { post: Post }) {
   return (
     <article className="max-w-[680px] mx-6 border-b border-neutral-200">
       <div className="flex gap-2">
-        <Link to={`/${author.username}`}>
-          <ProfilePicture
-            src={author.photoURL}
-            className="min-w-[24px] h-6 rounded-full"
-          />
-        </Link>
+        {!omitProfile && (
+          <Link to={`/u/${author.username}`}>
+            <ProfilePicture
+              src={author.photoURL}
+              className="min-w-[24px] h-6 rounded-full"
+            />
+          </Link>
+        )}
 
         <div className="flex">
-          <Link to={`/${author.username}`}>
-            <p className="line-clamp-1 break-all text-sm">
-              {author.displayName}
-            </p>
-          </Link>
-          <div className="mx-1 text-sm">·</div>
+          {!omitProfile && (
+            <>
+              <Link to={`/u/${author.username}`}>
+                <p className="line-clamp-1 break-all text-sm">
+                  {author.displayName}
+                </p>
+              </Link>
+              <div className="mx-1 text-sm">·</div>
+            </>
+          )}
           <span className="text-grey text-sm whitespace-nowrap">
             {formatDate(post.timestamp.toDate())}
           </span>
