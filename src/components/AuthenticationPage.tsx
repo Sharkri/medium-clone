@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import CloseModalButton from "./modal/CloseModalButton";
 import OpenModalButton from "./OpenModalButton";
 import SignInPage from "./SignInPage";
 import SignUpPage from "./SignUpPage";
@@ -11,7 +12,9 @@ export default function AuthenticationPage({
   isSignUpPage: boolean;
 }) {
   return (
-    <div className="grid place-items-center h-full">
+    <div className="grid place-items-center overflow-auto rounded bg-white py-10 px-14 shadow-lg relative text-center max-w-[678px] max-h-[695px] w-full h-full animate-fade-scale-in">
+      <CloseModalButton />
+
       <h2 className="font-serif tracking-[-0.03em] text-[28px]">
         {isSignUpPage ? "Join Medium." : "Welcome back."}
       </h2>
