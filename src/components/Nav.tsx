@@ -10,8 +10,14 @@ function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
   // event listener for when click outside of dropdown
   useEffect(() => {
     function handleClick(e: MouseEvent) {
-      // if clicked outside of dropdown menu, close it.
-      if (!dropdownRef?.current?.contains(e.target as HTMLElement)) {
+      const target = e.target as HTMLElement;
+
+      if (
+        !dropdownRef?.current?.contains(target) ||
+        target.closest("a") ||
+        target.closest("button")
+      ) {
+        // if clicked outside of dropdown menu, close it.
         setIsDropdownOpen(false);
       }
     }
