@@ -13,6 +13,7 @@ export default interface Post {
   authorUid: string;
   timestamp: any;
   likes: number;
+  readingTimeInMinutes: number;
   comments?: Comment[];
   id: string;
 }

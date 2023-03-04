@@ -76,7 +76,9 @@ export default function PostPreview({ post }: { post: Post }) {
         <div className="flex items-center py-8 max-sm:py-4">
           <div className="grow">
             <Link to={postLink}>
-              <span className="text-grey text-sm">1 min read</span>
+              <span className="text-grey text-sm">
+                {post.readingTimeInMinutes} min read
+              </span>
             </Link>
           </div>
           <button className="p-2 flex">

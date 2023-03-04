@@ -1,6 +1,7 @@
 import { serverTimestamp, updateDoc } from "firebase/firestore";
 import { MouseEventHandler, useContext, useEffect, useState } from "react";
 import { addPost, getImageUrl } from "../firebase/firebase-app";
+import calculateReadingTime from "../helper-functions/calculateReadingTime";
 import getRandomId from "../helper-functions/getRandomId";
 import UserContext from "../UserContext";
 
@@ -37,6 +38,10 @@ export default function PublishPost({
       blogContents,
       authorUid: user.uid,
       timestamp: serverTimestamp(),
+      readingTimeInMinutes: calculateReadingTime(
+        // word count
+        (title + description + blogContents).length
+      ),
       thumbnail: "",
       likes: 0,
       id: getRandomId(12),

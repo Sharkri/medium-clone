@@ -54,7 +54,7 @@ export default function BlogPost() {
                 <div className="flex text-sm text-grey">
                   <span>{formatDate(post.timestamp.toDate())}</span>
                   <div className="px-2">·</div>
-                  <span>3 min read</span>
+                  <span>{post.readingTimeInMinutes} min read</span>
                 </div>
               </div>
             </header>

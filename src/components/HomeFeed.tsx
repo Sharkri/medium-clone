@@ -17,6 +17,7 @@ function HomeFeed() {
               thumbnail: ".aa",
               likes: 0,
               id: ".",
+              readingTimeInMinutes: 5,
             },
           ]}
         />
