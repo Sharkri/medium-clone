@@ -1,8 +1,8 @@
 import { FirebaseError } from "firebase/app";
-import { User } from "firebase/auth";
+import UserData from "./UserDataInterface";
 
 export default interface IUserContext {
-  user: User | null;
+  user: UserData | null;
   loading: Boolean;
   error?: FirebaseError;
 }

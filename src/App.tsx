@@ -3,7 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Home from "./components/Home";
 import { useAuthState } from "react-firebase-hooks/auth";
 import UserContext from "./UserContext";
-import { getAuthInstance } from "./firebase/firebase-app";
+import { getAuthInstance, getUserById } from "./firebase/firebase-app";
 import LoggedInHomepage from "./components/LoggedInHomepage";
 import useModal from "./components/modal/useModal";
 import ModalContext from "./components/modal/ModalContext";
@@ -15,6 +15,9 @@ import { FirebaseError } from "firebase/app";
 import BlogPost from "./components/BlogPost";
 import { User } from "firebase/auth";
 import ProfilePage from "./components/ProfilePage";
+import Settings from "./components/Settings";
+import { useEffect, useState } from "react";
+import UserData from "./interfaces/UserDataInterface";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -26,6 +29,19 @@ function App() {
     authState[1],
     authState[2] as FirebaseError,
   ];
+
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    if (!user) {
+      setUserData(null);
+      return;
+    }
+
+    getUserById(user.uid).then((data) => {
+      setUserData(data as UserData);
+    });
+  }, [user]);
 
   const { modalContent, setModalOpen, isModalOpen } = useModal();
 
@@ -44,7 +60,7 @@ function App() {
         isModalOpen,
       }}
     >
-      <UserContext.Provider value={{ user, loading, error }}>
+      <UserContext.Provider value={{ user: userData, loading, error }}>
         <Modal />
 
         {
@@ -69,14 +85,20 @@ function App() {
 
           <Route element={<BlogPost />} path=":username/posts/:title" />
 
+          <Route element={<ProfilePage page="profile" />} path="u/:username" />
           <Route
-            element={<ProfilePage page={"profile"} />}
-            path="u/:username"
-          />
-          <Route
-            element={<ProfilePage page={"about"} />}
+            element={<ProfilePage page="about" />}
             path="u/:username/about"
           />
+
+          <Route
+            element={
+              <AuthenticatedRoute isLoggedIn={isLoggedIn}>
+                <Settings />
+              </AuthenticatedRoute>
+            }
+            path="/settings"
+          ></Route>
         </Routes>
       </UserContext.Provider>
     </ModalContext.Provider>
