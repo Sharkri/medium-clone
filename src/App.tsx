@@ -65,7 +65,7 @@ function App() {
 
         {
           // show header anywhere except "/" path unless logged in
-          (pathname !== "/" || isLoggedIn) && <Header user={user} />
+          (pathname !== "/" || isLoggedIn) && <Header user={userData} />
         }
 
         <Routes>

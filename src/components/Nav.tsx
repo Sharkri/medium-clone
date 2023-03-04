@@ -1,9 +1,9 @@
-import { User } from "firebase/auth";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import UserData from "../interfaces/UserDataInterface";
 import ProfilePicture from "./helper/ProfilePicture";
 
-function Nav({ user, onSignOut }: { user: User; onSignOut: Function }) {
+function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -68,7 +68,7 @@ function Nav({ user, onSignOut }: { user: User; onSignOut: Function }) {
               </Link>
 
               <Link
-                to="/profile"
+                to={`/u/${user.username}`}
                 className="grow flex gap-4 items-center py-2 px-6 hover:text-lighterblack"
               >
                 <i className="fa-regular fa-user thinner-icon text-[21px] min-w-[24px]" />

@@ -1,4 +1,3 @@
-import { User } from "firebase/auth";
 import { Link } from "react-router-dom";
 import LogoWithoutText from "./helper/LogoWithoutText";
 import { signOutUser } from "../firebase/firebase-app";
@@ -8,8 +7,9 @@ import OpenModalButton from "./OpenModalButton";
 import SignUpPage from "./SignUpPage";
 import SignInPage from "./SignInPage";
 import useScrollDirection from "./useScrollDirection";
+import UserData from "../interfaces/UserDataInterface";
 
-export default function Header({ user }: { user: User | null }) {
+export default function Header({ user }: { user: UserData | null }) {
   const scrollDirection = useScrollDirection();
 
   return (
