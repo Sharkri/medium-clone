@@ -1,10 +1,12 @@
 import { useContext, useEffect } from "react";
 import UserContext from "../UserContext";
 import ProfilePicture from "./helper/ProfilePicture";
+import ModalContext from "./modal/ModalContext";
 import Sidebar from "./Sidebar";
 
 export default function Settings() {
   const { user } = useContext(UserContext);
+  const { setModalOpen } = useContext(ModalContext);
 
   useEffect(() => {
     document.title = "Settings - Medium";
@@ -39,7 +41,10 @@ export default function Settings() {
               </span>
             </button>
 
-            <button className="flex justify-between group">
+            <button
+              className="flex justify-between group"
+              onClick={() => setModalOpen(true, <div className="grow">hi</div>)}
+            >
               <span className="text-sm text-lighterblack">
                 Username and subdomain
               </span>
