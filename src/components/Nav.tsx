@@ -25,7 +25,7 @@ function Nav({ user, onSignOut }: { user: User; onSignOut: Function }) {
     <nav className="flex items-center gap-8 text-neutral-500">
       <Link
         to="/new-story"
-        className="flex items-center gap-2 hover:text-lighterblack"
+        className="flex items-center gap-2 hover:text-lighterblack max-md:hidden"
       >
         <i className="fa-regular fa-pen-to-square text-[19px] thinner-icon" />
         <span className="text-sm">Write</span>
@@ -59,6 +59,14 @@ function Nav({ user, onSignOut }: { user: User; onSignOut: Function }) {
             className="absolute z-10 bg-white right-0 w-[264px] shadow-md border border-neutral-200 rounded-[4px] overflow-y-auto m-h-[1167px]"
           >
             <div className="flex flex-col py-4 border-b border-b-neutral-200">
+              <Link
+                to="/new-story"
+                className="grow hidden max-md:flex gap-4 items-center py-2 px-6 hover:text-lighterblack"
+              >
+                <i className="fa-regular fa-pen-to-square thinner-icon text-[21px] min-w-[24px]" />
+                <span className="text-sm">Write</span>
+              </Link>
+
               <Link
                 to="/profile"
                 className="grow flex gap-4 items-center py-2 px-6 hover:text-lighterblack"
