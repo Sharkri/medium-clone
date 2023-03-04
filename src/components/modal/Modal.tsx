@@ -5,7 +5,7 @@ function Modal() {
   const { isModalOpen, modalContent, setModalOpen } = useContext(ModalContext);
   return isModalOpen ? (
     <div
-      className="fixed left-0 right-0 top-0 bottom-0 z-10 flex justify-center items-center bg-white/95 animate-fade-in"
+      className="fixed left-0 right-0 top-0 bottom-0 z-20 flex justify-center items-center bg-white/95 animate-fade-in"
       data-testid="modal"
       onClick={(e) => {
         const modalContentClicked = (e.target as HTMLInputElement).closest(
