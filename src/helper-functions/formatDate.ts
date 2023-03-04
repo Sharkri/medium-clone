@@ -5,9 +5,15 @@ import {
   formatDistanceToNowStrict,
 } from "date-fns";
 
-export default function formatDate(date: Date) {
-  if (isThisWeek(date))
+export default function formatDate(
+  date: Date,
+  options: { relative?: Boolean; omitIfCurrentYear?: Boolean } = {}
+) {
+  if (options.relative && isThisWeek(date))
     return formatDistanceToNowStrict(date, { addSuffix: true });
 
-  return format(date, `${isThisYear(date) ? "MMM d" : "MMM d, yyyy"}`);
+  return format(
+    date,
+    `${options.omitIfCurrentYear && isThisYear(date) ? "MMM d" : "MMM d, yyyy"}`
+  );
 }

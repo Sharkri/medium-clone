@@ -63,6 +63,8 @@ async function addUser(user: User) {
       photoURL: user.photoURL,
       email: user.email,
       followers: [],
+      following: [],
+      creationTime: user.metadata.creationTime,
     });
   } catch (error) {
     console.error("Error writing to Firebase Database", error);

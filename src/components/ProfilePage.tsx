@@ -3,9 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import { getAllPostsByUser, getUserByName } from "../firebase/firebase-app";
 import Post from "../interfaces/PostInterface";
 import UserData from "../interfaces/UserDataInterface";
-import ProfilePicture from "./helper/ProfilePicture";
+import AboutPage from "./AboutPage";
 import PostPreview from "./PostPreview";
 import Sidebar from "./Sidebar";
+import UserInfo from "./UserInfo";
 
 export default function ProfilePage({ page }: { page: "profile" | "about" }) {
   const { username } = useParams();
@@ -68,7 +69,7 @@ export default function ProfilePage({ page }: { page: "profile" | "about" }) {
           </div>
           <div className="grow">
             {page === "about" ? (
-              <div></div>
+              <AboutPage user={user} />
             ) : (
               <div className="p-2 flex flex-col gap-6">
                 {userPosts.map((userPost) => (
@@ -78,24 +79,10 @@ export default function ProfilePage({ page }: { page: "profile" | "about" }) {
             )}
           </div>
         </main>
+
         <Sidebar>
           <div className="mt-10">
-            <ProfilePicture
-              src={user.photoURL}
-              className="w-[88px] h-[88px] rounded-full"
-            />
-            <div className="mt-4">
-              <h2 className="leading-5 break-word">{user.displayName}</h2>
-              {user.followers.length > 0 && (
-                <span className="text-grey inline-block mt-1">
-                  {Intl.NumberFormat("en-US", {
-                    notation: "compact",
-                    maximumFractionDigits: 1,
-                  }).format(user.followers.length)}{" "}
-                  Followers
-                </span>
-              )}
-            </div>
+            <UserInfo user={user} />
           </div>
         </Sidebar>
       </div>

@@ -7,6 +7,7 @@ import BlogMarkdown from "./BlogMarkdown";
 import ProfilePicture from "./helper/ProfilePicture";
 import formatDate from "../helper-functions/formatDate";
 import Sidebar from "./Sidebar";
+import UserInfo from "./UserInfo";
 
 export default function BlogPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -74,31 +75,7 @@ export default function BlogPost() {
         </article>
         <Sidebar>
           <div className="mt-10">
-            <Link
-              to={`/${author.username}`}
-              className="block w-[88px] h-[88px]"
-            >
-              <ProfilePicture
-                className="rounded-full w-full h-full"
-                src={author.photoURL}
-              />
-            </Link>
-            <h2 className="text-lighterblack font-sohne-semibold mt-4">
-              <Link to={`/${author.username}`}>{author.displayName} </Link>
-            </h2>
-            <Link
-              to={`/${author.username}/followers`}
-              className="text-grey hover:text-lightblack mt-1 inline-block"
-            >
-              <span>69420 followers</span>
-            </Link>
-            <p className="text-grey text-sm mt-3">
-              CTO & Co-founder @Kravve | Talks about #tech, #web3, #crypto |
-              Writer for Level Up Coding & Geek Culture
-            </p>
-            <button className="mt-6 bg-blue-500 border border-blue-500 text-sm text-white rounded-full px-5 py-2">
-              Follow
-            </button>
+            <UserInfo user={author} />
           </div>
         </Sidebar>
       </div>

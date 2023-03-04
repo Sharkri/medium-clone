@@ -5,6 +5,9 @@ export default interface UserData {
   email: string;
   uid: string;
   username: string;
+  lowercaseUsername: string;
   // array of uids
   followers: string[];
+  following: string[];
+  creationTime: any;
 }
