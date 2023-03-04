@@ -73,7 +73,7 @@ export default function ProfilePage({ page }: { page: "profile" | "about" }) {
             ) : (
               <div className="p-2 flex flex-col gap-6">
                 {userPosts.map((userPost) => (
-                  <PostPreview post={userPost} omitProfile />
+                  <PostPreview post={userPost} key={userPost.id} omitProfile />
                 ))}
               </div>
             )}
