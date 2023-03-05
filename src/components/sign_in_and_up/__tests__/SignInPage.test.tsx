@@ -2,7 +2,7 @@ import { render } from "@testing-library/react";
 import OpenModalButton from "../../helper-components/OpenModalButton";
 import SignInOptions from "../SignInOptions";
 
-jest.mock("../OpenModalButton.tsx", () => jest.fn());
+jest.mock("../../helper-components/OpenModalButton", () => jest.fn());
 
 it('navigates to <SignUpPage /> when "No account? Create one" is clicked', () => {
   render(<SignInOptions />);
@@ -17,7 +17,7 @@ it('navigates to <SignUpPage /> when "No account? Create one" is clicked', () =>
       >
         Create one
       </b>,
-      "element": <SignUpPage />,
+      "element": <SignUpOptions />,
     }
   `);
 });

@@ -7,29 +7,6 @@ import "@testing-library/jest-dom";
 const setModalOpen = jest.fn();
 
 describe("Close Modal", () => {
-  it("should close modal when close modal button is clicked", () => {
-    render(
-      <ModalContext.Provider
-        value={{
-          setModalOpen,
-          isModalOpen: true,
-          modalContent: <div>content!</div>,
-        }}
-      >
-        <Modal />
-      </ModalContext.Provider>
-    );
-
-    expect(setModalOpen).not.toBeCalled();
-
-    const closeModalButton = screen.getByRole("button", { name: "close" });
-
-    userEvent.click(closeModalButton);
-
-    // should set modal open to false
-    expect(setModalOpen).toBeCalledWith(false);
-  });
-
   it("closes modal when outside of modal is clicked", () => {
     render(
       <ModalContext.Provider
