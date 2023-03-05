@@ -30,19 +30,16 @@ export default function UsernameModal({ user }: { user: UserData }) {
   }
 
   return (
-    <ModalContent className="pt-8 px-10 pb-10 text-center max-w-[552px] w-full">
+    <ModalContent className="pt-8 px-10 pb-10 max-w-[552px] w-full">
       <CloseModalButton />
 
       <form onSubmit={handleSubmit} noValidate>
-        <h1 className="text-lighterblack text-[22px] font-sohne-bold text-left mb-10">
+        <h1 className="text-lighterblack text-[22px] font-sohne-bold mb-10">
           Username
         </h1>
 
         <div className="flex flex-col">
-          <label
-            htmlFor="username"
-            className="text-grey mb-[10px] text-left text-sm"
-          >
+          <label htmlFor="username" className="text-grey mb-[10px] text-sm">
             Username
           </label>
           <input
