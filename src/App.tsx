@@ -3,7 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import Home from "./components/Home";
 import { useAuthState } from "react-firebase-hooks/auth";
 import UserContext from "./UserContext";
-import { getAuthInstance, getUserById } from "./firebase/firebase-app";
+import { getAuthInstance, getUserRefById } from "./firebase/firebase-app";
 import LoggedInHomepage from "./components/LoggedInHomepage";
 import useModal from "./components/modal/useModal";
 import ModalContext from "./components/modal/ModalContext";
@@ -11,36 +11,37 @@ import Modal from "./components/modal/Modal";
 import Header from "./components/Header";
 import CreatePost from "./components/CreatePost";
 import AuthenticatedRoute from "./AuthenticatedRoute";
-import { FirebaseError } from "firebase/app";
 import BlogPost from "./components/BlogPost";
 import { User } from "firebase/auth";
 import ProfilePage from "./components/ProfilePage";
 import Settings from "./components/Settings";
 import { useEffect, useState } from "react";
 import UserData from "./interfaces/UserDataInterface";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { DocumentReference } from "firebase/firestore";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
 
   const { pathname } = useLocation();
 
-  const [user, loading, error] = [
-    authState[0] as User | null,
-    authState[1],
-    authState[2] as FirebaseError,
-  ];
+  const [user, loading] = [authState[0] as User | null, authState[1]];
 
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const [userRef, setUserRef] = useState<DocumentReference | null>(null);
+  const userData = useDocumentData(userRef)[0] as UserData;
+
+  const reloadUserData = async (uid: string) =>
+    setUserRef((await getUserRefById(uid)) as DocumentReference);
 
   useEffect(() => {
     if (!user) {
-      setUserData(null);
+      setUserRef(null);
       return;
     }
 
-    getUserById(user.uid).then((data) => {
-      setUserData(data as UserData);
-    });
+    if (userRef) return;
+
+    reloadUserData(user.uid);
   }, [user]);
 
   const { modalContent, setModalOpen, isModalOpen } = useModal();
@@ -50,8 +51,7 @@ function App() {
 
   if (loading) return null;
 
-  const isLoggedIn = !!user;
-
+  const isLoggedIn = !!(user && userData);
   return (
     <ModalContext.Provider
       value={{
@@ -60,7 +60,13 @@ function App() {
         isModalOpen,
       }}
     >
-      <UserContext.Provider value={{ user: userData, loading, error }}>
+      <UserContext.Provider
+        value={{
+          user: userData as UserData,
+          loading: loading,
+          reloadUserData,
+        }}
+      >
         <Modal />
 
         {

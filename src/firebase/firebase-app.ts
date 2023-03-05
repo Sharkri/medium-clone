@@ -17,6 +17,7 @@ import {
   where,
   limit,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -78,8 +79,13 @@ async function signInWithGoogle() {
     getAuthInstance(),
     provider
   );
+
+  const newUser = isNewUser(userCredential);
+
   // if is new user, add user to database
-  if (isNewUser(userCredential)) await addUser(userCredential.user);
+  if (newUser) await addUser(userCredential.user);
+
+  return { user: userCredential.user, newUser };
 }
 
 async function getDoc(
@@ -97,12 +103,45 @@ async function getDoc(
 
   if (docs.empty) return null;
 
-  return docs.docs[0].data();
+  return docs.docs[0];
 }
 
-const getPostById = async (id: string) => getDoc("posts", "id", id);
-const getUserById = async (uid: string) => getDoc("users", "uid", uid);
-const getUserByName = async (name: string) => getDoc("users", "username", name);
+async function getDocData(
+  collectionToSearch: string,
+  field: string,
+  equalTo: string
+) {
+  const doc = await getDoc(collectionToSearch, field, equalTo);
+
+  return doc ? doc.data() : doc;
+}
+
+async function changeUsername(userUid: string, newUsername: string) {
+  try {
+    const docs = await getDocs(
+      query(getCollectionRef("users"), where("uid", "==", userUid), limit(1))
+    );
+
+    const reference = docs.docs[0].ref;
+
+    await updateDoc(reference, {
+      username: newUsername,
+      lowercaseUsername: newUsername.toLowerCase(),
+    });
+  } catch (error) {
+    console.error("Error writing to Firebase Database", error);
+  }
+}
+
+const getPostById = async (id: string) => getDocData("posts", "id", id);
+const getUserById = async (uid: string) => getDocData("users", "uid", uid);
+const getUserRefById = async (uid: string) => {
+  const x = await getDoc("users", "uid", uid);
+  return x?.ref;
+};
+
+const getUserByName = async (name: string) =>
+  getDocData("users", "username", name);
 
 async function getImageUrl(file: File, filePath: string) {
   try {
@@ -158,4 +197,6 @@ export {
   getAllPosts,
   getUserByName,
   getAllPostsByUser,
+  changeUsername,
+  getUserRefById,
 };

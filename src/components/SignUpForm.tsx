@@ -7,6 +7,7 @@ import LoadingButton from "./helper/LoadingButton";
 import PasswordInput from "./helper/PasswordInput";
 import IError from "../interfaces/ErrorInterface";
 import ModalContext from "./modal/ModalContext";
+import UserContext from "../UserContext";
 
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ export default function SignUpForm() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { setModalOpen } = useContext(ModalContext);
+  const { reloadUserData } = useContext(UserContext);
 
   function checkForEmptyInputs() {
     setFullNameError(
@@ -79,6 +81,7 @@ export default function SignUpForm() {
 
           // add user to database
           await addUser(user);
+          await reloadUserData(user.uid);
 
           setModalOpen(false);
         } catch (error: unknown) {

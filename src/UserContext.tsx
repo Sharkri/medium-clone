@@ -4,7 +4,7 @@ import IUserContext from "./interfaces/UserContextInterface";
 const UserContext = createContext<IUserContext>({
   user: null,
   loading: false,
-  error: undefined,
+  reloadUserData: () => {},
 });
 
 export default UserContext;
