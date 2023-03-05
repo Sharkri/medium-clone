@@ -25,6 +25,23 @@ it("should generate username with random 4 characters", async () => {
   expect(getRandomId).toHaveBeenCalledWith(4);
 });
 
+it("should truncate username to maximum of 30 chars", async () => {
+  (getRandomId as jest.Mock)
+    .mockReturnValueOnce("12ab")
+    .mockReturnValueOnce("amog");
+
+  (isUniqueUsername as jest.Mock)
+    .mockReturnValueOnce(Promise.resolve(false))
+    .mockReturnValueOnce(Promise.resolve(true));
+
+  // enter email with length 27. so that 27 + (4 unique chars) > 30 length
+  const result = await generateUniqueUsername(`${"h".repeat(27)}@gmail.com`);
+
+  expect(result.length).toBe(30);
+
+  expect(getRandomId).toHaveBeenCalledWith(4);
+});
+
 it("should give original name if username is already unique", async () => {
   (isUniqueUsername as jest.Mock).mockReturnValueOnce(Promise.resolve(true));
 
