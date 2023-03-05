@@ -3,6 +3,7 @@ import UserContext from "../UserContext";
 import ProfilePicture from "./helper/ProfilePicture";
 import ModalContext from "./modal/ModalContext";
 import Sidebar from "./Sidebar";
+import UsernameModal from "./UsernameModal";
 
 export default function Settings() {
   const { user } = useContext(UserContext);
@@ -43,11 +44,9 @@ export default function Settings() {
 
             <button
               className="flex justify-between group"
-              onClick={() => setModalOpen(true, <div className="grow">hi</div>)}
+              onClick={() => setModalOpen(true, <UsernameModal user={user} />)}
             >
-              <span className="text-sm text-lighterblack">
-                Username and subdomain
-              </span>
+              <span className="text-sm text-lighterblack">Username</span>
               <span className="text-grey font-content-sans text-[16.2px] group-hover:text-lightblack">
                 @{user.username}
               </span>
