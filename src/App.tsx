@@ -1,20 +1,20 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import Home from "./components/Home";
+import LoggedOutHomepage from "./components/pages/logged_out_page/LoggedOutHomepage";
 import { useAuthState } from "react-firebase-hooks/auth";
 import UserContext from "./UserContext";
 import { getAuthInstance, getUserRefById } from "./firebase/firebase-app";
-import LoggedInHomepage from "./components/LoggedInHomepage";
+import Homepage from "./components/pages/home_page/Homepage";
 import useModal from "./components/modal/useModal";
 import ModalContext from "./components/modal/ModalContext";
 import Modal from "./components/modal/Modal";
-import Header from "./components/Header";
-import CreatePost from "./components/CreatePost";
+import Header from "./components/main/Header";
+import CreatePost from "./components/pages/create_post_page/CreatePost";
 import AuthenticatedRoute from "./AuthenticatedRoute";
-import BlogPost from "./components/BlogPost";
+import BlogPost from "./components/pages/blog_post_page/BlogPost";
 import { User } from "firebase/auth";
-import ProfilePage from "./components/ProfilePage";
-import Settings from "./components/Settings";
+import ProfilePage from "./components/pages/profile_page/ProfilePage";
+import Settings from "./components/pages/settings_page/Settings";
 import { useEffect, useState } from "react";
 import UserData from "./interfaces/UserDataInterface";
 import { useDocumentData } from "react-firebase-hooks/firestore";
@@ -86,7 +86,7 @@ function App() {
 
         <Routes>
           <Route
-            element={isLoggedIn ? <LoggedInHomepage /> : <Home />}
+            element={isLoggedIn ? <Homepage /> : <LoggedOutHomepage />}
             path="/"
           />
 

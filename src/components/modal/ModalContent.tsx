@@ -3,10 +3,10 @@ import CloseModalButton from "./CloseModalButton";
 
 export default function ModalContent({
   children,
-  className,
+  className = "",
 }: {
   children: ReactNode;
-  className: string;
+  className?: string;
 }) {
   return (
     <div
