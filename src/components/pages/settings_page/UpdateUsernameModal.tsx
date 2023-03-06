@@ -44,8 +44,8 @@ export default function UsernameModal({ user }: { user: UserData }) {
           Username
         </h1>
 
-        <div className="flex flex-col">
-          <label htmlFor="username" className="text-grey mb-[10px] text-sm">
+        <div className="flex flex-col text-sm">
+          <label htmlFor="username" className="text-grey mb-[10px]">
             Username
           </label>
           <input
