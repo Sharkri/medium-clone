@@ -30,7 +30,10 @@ export default function UserInfo({ user }: { user: UserData }) {
       <p className="text-grey text-sm mt-3 mb-6">{user.bio}</p>
 
       {loggedInUser?.uid === user.uid ? (
-        <Link to="/settings" className="text-green text-[13px]">
+        <Link
+          to="/settings"
+          className="text-green text-[13px] hover:text-lightblack"
+        >
           Edit profile
         </Link>
       ) : (
