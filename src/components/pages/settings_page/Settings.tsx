@@ -79,7 +79,20 @@ export default function Settings() {
             </button>
           </div>
         </main>
-        <Sidebar>Hello!</Sidebar>
+        <Sidebar>
+          <div className="flex flex-col">
+            <h2 className="font-sohne-bold mt-16 mb-8">
+              Suggested help articles
+            </h2>
+            <div className="text-sm flex flex-col gap-4 text-lighterblack [&>button]:text-left">
+              <button>Sign in or sign up to Medium</button>
+              <button>Your profile page</button>
+              <button>Writing and publishing your first story</button>
+              <button>About Medium's distribution system</button>
+              <button>Get started with the Partner Program</button>
+            </div>
+          </div>
+        </Sidebar>
       </div>
     </div>
   );
