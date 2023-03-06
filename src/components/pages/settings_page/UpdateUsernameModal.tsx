@@ -71,9 +71,9 @@ export default function UsernameModal({ user }: { user: UserData }) {
             )}
             <p>
               <span
-                className={`${
+                className={
                   newUsername.length > 30 ? "text-red-700" : "text-lightblack"
-                }`}
+                }
               >
                 {newUsername.length}
               </span>
