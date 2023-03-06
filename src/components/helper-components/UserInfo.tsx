@@ -1,11 +1,14 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import compactNumber from "../../helper-functions/abbreviateNumber";
 import UserData from "../../interfaces/UserDataInterface";
+import UserContext from "../../UserContext";
 import ProfilePicture from "./ProfilePicture";
 
-// Component contains User PFP, displayName, followers, bio, follow button
+// Component contains User PFP, displayName, followers, bio, follow or edit profile button
 export default function UserInfo({ user }: { user: UserData }) {
   const { username, displayName, photoURL } = user;
+  const { user: loggedInUser } = useContext(UserContext);
 
   return (
     <>
@@ -24,11 +27,17 @@ export default function UserInfo({ user }: { user: UserData }) {
         <span>{compactNumber(user.followers.length)} Followers</span>
       </Link>
 
-      <p className="text-grey text-sm mt-3">{user.bio}</p>
+      <p className="text-grey text-sm mt-3 mb-6">{user.bio}</p>
 
-      <button className="mt-6 bg-blue-500 border border-blue-500 text-sm text-white rounded-full px-5 py-2">
-        Follow
-      </button>
+      {loggedInUser?.uid === user.uid ? (
+        <Link to="/settings" className="text-green text-[13px]">
+          Edit profile
+        </Link>
+      ) : (
+        <button className="bg-blue-500 border border-blue-500 text-sm text-white rounded-full px-5 py-2">
+          Follow
+        </button>
+      )}
     </>
   );
 }

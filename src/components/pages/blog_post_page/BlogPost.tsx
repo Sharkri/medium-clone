@@ -39,9 +39,9 @@ export default function BlogPost() {
   return (
     <div className="max-w-[1336px] mx-auto">
       <div className="flex justify-evenly max-lg:block">
-        <article className="mx-6 mb-16">
+        <article className="mx-6 mb-16 grow-[0.8]">
           <main className="mx-auto max-w-[680px]">
-            <header className="mb-8 mt-4 flex gap-4">
+            <header className="mb-8 mt-14 max-lg:mt-8 max-lg:mb-6 flex gap-4">
               <Link to={`/u/${author.username}`}>
                 <ProfilePicture
                   className="w-[48px] h-[48px]"
