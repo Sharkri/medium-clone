@@ -37,22 +37,22 @@ export default function Settings() {
           </div>
 
           <div className="flex flex-col gap-8">
-            <button className="flex justify-between group">
+            <button className="flex justify-between gap-2 group">
               <span className="text-sm text-lighterblack">Email address</span>
 
-              <span className="text-grey font-content-sans text-[16.3px] group-hover:text-lightblack">
+              <span className="text-grey font-content-sans text-[16.3px] group-hover:text-lightblack line-clamp-1 break-all">
                 {user.email}
               </span>
             </button>
 
             <button
-              className="flex justify-between group"
+              className="flex justify-between gap-2 group"
               onClick={() =>
                 setModalOpen(true, <UpdateUsernameModal user={user} />)
               }
             >
               <span className="text-sm text-lighterblack">Username</span>
-              <span className="text-grey font-content-sans text-[16.2px] group-hover:text-lightblack">
+              <span className="text-grey font-content-sans text-[16.2px] group-hover:text-lightblack line-clamp-1 break-all">
                 @{user.username}
               </span>
             </button>
