@@ -89,11 +89,11 @@ export default function SignUpFormModal() {
               password
             );
 
+            setModalOpen(false);
+
             // add user to database
             await addUser({ ...user, displayName: fullName });
             await reloadUserData(user.uid);
-
-            setModalOpen(false);
           } catch (error: unknown) {
             if (error instanceof FirebaseError) {
               handleErrors(error);
