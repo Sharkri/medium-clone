@@ -12,7 +12,7 @@ export default function ProfilePicture({
       src={src || defaultProfilePic}
       alt="user profile"
       referrerPolicy="no-referrer"
-      className={`rounded-full ${className}`}
+      className={`rounded-full object-cover ${className}`}
     />
   );
 }
