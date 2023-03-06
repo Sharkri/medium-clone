@@ -6,6 +6,7 @@ import ModalContext from "../../modal/ModalContext";
 import UpdateUsernameModal from "./UpdateUsernameModal";
 import ProfilePicture from "../../helper-components/ProfilePicture";
 import Sidebar from "../../main/Sidebar";
+import UpdateProfileInfoModal from "./UpdateProfileInfoModal";
 
 export default function Settings() {
   const { user } = useContext(UserContext);
@@ -56,7 +57,12 @@ export default function Settings() {
               </span>
             </button>
 
-            <button className="flex justify-between text-sm group">
+            <button
+              className="flex justify-between text-sm group"
+              onClick={() =>
+                setModalOpen(true, <UpdateProfileInfoModal user={user} />)
+              }
+            >
               <div className="text-left">
                 <p className="text-lighterblack">Profile information</p>
                 <div className="text-[13px] text-grey mt-1">
@@ -68,10 +74,7 @@ export default function Settings() {
                   {user.displayName}
                 </span>
 
-                <ProfilePicture
-                  src={user.photoURL}
-                  className="w-6 h-6 rounded-full ml-2"
-                />
+                <ProfilePicture src={user.photoURL} className="w-6 h-6 ml-2" />
               </div>
             </button>
 

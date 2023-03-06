@@ -52,10 +52,7 @@ function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
             setIsDropdownOpen(!isDropdownOpen);
           }}
         >
-          <ProfilePicture
-            className="rounded-full h-[31px] w-[31px]"
-            src={user.photoURL}
-          />
+          <ProfilePicture className="h-[31px] w-[31px]" src={user.photoURL} />
           <i className="fa-solid fa-chevron-down text-[8.7px] thin-icon ml-2" />
         </button>
 

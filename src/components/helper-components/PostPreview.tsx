@@ -37,7 +37,7 @@ export default function PostPreview({
           <Link to={`/u/${author.username}`}>
             <ProfilePicture
               src={author.photoURL}
-              className="min-w-[24px] h-6 rounded-full"
+              className="min-w-[24px] h-6"
             />
           </Link>
         )}

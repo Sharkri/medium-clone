@@ -44,7 +44,7 @@ export default function BlogPost() {
             <header className="mb-8 mt-4 flex gap-4">
               <Link to={`/${author.username}`}>
                 <ProfilePicture
-                  className="rounded-full w-[48px] h-[48px]"
+                  className="w-[48px] h-[48px]"
                   src={author.photoURL}
                 />
               </Link>

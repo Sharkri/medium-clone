@@ -10,7 +10,7 @@ export default function UserInfo({ user }: { user: UserData }) {
   return (
     <>
       <Link to={`/u/${username}`} className="block w-[88px] h-[88px]">
-        <ProfilePicture className="rounded-full w-full h-full" src={photoURL} />
+        <ProfilePicture className="w-full h-full" src={photoURL} />
       </Link>
 
       <h2 className="text-lighterblack font-sohne-semibold mt-4">
