@@ -13,7 +13,7 @@ export default function AuthenticationPage({
   isSignUpPage: boolean;
 }) {
   return (
-    <ModalContent className="grid place-items-center py-10 px-14 text-center max-w-[678px] max-h-[695px] w-full h-full">
+    <ModalContent className="grid place-items-center py-10 px-14 text-center max-w-[678px] max-h-[695px] w-full h-full animate-fade-scale-in">
       <h2 className="font-serif tracking-[-0.03em] text-[28px]">
         {isSignUpPage ? "Join Medium." : "Welcome back."}
       </h2>
