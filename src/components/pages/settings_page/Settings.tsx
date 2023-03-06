@@ -77,15 +77,6 @@ export default function Settings() {
                 <ProfilePicture src={user.photoURL} className="w-6 h-6 ml-2" />
               </div>
             </button>
-
-            <div className="border-t border-t-neutral-200" />
-
-            <button className="text-sm mb-8 text-left">
-              <p className="text-[#c94a4a] mb-1">Delete account</p>
-              <span className="text-grey">
-                Permanently delete your account and all of your content.
-              </span>
-            </button>
           </div>
         </main>
         <Sidebar>Hello!</Sidebar>
