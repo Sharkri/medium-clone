@@ -25,7 +25,7 @@ export default function UsernameModal({ user }: { user: UserData }) {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    if (error || user.username === newUsername) return;
+    if (error || user.username === newUsername || loading) return;
     setLoading(true);
 
     await changeUsername(user.uid, newUsername);
@@ -85,13 +85,14 @@ export default function UsernameModal({ user }: { user: UserData }) {
           <button
             className="text-[#0f730c] border-[#0f730c] border rounded-full pt-2 px-7 pb-[10px]"
             onClick={() => setModalOpen(false)}
+            type="button"
           >
             Cancel
           </button>
           <LoadingButton
             type="submit"
             className="disabled:opacity-30 bg-green pt-2 px-7 pb-[10px] text-white rounded-full"
-            disabled={error || newUsername === user.username}
+            disabled={error || newUsername === user.username || loading}
             loading={loading}
           >
             Save
