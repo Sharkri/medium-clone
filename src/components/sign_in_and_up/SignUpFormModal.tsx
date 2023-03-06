@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { addUser, getAuthInstance } from "../../firebase/firebase-app";
 
@@ -89,10 +89,8 @@ export default function SignUpFormModal() {
               password
             );
 
-            await updateProfile(user, { displayName: fullName });
-
             // add user to database
-            await addUser(user);
+            await addUser({ ...user, displayName: fullName });
             await reloadUserData(user.uid);
 
             setModalOpen(false);
