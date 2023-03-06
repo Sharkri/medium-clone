@@ -42,14 +42,14 @@ export default function BlogPost() {
         <article className="mx-6 mb-16">
           <main className="mx-auto max-w-[680px]">
             <header className="mb-8 mt-4 flex gap-4">
-              <Link to={`/${author.username}`}>
+              <Link to={`/u/${author.username}`}>
                 <ProfilePicture
                   className="w-[48px] h-[48px]"
                   src={author.photoURL}
                 />
               </Link>
               <div>
-                <Link to={`/${author.username}`}>
+                <Link to={`/u/${author.username}`}>
                   <h2 className="text-lighterblack mb-1">
                     {author.displayName}
                   </h2>
