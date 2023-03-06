@@ -8,9 +8,11 @@ import ModalContext from "../../modal/ModalContext";
 
 import ModalContent from "../../modal/ModalContent";
 import CloseModalButton from "../../modal/CloseModalButton";
+import LoadingButton from "../../helper-components/LoadingButton";
 
 export default function UsernameModal({ user }: { user: UserData }) {
   const [newUsername, setNewUsername] = useState(user.username);
+  const [loading, setLoading] = useState(false);
   const { setModalOpen } = useContext(ModalContext);
 
   const isAlphanumericUsername = newUsername.match(/^[\w]+$/);
@@ -24,8 +26,12 @@ export default function UsernameModal({ user }: { user: UserData }) {
     e.preventDefault();
 
     if (error || user.username === newUsername) return;
+    setLoading(true);
 
     await changeUsername(user.uid, newUsername);
+
+    setLoading(false);
+
     setModalOpen(false);
   }
 
@@ -82,13 +88,14 @@ export default function UsernameModal({ user }: { user: UserData }) {
           >
             Cancel
           </button>
-          <button
+          <LoadingButton
             type="submit"
             className="disabled:opacity-30 bg-green pt-2 px-7 pb-[10px] text-white rounded-full"
             disabled={error || newUsername === user.username}
+            loading={loading}
           >
             Save
-          </button>
+          </LoadingButton>
         </div>
       </form>
     </ModalContent>
