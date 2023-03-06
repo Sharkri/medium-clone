@@ -61,7 +61,7 @@ function App() {
 
   if (loading || fetchingUserData || fetchingUserRef) return null;
 
-  const isLoggedIn = !!(user && userData);
+  const isLoggedIn = !!user;
   return (
     <ModalContext.Provider
       value={{
