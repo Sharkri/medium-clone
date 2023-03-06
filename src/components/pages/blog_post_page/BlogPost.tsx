@@ -49,11 +49,15 @@ export default function BlogPost() {
                 />
               </Link>
               <div>
-                <Link to={`/u/${author.username}`}>
-                  <h2 className="text-lighterblack mb-1">
-                    {author.displayName}
-                  </h2>
-                </Link>
+                <div className="flex items-center mb-1">
+                  <Link to={`/u/${author.username}`}>
+                    <h2 className="text-lighterblack">{author.displayName}</h2>
+                  </Link>
+                  <button className="lg:hidden ml-3 bg-blue-500 border border-blue-500 text-[13px] text-white rounded-full px-2 pb-[1px]">
+                    Follow
+                  </button>
+                </div>
+
                 <div className="flex text-sm text-grey">
                   <span>{formatDate(post.timestamp.toDate())}</span>
                   <div className="px-2">·</div>
