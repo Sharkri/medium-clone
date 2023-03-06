@@ -29,18 +29,11 @@ function App() {
 
   const [userRef, setUserRef] = useState<DocumentReference | null>(null);
 
-  const [value, fetchingUserData] = useDocumentData(userRef);
-  const userData = value as UserData;
-
-  const [fetchingUserRef, setFetchingUserRef] = useState(false);
+  const userData = useDocumentData(userRef)[0] as UserData;
 
   const reloadUserData = async (uid: string) => {
-    setFetchingUserRef(true);
-
     const fetchedUserRef = (await getUserRefById(uid)) as DocumentReference;
     setUserRef(fetchedUserRef);
-
-    setFetchingUserRef(false);
   };
 
   useEffect(() => {
@@ -59,9 +52,10 @@ function App() {
   // hide scrollbar when modal open
   document.body.style.overflow = isModalOpen ? "hidden" : "unset";
 
-  if (loading || fetchingUserData || fetchingUserRef) return null;
+  if (loading) return null;
 
   const isLoggedIn = !!user;
+
   return (
     <ModalContext.Provider
       value={{
