@@ -90,7 +90,11 @@ export default function SignInFormModal() {
           autoComplete="current-password"
         />
 
-        <LoadingButton type="submit" loading={loading}>
+        <LoadingButton
+          type="submit"
+          loading={loading}
+          className="grid place-items-center w-full h-[42px] leading-5 text-[15px] pt-[7px] px-4 pb-[9px] bg-lightblack border-lightblack text-white rounded-full transition duration-[0.25s] hover:bg-black hover:border-lightblack"
+        >
           Continue
         </LoadingButton>
       </form>
