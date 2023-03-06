@@ -60,12 +60,13 @@ async function addUser(user: User) {
       displayName: user.displayName,
       username,
       // for case-insensitive search purposes
-      lowercaseUsername: username?.toLowerCase(),
+      lowercaseUsername: username.toLowerCase(),
       photoURL: user.photoURL,
       email: user.email,
       followers: [],
       following: [],
       creationTime: user.metadata.creationTime,
+      bio: "",
     });
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
@@ -128,6 +129,24 @@ async function changeUsername(userUid: string, newUsername: string) {
       username: newUsername,
       lowercaseUsername: newUsername.toLowerCase(),
     });
+  } catch (error) {
+    console.error("Error writing to Firebase Database", error);
+  }
+}
+
+async function updateUser(
+  uid: string,
+  newData: {
+    photoURL?: string | null;
+    displayName?: string;
+    bio?: string;
+  }
+) {
+  try {
+    const doc = await getDoc("users", "uid", uid);
+    if (!doc) throw Error(`User with uid ${uid} does not exist`);
+
+    await updateDoc(doc.ref, newData);
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
@@ -199,4 +218,5 @@ export {
   getAllPostsByUser,
   changeUsername,
   getUserRefById,
+  updateUser,
 };

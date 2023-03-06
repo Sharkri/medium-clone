@@ -10,4 +10,5 @@ export default interface UserData {
   followers: string[];
   following: string[];
   creationTime: any;
+  bio: string;
 }

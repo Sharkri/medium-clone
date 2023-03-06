@@ -10,7 +10,7 @@ export default function ModalContent({
 }) {
   return (
     <div
-      className={`overflow-auto rounded bg-white shadow-lg relative animate-fade-scale-in ${className}`}
+      className={`overflow-auto rounded bg-white shadow-lg relative ${className}`}
     >
       <CloseModalButton />
       {children}
