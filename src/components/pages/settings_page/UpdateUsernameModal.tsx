@@ -55,7 +55,7 @@ export default function UsernameModal({ user }: { user: UserData }) {
             value={newUsername}
             onChange={(e) => setNewUsername(e.target.value)}
             className={`outline-none border-b ${
-              error ? "border-b-red-700" : "border-b-neutral-200"
+              error ? "border-red-700" : "border-neutral-200 focus:border-grey"
             } py-1 pr-3`}
           />
 
