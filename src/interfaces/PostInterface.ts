@@ -1,9 +1,4 @@
-interface Comment {
-  likes: number;
-  text: string;
-  authorUid: string;
-  replies?: Comment[];
-}
+import Comment from "./CommentInterface";
 
 export default interface Post {
   title: string;
