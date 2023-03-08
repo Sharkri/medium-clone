@@ -3,7 +3,7 @@ export default function ProfilePicture({
   className = "",
 }: {
   src: string | null | undefined;
-  className: string;
+  className?: string;
 }) {
   const defaultProfilePic = require("../../assets/images/default-profile.png");
 
