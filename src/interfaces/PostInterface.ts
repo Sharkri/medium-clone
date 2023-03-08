@@ -9,6 +9,6 @@ export default interface Post {
   timestamp: any;
   likes: number;
   readingTimeInMinutes: number;
-  comments?: Comment[];
+  comments: Comment[];
   id: string;
 }

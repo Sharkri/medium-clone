@@ -10,6 +10,7 @@ import formatDate from "../../../helper-functions/formatDate";
 import Sidebar from "../../main/Sidebar";
 import UserInfo from "../../helper-components/UserInfo";
 import BlogMarkdownWithTitleAndDesc from "../../helper-components/BlogMarkdownWithTitleAndDesc";
+import InteractionBar from "./InteractionBar";
 
 export default function BlogPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -37,10 +38,10 @@ export default function BlogPost() {
   if (post == null || author == null) return null;
 
   return (
-    <div className="max-w-[1336px] mx-auto">
-      <div className="flex justify-evenly max-lg:block">
-        <article className="mx-6 mb-16 grow-[0.8]">
-          <main className="mx-auto max-w-[680px]">
+    <div className="max-w-[1336px] mx-auto h-[calc(100vh-57px)]">
+      <div className="flex justify-evenly max-lg:block h-full">
+        <article className="mx-6 mb-16 grow-[0.8] relative h-full">
+          <main className="mx-auto max-w-[680px] min-h-full">
             <header className="mb-8 mt-14 max-lg:mt-8 max-lg:mb-6 flex gap-4">
               <Link to={`/u/${author.username}`}>
                 <ProfilePicture
@@ -76,6 +77,8 @@ export default function BlogPost() {
               blogContents={post.blogContents}
             />
           </main>
+
+          <InteractionBar post={post} />
         </article>
         <Sidebar>
           <div className="mt-10">

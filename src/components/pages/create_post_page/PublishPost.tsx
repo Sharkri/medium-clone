@@ -37,6 +37,7 @@ export default function PublishPost({
         // word count
         (title + description + blogContents).length
       ),
+      comments: [],
       thumbnail: "",
       likes: 0,
       id: getRandomId(12),
