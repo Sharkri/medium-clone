@@ -1,15 +1,18 @@
 import {
   format,
   isThisYear,
-  isThisWeek,
   formatDistanceToNowStrict,
+  subWeeks,
+  isBefore,
 } from "date-fns";
 
 export default function formatDate(
   date: Date,
   options: { relative?: Boolean; omitIfCurrentYear?: Boolean } = {}
 ) {
-  if (options.relative && isThisWeek(date))
+  const isLast7Days = isBefore(subWeeks(new Date(), 1), date);
+
+  if (options.relative && isLast7Days)
     return formatDistanceToNowStrict(date, { addSuffix: true });
 
   return format(

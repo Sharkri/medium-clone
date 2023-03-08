@@ -22,7 +22,7 @@ export default function Homepage() {
       <div className="flex justify-evenly">
         <main className="pt-[50px] max-w-[728px] flex flex-col gap-6">
           {posts.map((post) => (
-            <PostPreview post={post} />
+            <PostPreview post={post} key={post.id} />
           ))}
         </main>
         <Sidebar>siderbar!~!! !</Sidebar>
