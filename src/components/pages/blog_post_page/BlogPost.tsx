@@ -5,11 +5,11 @@ import { getPostById, getUserById } from "../../../firebase/firebase-app";
 
 import Post from "../../../interfaces/PostInterface";
 import UserData from "../../../interfaces/UserDataInterface";
-import BlogMarkdown from "../../helper-components/BlogMarkdown";
 import ProfilePicture from "../../helper-components/ProfilePicture";
 import formatDate from "../../../helper-functions/formatDate";
 import Sidebar from "../../main/Sidebar";
 import UserInfo from "../../helper-components/UserInfo";
+import BlogMarkdownWithTitleAndDesc from "../../helper-components/BlogMarkdownWithTitleAndDesc";
 
 export default function BlogPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -59,24 +59,22 @@ export default function BlogPost() {
                 </div>
 
                 <div className="flex text-sm text-grey">
-                  <span>{formatDate(post.timestamp.toDate())}</span>
+                  <span>
+                    {formatDate(post.timestamp.toDate(), {
+                      omitIfCurrentYear: true,
+                    })}
+                  </span>
                   <div className="px-2">·</div>
                   <span>{post.readingTimeInMinutes} min read</span>
                 </div>
               </div>
             </header>
-            <div className="prose max-sm:prose-p:text-[18px] max-sm:prose-h1:text-[20px] max-sm:prose-h2:text-[18px] max-w-full prose-img:mx-auto prose-img:max-h-[696px] prose-pre:bg-[#282c34] font-source-serif-pro prose-headings:font-sohne-bold">
-              <div className="not-prose">
-                <h1 className="text-[32px] tracking-[-0.256px] font-sohne-bold">
-                  {post.title}
-                </h1>
-                <h2 className="text-grey text-[22px] font-sans">
-                  {post.description}
-                </h2>
-              </div>
-              {post.thumbnail && <img src={post.thumbnail} alt="" />}
-              <BlogMarkdown text={post.blogContents} />
-            </div>
+
+            <BlogMarkdownWithTitleAndDesc
+              title={post.title}
+              description={post.description}
+              blogContents={post.blogContents}
+            />
           </main>
         </article>
         <Sidebar>

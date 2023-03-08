@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 
 import TextareaAutosize from "react-textarea-autosize";
 
-import BlogMarkdown from "../../helper-components/BlogMarkdown";
+import BlogMarkdownWithTitleAndDesc from "../../helper-components/BlogMarkdownWithTitleAndDesc";
 import PublishPost from "./PublishPost";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [blogContents, setBlogContents] = useState("");
   const [isEditing, setIsEditing] = useState(true);
   const [isPublishing, setIsPublishing] = useState(false);
@@ -31,6 +32,7 @@ export default function CreatePost() {
     return (
       <PublishPost
         title={title}
+        description={description}
         blogContents={blogContents}
         onGoBack={() => setIsPublishing(false)}
       />
@@ -57,6 +59,12 @@ export default function CreatePost() {
             className="font-title text-[42px] leading-[52.5px] outline-none resize-none"
           />
           <TextareaAutosize
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value.replace(/\n/g, ""))}
+            className="font-content-serif text-[28px] leading-[42.4px] text-grey outline-none resize-none"
+          />
+          <TextareaAutosize
             className="font-content-serif text-[21px] leading-[33.18px] outline-none resize-none"
             value={blogContents}
             onChange={(e) => setBlogContents(e.target.value)}
@@ -65,10 +73,12 @@ export default function CreatePost() {
           />
         </div>
       ) : (
-        <div className="prose prose-lg prose-img:w-full prose-img:m-auto prose-img:max-w-[600px] prose-pre:bg-[#282c34] prose-headings:font-sans font-source-serif-pro">
-          <h1 className="font-bold text-3xl">{title}</h1>
-          <BlogMarkdown text={blogContents} />
-        </div>
+        // preview markdown
+        <BlogMarkdownWithTitleAndDesc
+          title={title}
+          description={description}
+          blogContents={blogContents}
+        />
       )}
     </div>
   );

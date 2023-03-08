@@ -1,4 +1,4 @@
-import { MouseEventHandler, useContext, useEffect, useState } from "react";
+import { MouseEventHandler, useContext, useState } from "react";
 
 import { serverTimestamp, updateDoc } from "firebase/firestore";
 import { addPost, getImageUrl } from "../../../firebase/firebase-app";
@@ -7,30 +7,22 @@ import UserContext from "../../../UserContext";
 
 import calculateReadingTime from "../../../helper-functions/calculateReadingTime";
 import getRandomId from "../../../helper-functions/getRandomId";
+import useImagePreview from "../../hooks/useImagePreview";
 
 export default function PublishPost({
   title,
+  description,
   blogContents,
   onGoBack,
 }: {
   title: string;
+  description: string;
   blogContents: string;
   onGoBack: MouseEventHandler;
 }) {
   const { user } = useContext(UserContext);
   const [file, setFile] = useState<File>();
-  const [previewImage, setPreviewImage] = useState("");
-  const [description, setDescription] = useState("");
-
-  useEffect(() => {
-    if (!file) return;
-    // create the preview
-    const objectUrl = URL.createObjectURL(file);
-    setPreviewImage(objectUrl);
-
-    // free memory when ever this component is unmounted
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [file]);
+  const previewImage = useImagePreview(file);
 
   async function handlePublishPost() {
     if (!user?.uid) throw new Error("User does not exist.");
@@ -59,8 +51,8 @@ export default function PublishPost({
 
   return (
     <div className="h-[calc(100vh-57px)] grid place-items-center font-content-sans">
-      <div className="w-full max-w-[1040px] flex flex-wrap">
-        <div className="grow p-10 flex flex-col gap-2">
+      <div className="w-full max-w-3xl flex flex-wrap">
+        <div className="grow p-8 flex flex-col gap-2">
           <b className="text-[19px] text-center text-black/75 font-content-sans-bold">
             Story Preview
           </b>
@@ -101,17 +93,9 @@ export default function PublishPost({
               />
             </label>
           </div>
-
-          <input
-            type="text"
-            value={description}
-            placeholder="Write a preview description"
-            className="mt-5 text-black/80 tracking-[-.29px] font-content-sans-bold text-[21px] border-b placeholder-[#b3b3b1] border-black/[.15] outline-none"
-            onChange={(e) => setDescription(e.target.value)}
-          />
         </div>
 
-        <div className="grow p-10">
+        <div className="grow-[0.7] p-8">
           <p className="text-[19px] text-black/75 line-clamp-1 break-all mb-5">
             Publishing to:{" "}
             <b className="font-content-sans-bold">{user?.displayName}</b>
