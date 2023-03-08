@@ -1,19 +1,19 @@
 import { useRef } from "react";
-import Comment from "../../../interfaces/CommentInterface";
+import Post from "../../../interfaces/PostInterface";
 import CreateComment from "./CreateComment";
 
 export default function CommentSection({
-  isCommentSectionOpen,
-  comments,
+  commentSectionOpen,
+  post,
   onClose,
 }: {
-  isCommentSectionOpen: boolean;
-  comments: Comment[];
+  commentSectionOpen: boolean;
+  post: Post;
   onClose: Function;
 }) {
   const commentModalRef = useRef(null);
 
-  if (!isCommentSectionOpen) return null;
+  if (!commentSectionOpen) return null;
   return (
     <div
       className="fixed w-full h-full flex justify-end bg-black/20 left-0 top-0 animate-fade-in cursor-pointer"
@@ -29,7 +29,7 @@ export default function CommentSection({
       <aside className="shadow-lg bg-white overflow-auto max-w-[414px] w-full cursor-auto">
         <div className="p-6 flex justify-between">
           <h2 className="text-xl font-sohne-semibold">
-            Responses ({comments.length})
+            Responses ({post.comments.length})
           </h2>
           <button onClick={() => onClose()}>
             <i className="fa-solid fa-xmark thinnest-icon text-2xl text-grey" />
@@ -37,7 +37,7 @@ export default function CommentSection({
         </div>
 
         <div className="mx-6 mb-5">
-          <CreateComment />
+          <CreateComment post={post} />
         </div>
       </aside>
     </div>

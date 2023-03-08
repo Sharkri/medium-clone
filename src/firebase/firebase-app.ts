@@ -27,6 +27,7 @@ import {
 } from "firebase/storage";
 import Post from "../interfaces/PostInterface";
 import generateUniqueUsername from "../helper-functions/generateUniqueUsername";
+import Comment from "../interfaces/CommentInterface";
 
 const getAuthInstance = getAuth;
 
@@ -183,6 +184,16 @@ async function addPost(post: Post) {
   }
 }
 
+async function addComment(postId: string, comment: Comment) {
+  const postDoc = await getDoc("posts", "id", postId);
+
+  if (!postDoc) return;
+
+  const postData = postDoc.data() as Post;
+
+  updateDoc(postDoc.ref, { comments: [...postData.comments, comment] });
+}
+
 // refactor later to only get 4-12 posts and infinite scrolling
 async function getAllPosts() {
   const { docs } = await getDocs(collection(getFirestore(), "posts"));
@@ -219,4 +230,5 @@ export {
   changeUsername,
   getUserRefById,
   updateUser,
+  addComment,
 };

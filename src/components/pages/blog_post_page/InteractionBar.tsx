@@ -3,9 +3,9 @@ import Post from "../../../interfaces/PostInterface";
 import CommentSection from "./CommentSection";
 
 export default function InteractionBar({ post }: { post: Post }) {
-  const [isCommentSectionOpen, setIsCommentSectionOpen] = useState(false);
+  const [commentSectionOpen, setCommentSectionOpen] = useState(false);
 
-  const closeCommentSection = () => setIsCommentSectionOpen(false);
+  const closeCommentSection = () => setCommentSectionOpen(false);
 
   return (
     <div className="sticky bottom-4 flex justify-center z-50">
@@ -32,7 +32,7 @@ export default function InteractionBar({ post }: { post: Post }) {
 
         <button
           className="flex gap-1 items-center"
-          onClick={() => setIsCommentSectionOpen(true)}
+          onClick={() => setCommentSectionOpen(true)}
         >
           <svg
             width="24"
@@ -49,9 +49,9 @@ export default function InteractionBar({ post }: { post: Post }) {
       </div>
 
       <CommentSection
-        isCommentSectionOpen={isCommentSectionOpen}
+        commentSectionOpen={commentSectionOpen}
         onClose={closeCommentSection}
-        comments={post.comments}
+        post={post}
       />
     </div>
   );
