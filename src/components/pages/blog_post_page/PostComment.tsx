@@ -5,7 +5,13 @@ import Comment from "../../../interfaces/CommentInterface";
 import UserData from "../../../interfaces/UserDataInterface";
 import ProfilePicture from "../../helper-components/ProfilePicture";
 
-export default function PostComment({ comment }: { comment: Comment }) {
+export default function PostComment({
+  comment,
+  isAuthor,
+}: {
+  comment: Comment;
+  isAuthor: boolean;
+}) {
   const [author, setAuthor] = useState<UserData | null>(null);
 
   useEffect(() => {
@@ -24,7 +30,14 @@ export default function PostComment({ comment }: { comment: Comment }) {
       <div className="flex gap-3 items-center">
         {<ProfilePicture src={author.photoURL} className="w-8 h-8" />}
         <div className="flex flex-col">
-          <span>{author.displayName}</span>
+          <div>
+            <span>{author.displayName}</span>
+            {isAuthor && (
+              <span className="bg-green px-[6px] py-[1px] text-[11px] text-white ml-3">
+                AUTHOR
+              </span>
+            )}
+          </div>
           <span className="text-grey" title={commentTimestamp}>
             {formatDate(commentTimestamp, { alwaysRelative: true })}
           </span>

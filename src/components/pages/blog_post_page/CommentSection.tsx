@@ -52,7 +52,11 @@ export default function CommentSection({
 
           <div className="mx-6 mb-5">
             {post.comments.map((comment) => (
-              <PostComment comment={comment} key={comment.id} />
+              <PostComment
+                comment={comment}
+                key={comment.id}
+                isAuthor={comment.authorUid === post.authorUid}
+              />
             ))}
           </div>
         </div>
