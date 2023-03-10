@@ -37,20 +37,24 @@ export default function CreateComment({ post }: { post: Post }) {
   }
 
   return (
-    <div
-      className={`py-[14px] shadow-[rgb(0,0,0,0.12)_0px_2px_8px] ${
-        expanded && "animate-fade-in"
-      }`}
+    <form
+      className={`py-[14px] shadow-[rgb(0,0,0,0.12)_0px_2px_8px]`}
+      onSubmit={handleAddComment}
     >
-      {expanded && (
-        <div className="px-[14px] mb-[6px] flex items-center gap-3">
-          <ProfilePicture src={user?.photoURL} className="w-8 h-8" />
-          <span className="text-sm">{user?.displayName}</span>
-        </div>
-      )}
+      <div
+        className={`${
+          !expanded && "hidden"
+        } px-[14px] mb-[6px] flex items-center gap-3 
+        `}
+      >
+        <ProfilePicture src={user?.photoURL} className="w-8 h-8" />
+        <span className="text-sm">{user?.displayName}</span>
+      </div>
 
       <div
-        className={`${expanded ? "min-h-[100px] p-[14px]" : "px-[14px] flex"}`}
+        className={`transition-all duration-300 ${
+          expanded ? "min-h-[100px] p-[14px]" : "px-[14px] flex"
+        } `}
       >
         <TextareaAutosize
           placeholder="What are your thoughts?"
@@ -61,24 +65,27 @@ export default function CreateComment({ post }: { post: Post }) {
         ></TextareaAutosize>
       </div>
 
-      {expanded && (
-        <div className="text-sm flex justify-end px-[14px]">
-          <button
-            className="pt-1 px-3 pb-[6px] disabled:cursor-default"
-            disabled={disabled}
-            onClick={onCancel}
-          >
-            Cancel
-          </button>
-          <button
-            className="pt-1 px-3 pb-[6px] bg-green disabled:opacity-30 rounded-full text-white disabled:cursor-default"
-            onClick={handleAddComment}
-            disabled={disabled || !commentText}
-          >
-            Respond
-          </button>
-        </div>
-      )}
-    </div>
+      <div
+        className={`${
+          !expanded && "hidden"
+        } text-sm flex justify-end px-[14px]`}
+      >
+        <button
+          className="pt-1 px-3 pb-[6px] disabled:cursor-default"
+          type="button"
+          disabled={disabled}
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
+        <button
+          className="pt-1 px-3 pb-[6px] bg-green disabled:opacity-30 rounded-full text-white disabled:cursor-default"
+          type="submit"
+          disabled={disabled || !commentText}
+        >
+          Respond
+        </button>
+      </div>
+    </form>
   );
 }
