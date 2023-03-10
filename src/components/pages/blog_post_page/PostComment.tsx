@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getUserById } from "../../../firebase/firebase-app";
 import formatDate from "../../../helper-functions/formatDate";
 import Comment from "../../../interfaces/CommentInterface";
@@ -18,10 +19,7 @@ export default function PostComment({
     getUserById(comment.authorUid).then((user) => setAuthor(user as UserData));
   }, [comment.authorUid]);
 
-  const commentTimestamp =
-    comment.timestamp instanceof Date
-      ? comment.timestamp
-      : comment.timestamp.toDate();
+  const commentTimestamp = comment.timestamp.toDate();
 
   if (author == null) return null;
 
@@ -31,7 +29,7 @@ export default function PostComment({
         {<ProfilePicture src={author.photoURL} className="w-8 h-8" />}
         <div className="flex flex-col">
           <div>
-            <span>{author.displayName}</span>
+            <Link to={`/u/${author.username}`}>{author.displayName}</Link>
             {isAuthor && (
               <span className="bg-green px-[6px] py-[1px] text-[11px] text-white ml-3">
                 AUTHOR
