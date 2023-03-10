@@ -36,7 +36,11 @@ export default function CreateComment({ post }: { post: Post }) {
   }
 
   return (
-    <div className="py-[14px] shadow-[rgb(0,0,0,0.12)_0px_2px_8px]">
+    <div
+      className={`py-[14px] shadow-[rgb(0,0,0,0.12)_0px_2px_8px] ${
+        expanded && "animate-fade-in"
+      }`}
+    >
       {expanded && (
         <div className="px-[14px] mb-[6px] flex items-center gap-3">
           <ProfilePicture src={user?.photoURL} className="w-8 h-8" />
