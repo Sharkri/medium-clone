@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { addComment } from "../../../firebase/firebase-app";
 import getRandomId from "../../../helper-functions/getRandomId";
@@ -12,7 +12,8 @@ export default function CreateComment({ post }: { post: Post }) {
   const [expanded, setExpanded] = useState(true);
   const [disabled, setDisabled] = useState(false);
 
-  async function handleAddComment() {
+  async function handleAddComment(e: FormEvent) {
+    e.preventDefault();
     if (!user || !commentText || disabled) return;
 
     setDisabled(true);
