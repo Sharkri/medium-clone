@@ -13,14 +13,13 @@ export default function CommentSection({
   onClose: Function;
 }) {
   const commentModalRef = useRef(null);
-
   if (!commentSectionOpen) return null;
   return (
     <div
       className="fixed w-full h-full flex justify-end bg-black/20 left-0 top-0 animate-fade-in cursor-pointer"
       onMouseDown={(e) => {
         const modalEdgeClicked =
-          (e.target as HTMLElement) === commentModalRef?.current;
+          (e.target as HTMLElement) === commentModalRef.current;
 
         // Close modal if clicked outside of modal-content (i.e. the edge of modal)
         if (modalEdgeClicked) onClose();
@@ -45,9 +44,9 @@ export default function CommentSection({
           <div className="mb-4 border-b border-b-neutral-200 pt-5 px-5 pb-3">
             <button className="text-xs px-3">
               <strong className="uppercase font-sohne-bold mr-2">
-                Most relevant{" "}
+                Most relevant
               </strong>
-              <i className="fa-solid fa-chevron-down" />
+              <i className="fa-solid fa-chevron-down thin-icon" />
             </button>
           </div>
 

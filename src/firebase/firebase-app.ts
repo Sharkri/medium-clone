@@ -154,6 +154,10 @@ async function updateUser(
 }
 
 const getPostById = async (id: string) => getDocData("posts", "id", id);
+const getPostRef = async (id: string) => {
+  const post = await getDoc("posts", "id", id);
+  return post?.ref;
+};
 const getUserById = async (uid: string) => getDocData("users", "uid", uid);
 const getUserRefById = async (uid: string) => {
   const x = await getDoc("users", "uid", uid);
@@ -191,7 +195,11 @@ async function addComment(postId: string, comment: Comment) {
 
   const postData = postDoc.data() as Post;
 
-  updateDoc(postDoc.ref, { comments: [...postData.comments, comment] });
+  const newComments = [...postData.comments, comment];
+
+  updateDoc(postDoc.ref, { comments: newComments });
+
+  return newComments;
 }
 
 // refactor later to only get 4-12 posts and infinite scrolling
@@ -231,4 +239,5 @@ export {
   getUserRefById,
   updateUser,
   addComment,
+  getPostRef,
 };

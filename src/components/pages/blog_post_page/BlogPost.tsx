@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
 import { Link, useParams } from "react-router-dom";
-import { getPostById, getUserById } from "../../../firebase/firebase-app";
+import { getPostRef, getUserById } from "../../../firebase/firebase-app";
 
-import Post from "../../../interfaces/PostInterface";
 import UserData from "../../../interfaces/UserDataInterface";
 import ProfilePicture from "../../helper-components/ProfilePicture";
 import formatDate from "../../../helper-functions/formatDate";
@@ -11,29 +10,30 @@ import Sidebar from "../../main/Sidebar";
 import UserInfo from "../../helper-components/UserInfo";
 import BlogMarkdownWithTitleAndDesc from "../../helper-components/BlogMarkdownWithTitleAndDesc";
 import InteractionBar from "./InteractionBar";
+import { DocumentReference } from "firebase/firestore";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import Post from "../../../interfaces/PostInterface";
 
 export default function BlogPost() {
-  const [post, setPost] = useState<Post | null>(null);
+  const [postRef, setPostRef] = useState<DocumentReference | null>(null);
+  const documentData = useDocumentData(postRef);
+
+  const post = documentData[0] as Post;
+
   const [author, setAuthor] = useState<UserData | null>(null);
   const { title } = useParams();
 
   const postId = title?.split("-").pop();
 
   useEffect(() => {
-    async function fetchInfo() {
-      if (!postId) return;
-
-      const fetchedPost = (await getPostById(postId)) as Post;
-      const fetchedAuthor = (await getUserById(
-        fetchedPost.authorUid
-      )) as UserData;
-
-      setPost(fetchedPost);
-      setAuthor(fetchedAuthor);
-    }
-
-    fetchInfo();
+    if (!postId) return;
+    getPostRef(postId).then((ref) => setPostRef(ref as DocumentReference));
   }, [postId]);
+
+  useEffect(() => {
+    if (!post?.authorUid) return;
+    getUserById(post.authorUid).then((user) => setAuthor(user as UserData));
+  }, [post?.authorUid]);
 
   if (post == null || author == null) return null;
 

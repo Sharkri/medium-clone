@@ -12,7 +12,10 @@ export default function PostComment({ comment }: { comment: Comment }) {
     getUserById(comment.authorUid).then((user) => setAuthor(user as UserData));
   }, [comment.authorUid]);
 
-  const commentTimestamp = comment.timestamp.toDate();
+  const commentTimestamp =
+    comment.timestamp instanceof Date
+      ? comment.timestamp
+      : comment.timestamp.toDate();
 
   if (author == null) return null;
 
