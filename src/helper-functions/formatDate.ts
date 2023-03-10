@@ -8,12 +8,19 @@ import {
 
 export default function formatDate(
   date: Date,
-  options: { relative?: Boolean; omitIfCurrentYear?: Boolean } = {}
+  options: {
+    relativeIfLast7Days?: Boolean;
+    alwaysRelative?: Boolean;
+    omitIfCurrentYear?: Boolean;
+  } = {}
 ) {
-  const isLast7Days = isBefore(subWeeks(new Date(), 1), date);
+  if (options.alwaysRelative || options.relativeIfLast7Days) {
+    const isLast7Days = isBefore(subWeeks(new Date(), 1), date);
 
-  if (options.relative && isLast7Days)
-    return formatDistanceToNowStrict(date, { addSuffix: true });
+    if (options.alwaysRelative || isLast7Days) {
+      return formatDistanceToNowStrict(date, { addSuffix: true });
+    }
+  }
 
   return format(
     date,

@@ -23,6 +23,7 @@ export default function CreateComment({ post }: { post: Post }) {
       authorUid: user.uid,
       replies: [],
       id: getRandomId(12),
+      timestamp: new Date(),
     });
 
     setDisabled(false);

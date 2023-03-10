@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import Post from "../../../interfaces/PostInterface";
 import CreateComment from "./CreateComment";
+import PostComment from "./PostComment";
 
 export default function CommentSection({
   commentSectionOpen,
@@ -36,8 +37,25 @@ export default function CommentSection({
           </button>
         </div>
 
-        <div className="mx-6 mb-5">
-          <CreateComment post={post} />
+        <div>
+          <div className="mx-6 mb-5">
+            <CreateComment post={post} />
+          </div>
+
+          <div className="mb-4 border-b border-b-neutral-200 pt-5 px-5 pb-3">
+            <button className="text-xs px-3">
+              <strong className="uppercase font-sohne-bold mr-2">
+                Most relevant{" "}
+              </strong>
+              <i className="fa-solid fa-chevron-down" />
+            </button>
+          </div>
+
+          <div className="mx-6 mb-5">
+            {post.comments.map((comment) => (
+              <PostComment comment={comment} key={comment.id} />
+            ))}
+          </div>
         </div>
       </aside>
     </div>

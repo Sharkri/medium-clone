@@ -4,4 +4,5 @@ export default interface Comment {
   authorUid: string;
   replies?: Comment[];
   id: string;
+  timestamp: any;
 }

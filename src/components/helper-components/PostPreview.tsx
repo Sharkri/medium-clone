@@ -55,7 +55,7 @@ export default function PostPreview({
           )}
           <span className="text-grey text-sm whitespace-nowrap">
             {formatDate(post.timestamp.toDate(), {
-              relative: true,
+              relativeIfLast7Days: true,
               omitIfCurrentYear: true,
             })}
           </span>
