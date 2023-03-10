@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getPostRef, getUserById } from "../../../firebase/firebase-app";
 
 import UserData from "../../../interfaces/UserDataInterface";
-import ProfilePicture from "../../helper-components/ProfilePicture";
-import formatDate from "../../../helper-functions/formatDate";
 import Sidebar from "../../main/Sidebar";
 import UserInfo from "../../helper-components/UserInfo";
 import BlogMarkdownWithTitleAndDesc from "../../helper-components/BlogMarkdownWithTitleAndDesc";
@@ -13,6 +11,7 @@ import InteractionBar from "./InteractionBar";
 import { DocumentReference } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import Post from "../../../interfaces/PostInterface";
+import BlogPostHeader from "./BlogPostHeader";
 
 export default function BlogPost() {
   const [postRef, setPostRef] = useState<DocumentReference | null>(null);
@@ -42,34 +41,7 @@ export default function BlogPost() {
       <div className="flex justify-evenly max-lg:block h-full">
         <article className="mx-6 mb-16 grow-[0.8] relative h-full">
           <main className="mx-auto max-w-[680px] min-h-full">
-            <header className="mb-8 mt-14 max-lg:mt-8 max-lg:mb-6 flex gap-4">
-              <Link to={`/u/${author.username}`}>
-                <ProfilePicture
-                  className="w-[48px] h-[48px]"
-                  src={author.photoURL}
-                />
-              </Link>
-              <div>
-                <div className="flex items-center mb-1">
-                  <Link to={`/u/${author.username}`}>
-                    <h2 className="text-lighterblack">{author.displayName}</h2>
-                  </Link>
-                  <button className="lg:hidden ml-3 bg-blue-500 border border-blue-500 text-[13px] text-white rounded-full px-2 pb-[1px]">
-                    Follow
-                  </button>
-                </div>
-
-                <div className="flex text-sm text-grey">
-                  <span>
-                    {formatDate(post.timestamp.toDate(), {
-                      omitIfCurrentYear: true,
-                    })}
-                  </span>
-                  <div className="px-2">·</div>
-                  <span>{post.readingTimeInMinutes} min read</span>
-                </div>
-              </div>
-            </header>
+            <BlogPostHeader author={author} post={post} />
 
             <BlogMarkdownWithTitleAndDesc
               title={post.title}
