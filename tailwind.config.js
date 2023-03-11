@@ -157,6 +157,15 @@ module.exports = {
             transform: "scale(1)",
           },
         },
+
+        scale: {
+          "35%": {
+            transform: "scale(1.1)",
+          },
+          "100%": {
+            transform: "scale(1)",
+          },
+        },
       },
 
       animation: {
@@ -164,6 +173,9 @@ module.exports = {
         "fade-in":
           "fade-in 300ms cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 normal forwards running",
         "scale-in":
+          "scale-in 300ms cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 normal forwards running",
+
+        scale:
           "scale 300ms cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 normal forwards running",
 
         "fade-scale-in":

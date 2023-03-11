@@ -1,15 +1,61 @@
+import { useEffect, useState } from "react";
+import useIsMount from "../../hooks/useIsMount";
+
 export default function LikeButton({
   onLike,
+  currentUserLikeCount,
   likeCount,
 }: {
   onLike: Function;
+  currentUserLikeCount: number;
   likeCount: number;
 }) {
+  const [timerId, setTimerId] = useState<number | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const isMount = useIsMount();
+
+  function activatePopup() {
+    if (timerId) clearTimeout(timerId);
+
+    setShowPopup(true);
+
+    const id = window.setTimeout(() => {
+      setShowPopup(false);
+      setTimerId(null);
+    }, 1000);
+
+    setTimerId(id);
+  }
+
+  useEffect(() => {
+    // skip initial render
+    if (isMount) return;
+    // show popup when currentUserLikeCount is incremented
+    activatePopup();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUserLikeCount]);
+
   return (
     <button
       className="relative flex gap-[5px] items-center group"
-      onClick={() => onLike()}
+      onClick={async () => {
+        // useEffect will not run if same number so manually activate it
+        if (currentUserLikeCount >= 50) {
+          activatePopup();
+        } else onLike();
+      }}
     >
+      {showPopup && (
+        <div
+          className="flex justify-center items-center text-[15px] absolute -left-1 bottom-10 bg-lighterblack text-white h-[35px] w-[35px] rounded-full animate-scale"
+          key={+new Date()}
+        >
+          +{currentUserLikeCount}
+        </div>
+      )}
+
       <svg
         width="24"
         height="24"

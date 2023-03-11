@@ -45,7 +45,7 @@ export default function PostComment({
 
       <div className="pt-3 pb-[5px]">{comment.text}</div>
       <div className="mt-[14px] flex justify-between">
-        <LikeButton onLike={() => {}} likeCount={0} />
+        <LikeButton onLike={() => {}} likeCount={0} currentUserLikeCount={0} />
 
         <button>Reply</button>
       </div>

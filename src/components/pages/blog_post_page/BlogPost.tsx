@@ -47,6 +47,8 @@ export default function BlogPost() {
 
   if (!post || !postRef || !author) return null;
 
+  const currentUserLikeCount = currentUser ? post.likes[currentUser.uid] : 0;
+
   return (
     <div className="max-w-[1336px] mx-auto h-[calc(100vh-57px)]">
       <div className="flex justify-evenly max-lg:block h-full">
@@ -63,13 +65,14 @@ export default function BlogPost() {
 
           <InteractionBar
             post={post}
-            onLike={() => {
+            currentUserLikeCount={currentUserLikeCount}
+            onLike={async () => {
               if (!currentUser) {
                 setModalOpen(true, <SignUpOptions />);
               } else {
                 // max likes per post = 50
-                if (post.likes[currentUser.uid] >= 50) return;
-                likePost(postRef, currentUser.uid);
+                if (currentUserLikeCount >= 50) return;
+                await likePost(postRef, currentUser.uid);
               }
             }}
           />
