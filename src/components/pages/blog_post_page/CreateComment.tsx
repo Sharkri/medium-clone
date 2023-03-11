@@ -19,7 +19,7 @@ export default function CreateComment({ post }: { post: Post }) {
     setDisabled(true);
 
     await addComment(post.id, {
-      likes: 0,
+      likes: {},
       text: commentText,
       authorUid: user.uid,
       replies: [],

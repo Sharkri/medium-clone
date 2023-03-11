@@ -1,5 +1,7 @@
+import Likes from "./LikesInterface";
+
 export default interface Comment {
-  likes: number;
+  likes: Likes;
   text: string;
   authorUid: string;
   replies?: Comment[];

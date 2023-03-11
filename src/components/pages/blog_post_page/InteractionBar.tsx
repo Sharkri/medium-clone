@@ -7,10 +7,12 @@ import LikeButton from "./LikeButton";
 export default function InteractionBar({
   post,
   onLike,
+  onCommentLike,
   currentUserLikeCount,
 }: {
   post: Post;
   onLike: Function;
+  onCommentLike: Function;
   currentUserLikeCount: number;
 }) {
   const [commentSectionOpen, setCommentSectionOpen] = useState(false);
@@ -50,6 +52,7 @@ export default function InteractionBar({
         commentSectionOpen={commentSectionOpen}
         onClose={closeCommentSection}
         post={post}
+        onCommentLike={onCommentLike}
       />
     </div>
   );

@@ -211,8 +211,43 @@ async function getAllPosts() {
   return docs.map((document) => document.data());
 }
 
-async function likePost(reference: DocumentReference, userUid: string) {
-  updateDoc(reference, { [`likes.${userUid}`]: increment(1) });
+async function likePost(postRef: DocumentReference, userUid: string) {
+  updateDoc(postRef, { [`likes.${userUid}`]: increment(1) });
+}
+
+function findCommentById(comment: Comment, idToFind: string): Comment | null {
+  // based cases
+  if (comment.id === idToFind) return comment;
+  if (!comment.replies) return null;
+
+  for (let i = 0; i < comment.replies.length; i++) {
+    // search for comment with comment id in comment replies
+    const foundComment = findCommentById(comment.replies[i], idToFind);
+    if (foundComment != null) return foundComment;
+  }
+
+  return null;
+}
+
+async function likeComment(
+  post: Post,
+  postRef: DocumentReference,
+  userUid: string,
+  commentId: string
+) {
+  for (const comment of post.comments) {
+    const foundComment = findCommentById(comment, commentId);
+
+    // if comment exists and times likes is less than 50
+    if (foundComment != null && (foundComment.likes[userUid] || 0) < 50) {
+      // if likes are undefined
+      if (foundComment.likes[userUid] == null) foundComment.likes[userUid] = 1;
+      // increment likes by 1
+      else foundComment.likes[userUid]++;
+    }
+  }
+
+  updateDoc(postRef, { comments: post.comments });
 }
 
 async function getAllPostsByUser(uid: string) {
@@ -247,4 +282,5 @@ export {
   addComment,
   getPostRef,
   likePost,
+  likeComment,
 };

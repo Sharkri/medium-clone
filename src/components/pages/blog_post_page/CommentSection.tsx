@@ -7,10 +7,12 @@ export default function CommentSection({
   commentSectionOpen,
   post,
   onClose,
+  onCommentLike,
 }: {
   commentSectionOpen: boolean;
   post: Post;
   onClose: Function;
+  onCommentLike: Function;
 }) {
   const commentModalRef = useRef(null);
   if (!commentSectionOpen) return null;
@@ -56,6 +58,7 @@ export default function CommentSection({
                 comment={comment}
                 key={comment.id}
                 isAuthor={comment.authorUid === post.authorUid}
+                onCommentLike={onCommentLike}
               />
             ))}
           </div>

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import {
   getPostRef,
   getUserById,
+  likeComment,
   likePost,
 } from "../../../firebase/firebase-app";
 
@@ -74,6 +75,10 @@ export default function BlogPost() {
                 if (currentUserLikeCount >= 50) return;
                 await likePost(postRef, currentUser.uid);
               }
+            }}
+            onCommentLike={async (commentId: string) => {
+              if (!currentUser) setModalOpen(true, <SignUpOptions />);
+              else await likeComment(post, postRef, currentUser.uid, commentId);
             }}
           />
         </article>
