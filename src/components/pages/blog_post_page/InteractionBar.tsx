@@ -1,17 +1,24 @@
 import { useState } from "react";
+import getLikeCount from "../../../helper-functions/getLikeCount";
 import Post from "../../../interfaces/PostInterface";
 import CommentSection from "./CommentSection";
 import LikeButton from "./LikeButton";
 
-export default function InteractionBar({ post }: { post: Post }) {
+export default function InteractionBar({
+  post,
+  onLike,
+}: {
+  post: Post;
+  onLike: Function;
+}) {
   const [commentSectionOpen, setCommentSectionOpen] = useState(false);
 
   const closeCommentSection = () => setCommentSectionOpen(false);
 
   return (
-    <div className="sticky bottom-4 flex justify-center z-50">
+    <div className="sticky bottom-4 flex justify-center z-20">
       <div className="flex items-center h-[40px] shadow-lg pl-4 pr-[14px] rounded-full text-grey bg-white">
-        <LikeButton likeCount={post.likes} onLike={() => {}} />
+        <LikeButton likeCount={getLikeCount(post.likes)} onLike={onLike} />
 
         <div className="border border-neutral-200 h-3 mx-4" />
 

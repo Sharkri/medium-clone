@@ -7,7 +7,7 @@ export default function LikeButton({
 }) {
   return (
     <button
-      className="flex gap-[5px] items-center group"
+      className="relative flex gap-[5px] items-center group"
       onClick={() => onLike()}
     >
       <svg

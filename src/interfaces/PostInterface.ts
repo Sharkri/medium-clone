@@ -1,4 +1,5 @@
 import Comment from "./CommentInterface";
+import Likes from "./LikesInterface";
 
 export default interface Post {
   title: string;
@@ -7,7 +8,8 @@ export default interface Post {
   thumbnail: string;
   authorUid: string;
   timestamp: any;
-  likes: number;
+  // array-like object
+  likes: Likes;
   readingTimeInMinutes: number;
   comments: Comment[];
   id: string;

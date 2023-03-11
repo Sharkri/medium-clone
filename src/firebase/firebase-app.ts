@@ -18,6 +18,8 @@ import {
   limit,
   getDocs,
   updateDoc,
+  increment,
+  DocumentReference,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -202,11 +204,15 @@ async function addComment(postId: string, comment: Comment) {
   return newComments;
 }
 
-// refactor later to only get 4-12 posts and infinite scrolling
+// TODO: refactor later to only get 4-12 posts and infinite scrolling
 async function getAllPosts() {
   const { docs } = await getDocs(collection(getFirestore(), "posts"));
 
   return docs.map((document) => document.data());
+}
+
+async function likePost(reference: DocumentReference, userUid: string) {
+  updateDoc(reference, { [`likes.${userUid}`]: increment(1) });
 }
 
 async function getAllPostsByUser(uid: string) {
@@ -240,4 +246,5 @@ export {
   updateUser,
   addComment,
   getPostRef,
+  likePost,
 };

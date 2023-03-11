@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
-import { getPostRef, getUserById } from "../../../firebase/firebase-app";
+import {
+  getPostRef,
+  getUserById,
+  likePost,
+} from "../../../firebase/firebase-app";
 
 import UserData from "../../../interfaces/UserDataInterface";
 import Sidebar from "../../main/Sidebar";
@@ -12,8 +16,14 @@ import { DocumentReference } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import Post from "../../../interfaces/PostInterface";
 import BlogPostHeader from "./BlogPostHeader";
+import UserContext from "../../../UserContext";
+import ModalContext from "../../modal/ModalContext";
+import SignUpOptions from "../../sign_in_and_up/SignUpOptions";
 
 export default function BlogPost() {
+  const { user: currentUser } = useContext(UserContext);
+  const { setModalOpen } = useContext(ModalContext);
+
   const [postRef, setPostRef] = useState<DocumentReference | null>(null);
   const documentData = useDocumentData(postRef);
 
@@ -24,17 +34,18 @@ export default function BlogPost() {
 
   const postId = title?.split("-").pop();
 
+  // fetch post
   useEffect(() => {
     if (!postId) return;
     getPostRef(postId).then((ref) => setPostRef(ref as DocumentReference));
   }, [postId]);
-
+  // fetch author of post
   useEffect(() => {
     if (!post?.authorUid) return;
     getUserById(post.authorUid).then((user) => setAuthor(user as UserData));
   }, [post?.authorUid]);
 
-  if (post == null || author == null) return null;
+  if (!post || !postRef || !author) return null;
 
   return (
     <div className="max-w-[1336px] mx-auto h-[calc(100vh-57px)]">
@@ -50,7 +61,18 @@ export default function BlogPost() {
             />
           </main>
 
-          <InteractionBar post={post} />
+          <InteractionBar
+            post={post}
+            onLike={() => {
+              if (!currentUser) {
+                setModalOpen(true, <SignUpOptions />);
+              } else {
+                // max likes per post = 50
+                if (post.likes[currentUser.uid] >= 50) return;
+                likePost(postRef, currentUser.uid);
+              }
+            }}
+          />
         </article>
         <Sidebar>
           <div className="mt-10">

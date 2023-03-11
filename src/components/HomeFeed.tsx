@@ -15,7 +15,7 @@ function HomeFeed() {
               authorUid: "123",
               timestamp: serverTimestamp(),
               thumbnail: ".aa",
-              likes: 0,
+              likes: {},
               id: ".",
               comments: [],
               readingTimeInMinutes: 5,

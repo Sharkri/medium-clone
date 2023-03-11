@@ -39,7 +39,7 @@ export default function PublishPost({
       ),
       comments: [],
       thumbnail: "",
-      likes: 0,
+      likes: {},
       id: getRandomId(12),
     });
 
