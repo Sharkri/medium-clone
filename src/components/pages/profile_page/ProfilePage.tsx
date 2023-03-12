@@ -21,7 +21,8 @@ export default function ProfilePage({ page }: { page: "profile" | "about" }) {
     async function fetchInfo() {
       if (!username) return;
 
-      const userData = (await getUserByName(username)) as UserData;
+      const userData = (await getUserByName(username)) as UserData | null;
+      if (!userData) return;
 
       setUser(userData);
 

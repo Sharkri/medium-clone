@@ -13,7 +13,6 @@ import {
 import {
   getFirestore,
   collection,
-  addDoc,
   query,
   where,
   limit,
@@ -21,6 +20,9 @@ import {
   updateDoc,
   increment,
   DocumentReference,
+  doc,
+  setDoc,
+  getDoc,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -59,7 +61,7 @@ async function addUser(user: User) {
   try {
     const username = await generateUniqueUsername(user.email);
 
-    await addDoc(getCollectionRef("users"), {
+    await setDoc(doc(getFirestore(), "users", user.uid), {
       uid: user.uid,
       displayName: user.displayName,
       username,
@@ -93,7 +95,11 @@ async function signInWithGoogle() {
   return { user: userCredential.user, newUser };
 }
 
-async function getDoc(
+function getDocRef(path: string) {
+  return doc(getFirestore(), path);
+}
+
+async function searchForDoc(
   collectionToSearch: string,
   field: string,
   equalTo: string
@@ -111,25 +117,24 @@ async function getDoc(
   return docs.docs[0];
 }
 
-async function getDocData(
-  collectionToSearch: string,
-  field: string,
-  equalTo: string
-) {
-  const doc = await getDoc(collectionToSearch, field, equalTo);
+async function getDocData(path: string) {
+  const document = await getDoc(doc(getFirestore(), path));
 
-  return doc ? doc.data() : doc;
+  return document?.data();
 }
+
+const getPostRef = (id: string) => getDocRef(`posts/${id}`);
+const getUserRef = (uid: string) => getDocRef(`users/${uid}`);
+
+const getPostById = async (id: string) => getDocData(`posts/${id}`);
+const getUserById = async (uid: string) => getDocData(`users/${uid}`);
+
+const getUserByName = async (name: string) =>
+  searchForDoc("users", "username", name);
 
 async function changeUsername(userUid: string, newUsername: string) {
   try {
-    const docs = await getDocs(
-      query(getCollectionRef("users"), where("uid", "==", userUid), limit(1))
-    );
-
-    const reference = docs.docs[0].ref;
-
-    await updateDoc(reference, {
+    await updateDoc(getUserRef(userUid), {
       username: newUsername,
       lowercaseUsername: newUsername.toLowerCase(),
     });
@@ -142,11 +147,8 @@ async function changeEmail(newEmail: string) {
   const { currentUser } = getAuthInstance();
   if (!currentUser) return;
 
-  const doc = await getDoc("users", "uid", currentUser.uid);
-  if (!doc) return;
-
   await updateEmail(currentUser, newEmail);
-  await updateDoc(doc.ref, { email: newEmail });
+  await updateDoc(getUserRef(currentUser.uid), { email: newEmail });
 }
 
 async function updateUser(
@@ -158,28 +160,11 @@ async function updateUser(
   }
 ) {
   try {
-    const doc = await getDoc("users", "uid", uid);
-    if (!doc) throw Error(`User with uid ${uid} does not exist`);
-
-    await updateDoc(doc.ref, newData);
+    await updateDoc(getUserRef(uid), newData);
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
 }
-
-const getPostById = async (id: string) => getDocData("posts", "id", id);
-const getPostRef = async (id: string) => {
-  const post = await getDoc("posts", "id", id);
-  return post?.ref;
-};
-const getUserById = async (uid: string) => getDocData("users", "uid", uid);
-const getUserRefById = async (uid: string) => {
-  const x = await getDoc("users", "uid", uid);
-  return x?.ref;
-};
-
-const getUserByName = async (name: string) =>
-  getDocData("users", "username", name);
 
 async function getImageUrl(file: File, filePath: string) {
   try {
@@ -196,24 +181,19 @@ async function getImageUrl(file: File, filePath: string) {
 
 async function addPost(post: Post) {
   try {
-    return await addDoc(getCollectionRef("posts"), post);
+    await setDoc(doc(getFirestore(), "posts", post.id), post);
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
 }
 
 async function addComment(postId: string, comment: Comment) {
-  const postDoc = await getDoc("posts", "id", postId);
+  const post = await getPostById(postId);
+  if (!post) return;
 
-  if (!postDoc) return;
+  const { comments } = post;
 
-  const postData = postDoc.data() as Post;
-
-  const newComments = [...postData.comments, comment];
-
-  updateDoc(postDoc.ref, { comments: newComments });
-
-  return newComments;
+  updateDoc(getPostRef(postId), { comments: [...comments, comment] });
 }
 
 // TODO: refactor later to only get 4-12 posts and infinite scrolling
@@ -242,12 +222,12 @@ function findCommentById(comment: Comment, idToFind: string): Comment | null {
 }
 
 async function likeComment(
-  post: Post,
+  comments: Comment[],
   postRef: DocumentReference,
   userUid: string,
   commentId: string
 ) {
-  for (const comment of post.comments) {
+  for (const comment of comments) {
     const foundComment = findCommentById(comment, commentId);
 
     // if comment exists and times likes is less than 50
@@ -259,7 +239,7 @@ async function likeComment(
     }
   }
 
-  updateDoc(postRef, { comments: post.comments });
+  updateDoc(postRef, { comments });
 }
 
 async function getAllPostsByUser(uid: string) {
@@ -289,7 +269,7 @@ export {
   getUserByName,
   getAllPostsByUser,
   changeUsername,
-  getUserRefById,
+  getUserRef,
   updateUser,
   addComment,
   getPostRef,

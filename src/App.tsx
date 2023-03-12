@@ -3,7 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import LoggedOutHomepage from "./components/pages/logged_out_page/LoggedOutHomepage";
 import { useAuthState } from "react-firebase-hooks/auth";
 import UserContext from "./UserContext";
-import { getAuthInstance, getUserRefById } from "./firebase/firebase-app";
+import { getAuthInstance, getUserRef } from "./firebase/firebase-app";
 import Homepage from "./components/pages/home_page/Homepage";
 import useModal from "./components/modal/useModal";
 import ModalContext from "./components/modal/ModalContext";
@@ -15,37 +15,17 @@ import BlogPost from "./components/pages/blog_post_page/BlogPost";
 import { User } from "firebase/auth";
 import ProfilePage from "./components/pages/profile_page/ProfilePage";
 import Settings from "./components/pages/settings_page/Settings";
-import { useEffect, useState } from "react";
 import UserData from "./interfaces/UserDataInterface";
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { DocumentReference } from "firebase/firestore";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
+  const [user, loading] = [authState[0] as User | null, authState[1]];
 
   const { pathname } = useLocation();
 
-  const [user, loading] = [authState[0] as User | null, authState[1]];
-
-  const [userRef, setUserRef] = useState<DocumentReference | null>(null);
-
+  const userRef = user ? getUserRef(user.uid) : null;
   const userData = useDocumentData(userRef)[0] as UserData;
-
-  const reloadUserData = async (uid: string) => {
-    const fetchedUserRef = (await getUserRefById(uid)) as DocumentReference;
-    setUserRef(fetchedUserRef);
-  };
-
-  useEffect(() => {
-    if (!user) {
-      setUserRef(null);
-      return;
-    }
-
-    if (userRef) return;
-
-    reloadUserData(user.uid);
-  }, [user]);
 
   const { modalContent, setModalOpen, isModalOpen } = useModal();
 
@@ -68,7 +48,6 @@ function App() {
         value={{
           user: userData,
           loading,
-          reloadUserData,
         }}
       >
         <Modal />

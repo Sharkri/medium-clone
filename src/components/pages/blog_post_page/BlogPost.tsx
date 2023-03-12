@@ -13,7 +13,6 @@ import Sidebar from "../../main/Sidebar";
 import UserInfo from "../../helper-components/UserInfo";
 import BlogMarkdownWithTitleAndDesc from "../../helper-components/BlogMarkdownWithTitleAndDesc";
 import InteractionBar from "./InteractionBar";
-import { DocumentReference } from "firebase/firestore";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import Post from "../../../interfaces/PostInterface";
 import BlogPostHeader from "./BlogPostHeader";
@@ -25,21 +24,16 @@ export default function BlogPost() {
   const { user: currentUser } = useContext(UserContext);
   const { setModalOpen } = useContext(ModalContext);
 
-  const [postRef, setPostRef] = useState<DocumentReference | null>(null);
+  const { title } = useParams();
+  const postId = title?.split("-").pop();
+
+  const postRef = postId ? getPostRef(postId) : null;
   const documentData = useDocumentData(postRef);
 
   const post = documentData[0] as Post;
 
   const [author, setAuthor] = useState<UserData | null>(null);
-  const { title } = useParams();
 
-  const postId = title?.split("-").pop();
-
-  // fetch post
-  useEffect(() => {
-    if (!postId) return;
-    getPostRef(postId).then((ref) => setPostRef(ref as DocumentReference));
-  }, [postId]);
   // fetch author of post
   useEffect(() => {
     if (!post?.authorUid) return;
@@ -78,7 +72,13 @@ export default function BlogPost() {
             }}
             onCommentLike={async (commentId: string) => {
               if (!currentUser) setModalOpen(true, <SignUpOptions />);
-              else await likeComment(post, postRef, currentUser.uid, commentId);
+              else
+                await likeComment(
+                  post.comments,
+                  postRef,
+                  currentUser.uid,
+                  commentId
+                );
             }}
           />
         </article>

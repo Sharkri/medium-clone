@@ -10,7 +10,6 @@ import Input from "../helper-components/Input";
 import LoadingButton from "../helper-components/LoadingButton";
 import PasswordInput from "../helper-components/PasswordInput";
 
-import UserContext from "../../UserContext";
 import ModalContext from "../modal/ModalContext";
 import ModalContent from "../modal/ModalContent";
 
@@ -26,7 +25,6 @@ export default function SignUpFormModal() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { setModalOpen } = useContext(ModalContext);
-  const { reloadUserData } = useContext(UserContext);
 
   function checkForEmptyInputs() {
     setFullNameError(
@@ -93,7 +91,6 @@ export default function SignUpFormModal() {
 
             // add user to database
             await addUser({ ...user, displayName: fullName });
-            await reloadUserData(user.uid);
           } catch (error: unknown) {
             if (error instanceof FirebaseError) {
               handleErrors(error);

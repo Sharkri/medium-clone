@@ -1,6 +1,6 @@
 import { MouseEventHandler, useContext, useState } from "react";
 
-import { serverTimestamp, updateDoc } from "firebase/firestore";
+import { serverTimestamp } from "firebase/firestore";
 import { addPost, getImageUrl } from "../../../firebase/firebase-app";
 
 import UserContext from "../../../UserContext";
@@ -27,27 +27,24 @@ export default function PublishPost({
   async function handlePublishPost() {
     if (!user?.uid) throw new Error("User does not exist.");
 
-    const postRef = await addPost({
+    const postId = getRandomId(12);
+    const imageUrl = file
+      ? await getImageUrl(file, `posts/${postId}/thumbnail`)
+      : "";
+    const wordCount = title.length + description.length + blogContents.length;
+
+    await addPost({
       title,
       description,
       blogContents,
       authorUid: user.uid,
       timestamp: serverTimestamp(),
-      readingTimeInMinutes: calculateReadingTime(
-        // word count
-        (title + description + blogContents).length
-      ),
+      readingTimeInMinutes: calculateReadingTime(wordCount),
       comments: [],
-      thumbnail: "",
+      thumbnail: imageUrl || "",
       likes: {},
-      id: getRandomId(12),
+      id: postId,
     });
-
-    if (file && postRef) {
-      const imageUrl = await getImageUrl(file, `posts/${postRef.id}/thumbnail`);
-      // update with new thumbnail
-      updateDoc(postRef, { thumbnail: imageUrl });
-    }
   }
 
   return (

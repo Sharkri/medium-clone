@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import ModalContext from "../modal/ModalContext";
-import UserContext from "../../UserContext";
 
 import { signInWithGoogle } from "../../firebase/firebase-app";
 
@@ -10,15 +9,13 @@ import SignInFormModal from "./SignInFormModal";
 
 export default function SignInOptions() {
   const { setModalOpen } = useContext(ModalContext);
-  const { reloadUserData } = useContext(UserContext);
 
   return (
     <AuthenticationPage isSignUpPage={false}>
       <ButtonWithIcon
         icon="fa-brands fa-google"
         onClick={async () => {
-          const { user, newUser } = await signInWithGoogle();
-          if (newUser) await reloadUserData(user.uid);
+          await signInWithGoogle();
           setModalOpen(false);
         }}
       >
