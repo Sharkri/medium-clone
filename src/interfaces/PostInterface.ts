@@ -1,4 +1,3 @@
-import Comment from "./CommentInterface";
 import Likes from "./LikesInterface";
 
 export default interface Post {
@@ -11,6 +10,5 @@ export default interface Post {
   // array-like object
   likes: Likes;
   readingTimeInMinutes: number;
-  comments: Comment[];
   id: string;
 }

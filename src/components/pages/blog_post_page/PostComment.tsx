@@ -13,10 +13,12 @@ export default function PostComment({
   comment,
   isAuthor,
   onCommentLike,
+  indent = 0,
 }: {
   comment: Comment;
   isAuthor: boolean;
   onCommentLike: Function;
+  indent?: number;
 }) {
   const { user: currentUser } = useContext(UserContext);
   const [author, setAuthor] = useState<UserData | null>(null);
@@ -30,7 +32,10 @@ export default function PostComment({
   if (author == null) return null;
 
   return (
-    <div className="pt-6 pb-4 text-sm text-lighterblack">
+    <div
+      className="pt-6 pb-4 text-sm text-lighterblack"
+      style={{ marginLeft: `${indent}px` }}
+    >
       <div className="flex gap-3 items-center">
         {<ProfilePicture src={author.photoURL} className="w-8 h-8" />}
         <div className="flex flex-col">

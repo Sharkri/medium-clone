@@ -20,7 +20,7 @@ export default function PostPreview({
   }, [post.authorUid]);
 
   if (!author) return null;
-  console.log(post.title, post.id);
+
   // lowercase title + trim extra whitespace + remove non-alphanumeric + convert spaces to dash
   const linkSafeTitle = post.title
     .toLowerCase()

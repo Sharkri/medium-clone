@@ -40,7 +40,6 @@ export default function PublishPost({
       authorUid: user.uid,
       timestamp: serverTimestamp(),
       readingTimeInMinutes: calculateReadingTime(wordCount),
-      comments: [],
       thumbnail: imageUrl || "",
       likes: {},
       id: postId,

@@ -19,7 +19,6 @@ import {
   getDocs,
   updateDoc,
   increment,
-  DocumentReference,
   doc,
   setDoc,
   getDoc,
@@ -188,12 +187,7 @@ async function addPost(post: Post) {
 }
 
 async function addComment(postId: string, comment: Comment) {
-  const post = await getPostById(postId);
-  if (!post) return;
-
-  const { comments } = post;
-
-  updateDoc(getPostRef(postId), { comments: [...comments, comment] });
+  setDoc(doc(getFirestore(), `posts/${postId}/comments`, comment.id), comment);
 }
 
 // TODO: refactor later to only get 4-12 posts and infinite scrolling
@@ -203,43 +197,45 @@ async function getAllPosts() {
   return docs.map((document) => document.data());
 }
 
-async function likePost(postRef: DocumentReference, userUid: string) {
-  updateDoc(postRef, { [`likes.${userUid}`]: increment(1) });
+async function likePost(postId: string, userUid: string) {
+  updateDoc(getPostRef(postId), { [`likes.${userUid}`]: increment(1) });
 }
 
-function findCommentById(comment: Comment, idToFind: string): Comment | null {
-  // based cases
-  if (comment.id === idToFind) return comment;
-  if (!comment.replies) return null;
+// function findCommentById(comment: Comment, idToFind: string): Comment | null {
+//   // based cases
+//   if (comment.id === idToFind) return comment;
+//   if (!comment.replies) return null;
 
-  for (let i = 0; i < comment.replies.length; i++) {
-    // search for comment with comment id in comment replies
-    const foundComment = findCommentById(comment.replies[i], idToFind);
-    if (foundComment != null) return foundComment;
-  }
+//   for (let i = 0; i < comment.replies.length; i++) {
+//     // search for comment with comment id in comment replies
+//     const foundComment = findCommentById(comment.replies[i], idToFind);
+//     if (foundComment != null) return foundComment;
+//   }
 
-  return null;
-}
+//   return null;
+// }
 
 async function likeComment(
-  comments: Comment[],
-  postRef: DocumentReference,
+  // comments: Comment[],
+  postId: string,
   userUid: string,
   commentId: string
 ) {
-  for (const comment of comments) {
-    const foundComment = findCommentById(comment, commentId);
+  // for (const comment of comments) {
+  //   const foundComment = findCommentById(comment, commentId);
 
-    // if comment exists and times likes is less than 50
-    if (foundComment != null && (foundComment.likes[userUid] || 0) < 50) {
-      // if likes are undefined
-      if (foundComment.likes[userUid] == null) foundComment.likes[userUid] = 1;
-      // increment likes by 1
-      else foundComment.likes[userUid]++;
-    }
-  }
+  //   // if comment exists and times likes is less than 50
+  //   if (foundComment != null && (foundComment.likes[userUid] || 0) < 50) {
+  //     // if likes are undefined
+  //     if (foundComment.likes[userUid] == null) foundComment.likes[userUid] = 1;
+  //     // increment likes by 1
+  //     else foundComment.likes[userUid]++;
+  //   }
+  // }
 
-  updateDoc(postRef, { comments });
+  updateDoc(getDocRef(`posts/${postId}/comments/${commentId}`), {
+    [`likes.${userUid}`]: increment(1),
+  });
 }
 
 async function getAllPostsByUser(uid: string) {
@@ -276,4 +272,5 @@ export {
   likePost,
   likeComment,
   changeEmail,
+  getCollectionRef,
 };
