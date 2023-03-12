@@ -113,7 +113,7 @@ async function searchForDoc(
 
   if (docs.empty) return null;
 
-  return docs.docs[0];
+  return docs.docs[0].data();
 }
 
 async function getDocData(path: string) {
