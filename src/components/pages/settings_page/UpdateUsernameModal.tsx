@@ -7,7 +7,6 @@ import UserData from "../../../interfaces/UserDataInterface";
 import ModalContext from "../../modal/ModalContext";
 
 import ModalContent from "../../modal/ModalContent";
-import CloseModalButton from "../../modal/CloseModalButton";
 import LoadingButton from "../../helper-components/LoadingButton";
 
 export default function UsernameModal({ user }: { user: UserData }) {
@@ -37,8 +36,6 @@ export default function UsernameModal({ user }: { user: UserData }) {
 
   return (
     <ModalContent className="pt-8 px-10 pb-10 max-w-[552px] w-full">
-      <CloseModalButton />
-
       <form onSubmit={handleSubmit} noValidate>
         <h1 className="text-lighterblack text-[22px] font-sohne-bold mb-10">
           Username
@@ -51,7 +48,6 @@ export default function UsernameModal({ user }: { user: UserData }) {
           <input
             type="text"
             id="username"
-            prefix="@"
             value={newUsername}
             onChange={(e) => setNewUsername(e.target.value)}
             className={`outline-none border-b ${

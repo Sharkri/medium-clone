@@ -7,6 +7,7 @@ import UpdateUsernameModal from "./UpdateUsernameModal";
 import ProfilePicture from "../../helper-components/ProfilePicture";
 import Sidebar from "../../main/Sidebar";
 import UpdateProfileInfoModal from "./UpdateProfileInfoModal";
+import UpdateEmailModal from "./UpdateEmailModal";
 
 export default function Settings() {
   const { user } = useContext(UserContext);
@@ -37,7 +38,12 @@ export default function Settings() {
           </div>
 
           <div className="flex flex-col gap-8">
-            <button className="flex justify-between gap-2 group">
+            <button
+              className="flex justify-between gap-2 group"
+              onClick={() =>
+                setModalOpen(true, <UpdateEmailModal user={user} />)
+              }
+            >
               <span className="text-sm text-lighterblack">Email address</span>
 
               <span className="text-grey font-content-sans text-[16.3px] group-hover:text-lightblack line-clamp-1 break-all">

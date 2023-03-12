@@ -6,6 +6,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
+  updateEmail,
   User,
   UserCredential,
 } from "firebase/auth";
@@ -135,6 +136,17 @@ async function changeUsername(userUid: string, newUsername: string) {
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
+}
+
+async function changeEmail(newEmail: string) {
+  const { currentUser } = getAuthInstance();
+  if (!currentUser) return;
+
+  const doc = await getDoc("users", "uid", currentUser.uid);
+  if (!doc) return;
+
+  await updateEmail(currentUser, newEmail);
+  await updateDoc(doc.ref, { email: newEmail });
 }
 
 async function updateUser(
@@ -283,4 +295,5 @@ export {
   getPostRef,
   likePost,
   likeComment,
+  changeEmail,
 };
