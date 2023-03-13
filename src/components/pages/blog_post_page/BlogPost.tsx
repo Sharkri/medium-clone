@@ -48,9 +48,9 @@ export default function BlogPost() {
               if (!currentUser) setModalOpen(true, <SignUpOptions />);
               else await likePost(postId, currentUser.uid);
             }}
-            onCommentLike={async (commentId: string) => {
+            onCommentLike={async (commentPath: string) => {
               if (!currentUser) setModalOpen(true, <SignUpOptions />);
-              else await likeComment(postId, currentUser.uid, commentId);
+              else await likeComment(commentPath, currentUser.uid);
             }}
           />
         </article>

@@ -201,8 +201,8 @@ async function likePost(postId: string, userUid: string) {
   updateDoc(getPostRef(postId), { [`likes.${userUid}`]: increment(1) });
 }
 
-async function likeComment(postId: string, userUid: string, commentId: string) {
-  updateDoc(getDocRef(`posts/${postId}/comments/${commentId}`), {
+async function likeComment(commentPath: string, userUid: string) {
+  updateDoc(doc(getFirestore(), commentPath), {
     [`likes.${userUid}`]: increment(1),
   });
 }

@@ -86,7 +86,7 @@ export default function PostComment({
         <div className="mt-[14px] flex justify-between">
           <div className="flex gap-4">
             <LikeButton
-              onLike={() => onCommentLike(comment.id)}
+              onLike={() => onCommentLike(commentPath)}
               likeCount={getLikeCount(comment.likes)}
               className="text-sm"
               currentUserLikeCount={
