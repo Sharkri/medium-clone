@@ -1,36 +1,21 @@
 import { FormEvent, useContext, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { addComment } from "../../../firebase/firebase-app";
-import getRandomId from "../../../helper-functions/getRandomId";
-import Post from "../../../interfaces/PostInterface";
 import UserContext from "../../../UserContext";
 import ProfilePicture from "../../helper-components/ProfilePicture";
 
-export default function CreateComment({ post }: { post: Post }) {
+export default function CreateComment({
+  onSubmit,
+  placeholder = "What are your thoughts?",
+  hideUserInfo,
+}: {
+  onSubmit: Function;
+  placeholder?: string;
+  hideUserInfo?: boolean;
+}) {
   const { user } = useContext(UserContext);
   const [commentText, setCommentText] = useState("");
   const [expanded, setExpanded] = useState(true);
   const [disabled, setDisabled] = useState(false);
-
-  async function handleAddComment(e: FormEvent) {
-    e.preventDefault();
-    if (!user || !commentText || disabled) return;
-
-    setDisabled(true);
-
-    await addComment(post.id, {
-      likes: {},
-      text: commentText,
-      authorUid: user.uid,
-      replies: [],
-      id: getRandomId(12),
-      timestamp: new Date(),
-    });
-
-    setDisabled(false);
-    setExpanded(false);
-    setCommentText("");
-  }
 
   function onCancel() {
     setExpanded(false);
@@ -40,17 +25,30 @@ export default function CreateComment({ post }: { post: Post }) {
   return (
     <form
       className={`py-[14px] shadow-[rgb(0,0,0,0.12)_0px_2px_8px]`}
-      onSubmit={handleAddComment}
+      onSubmit={async (e: FormEvent) => {
+        e.preventDefault();
+        if (!user || !commentText || disabled) return;
+
+        setDisabled(true);
+
+        await onSubmit(commentText, user.uid);
+
+        setExpanded(false);
+        setDisabled(false);
+        setCommentText("");
+      }}
     >
-      <div
-        className={`${
-          !expanded && "hidden"
-        } px-[14px] mb-[6px] flex items-center gap-3 
+      {!hideUserInfo && (
+        <div
+          className={`${
+            !expanded && "hidden"
+          } px-[14px] mb-[6px] flex items-center gap-3 
         `}
-      >
-        <ProfilePicture src={user?.photoURL} className="w-8 h-8" />
-        <span className="text-sm">{user?.displayName}</span>
-      </div>
+        >
+          <ProfilePicture src={user?.photoURL} className="w-8 h-8" />
+          <span className="text-sm">{user?.displayName}</span>
+        </div>
+      )}
 
       <div
         className={`transition-all duration-300 ${
@@ -58,7 +56,7 @@ export default function CreateComment({ post }: { post: Post }) {
         } `}
       >
         <TextareaAutosize
-          placeholder="What are your thoughts?"
+          placeholder={placeholder}
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           onClick={() => setExpanded(true)}

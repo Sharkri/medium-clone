@@ -1,4 +1,6 @@
 import { useRef } from "react";
+import { addComment } from "../../../firebase/firebase-app";
+import getRandomId from "../../../helper-functions/getRandomId";
 import Comment from "../../../interfaces/CommentInterface";
 import Post from "../../../interfaces/PostInterface";
 import CreateComment from "./CreateComment";
@@ -45,7 +47,22 @@ export default function CommentSection({
 
         <div>
           <div className="mx-6 mb-5">
-            <CreateComment post={post} />
+            <CreateComment
+              onSubmit={async (commentText: string, authorUid: string) => {
+                const comment = {
+                  likes: {},
+                  text: commentText,
+                  authorUid,
+                  id: getRandomId(12),
+                  timestamp: new Date(),
+                };
+
+                await addComment(
+                  `posts/${post.id}/comments/${comment.id}`,
+                  comment
+                );
+              }}
+            />
           </div>
 
           <div className="mb-4 border-b border-b-neutral-200 pt-5 px-5 pb-3">
@@ -60,9 +77,9 @@ export default function CommentSection({
           <div className="mx-6 mb-5">
             {comments.map((comment) => (
               <PostComment
+                post={post}
                 comment={comment}
                 key={comment.id}
-                isAuthor={comment.authorUid === post.authorUid}
                 onCommentLike={onCommentLike}
               />
             ))}

@@ -5,10 +5,12 @@ export default function LikeButton({
   onLike,
   currentUserLikeCount,
   likeCount,
+  className,
 }: {
   onLike: Function;
   currentUserLikeCount: number;
   likeCount: number;
+  className?: string;
 }) {
   const [timerId, setTimerId] = useState<number | null>(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -70,7 +72,9 @@ export default function LikeButton({
         ></path>
       </svg>
 
-      {!!likeCount && <span className="text-[13px]">{likeCount}</span>}
+      {!!likeCount && (
+        <span className={className || "text-[13px]"}>{likeCount}</span>
+      )}
     </button>
   );
 }

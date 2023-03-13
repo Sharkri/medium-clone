@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -166,24 +169,53 @@ module.exports = {
             transform: "scale(1)",
           },
         },
+
+        open: {
+          "0%": {
+            transform: "translateY(-20px)",
+          },
+
+          "100%": {
+            transform: "translateY(0)",
+          },
+        },
       },
 
       animation: {
         shake: "0.4s shake",
-        "fade-in":
-          "fade-in 300ms cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 normal forwards running",
-        "scale-in":
-          "scale-in 300ms cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 normal forwards running",
-
-        scale:
-          "scale 300ms cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 normal forwards running",
-
-        "fade-scale-in":
-          "fade-in 300ms cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 normal forwards running, scale-in 300ms cubic-bezier(0.25, 0.1, 0.25, 1) 0s 1 normal forwards running",
+        "fade-in": "fade-in 300ms",
+        "scale-in": "scale-in 300ms",
+        scale: "scale 300ms",
+        "fade-scale-in": "fade-in 300ms, scale-in 300ms",
+        open: "open 0.56s, fade-in 0.56s",
       },
     },
   },
+
   plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".rotate-y-180": {
+          transform: "rotateY(180deg)",
+        },
+        ".break-word": {
+          "word-break": "break-word",
+        },
+
+        ".thin-icon:before": {
+          "-webkit-text-stroke": "0.3px white",
+        },
+
+        ".thinner-icon:before": {
+          "-webkit-text-stroke": "1px white",
+        },
+
+        ".thinnest-icon:before": {
+          "-webkit-text-stroke": "2px white",
+        },
+      });
+    }),
+
     require("@tailwindcss/typography"),
     require("@tailwindcss/line-clamp"),
   ],

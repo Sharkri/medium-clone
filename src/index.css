@@ -61,22 +61,6 @@
     color: transparent;
     -webkit-text-fill-color: transparent;
   }
-
-  .thin-icon:before {
-    -webkit-text-stroke: 0.3px white;
-  }
-
-  .thinner-icon:before {
-    -webkit-text-stroke: 1px white;
-  }
-
-  .thinnest-icon:before {
-    -webkit-text-stroke: 2px white;
-  }
-
-  .break-word {
-    word-break: break-word;
-  }
 }
 
 @tailwind components;

@@ -186,8 +186,8 @@ async function addPost(post: Post) {
   }
 }
 
-async function addComment(postId: string, comment: Comment) {
-  setDoc(doc(getFirestore(), `posts/${postId}/comments`, comment.id), comment);
+async function addComment(commentPath: string, comment: Comment) {
+  setDoc(doc(getFirestore(), commentPath), comment);
 }
 
 // TODO: refactor later to only get 4-12 posts and infinite scrolling
@@ -201,38 +201,7 @@ async function likePost(postId: string, userUid: string) {
   updateDoc(getPostRef(postId), { [`likes.${userUid}`]: increment(1) });
 }
 
-// function findCommentById(comment: Comment, idToFind: string): Comment | null {
-//   // based cases
-//   if (comment.id === idToFind) return comment;
-//   if (!comment.replies) return null;
-
-//   for (let i = 0; i < comment.replies.length; i++) {
-//     // search for comment with comment id in comment replies
-//     const foundComment = findCommentById(comment.replies[i], idToFind);
-//     if (foundComment != null) return foundComment;
-//   }
-
-//   return null;
-// }
-
-async function likeComment(
-  // comments: Comment[],
-  postId: string,
-  userUid: string,
-  commentId: string
-) {
-  // for (const comment of comments) {
-  //   const foundComment = findCommentById(comment, commentId);
-
-  //   // if comment exists and times likes is less than 50
-  //   if (foundComment != null && (foundComment.likes[userUid] || 0) < 50) {
-  //     // if likes are undefined
-  //     if (foundComment.likes[userUid] == null) foundComment.likes[userUid] = 1;
-  //     // increment likes by 1
-  //     else foundComment.likes[userUid]++;
-  //   }
-  // }
-
+async function likeComment(postId: string, userUid: string, commentId: string) {
   updateDoc(getDocRef(`posts/${postId}/comments/${commentId}`), {
     [`likes.${userUid}`]: increment(1),
   });
