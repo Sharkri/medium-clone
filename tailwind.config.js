@@ -53,6 +53,13 @@ module.exports = {
           "Times",
           "serif",
         ],
+        "sohne-italic": [
+          "sohne-italic",
+          "Helvetica Neue",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
         "sohne-bold": [
           "sohne-bold",
           "Helvetica Neue",

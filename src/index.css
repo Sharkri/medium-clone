@@ -12,6 +12,11 @@
   }
 
   @font-face {
+    font-family: sohne-italic;
+    src: url("./assets/fonts/sohne-400-italic.woff");
+  }
+
+  @font-face {
     font-family: sohne-bold;
     src: url("./assets/fonts/sohne-700-normal.woff");
   }

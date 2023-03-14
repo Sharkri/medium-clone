@@ -35,7 +35,7 @@ export default function CommentSection({
       }}
       ref={commentModalRef}
     >
-      <aside className="shadow-lg bg-white overflow-auto max-w-[414px] w-full cursor-auto">
+      <aside className="flex flex-col shadow-lg bg-white overflow-auto max-w-[414px] w-full cursor-auto">
         <div className="p-6 flex justify-between">
           <h2 className="text-xl font-sohne-semibold">
             Responses ({comments.length})
@@ -45,7 +45,7 @@ export default function CommentSection({
           </button>
         </div>
 
-        <div>
+        <div className="grow flex flex-col">
           <div className="mx-6 mb-5">
             <CreateComment
               onSubmit={async (commentText: string, authorUid: string) => {
@@ -65,25 +65,33 @@ export default function CommentSection({
             />
           </div>
 
-          <div className="mb-4 border-b border-b-neutral-200 pt-5 px-5 pb-3">
-            <button className="text-xs px-3">
-              <strong className="uppercase font-sohne-bold mr-2">
-                Most relevant
-              </strong>
-              <i className="fa-solid fa-chevron-down thin-icon" />
-            </button>
-          </div>
-
-          <div className="mx-6 mb-5">
-            {comments.map((comment) => (
-              <PostComment
-                post={post}
-                comment={comment}
-                key={comment.id}
-                onCommentLike={onCommentLike}
-              />
-            ))}
-          </div>
+          {comments.length ? (
+            <>
+              <div className="mb-4 border-b border-b-neutral-200 pt-5 px-5 pb-3">
+                <button className="text-xs px-3">
+                  <strong className="uppercase font-sohne-bold mr-2">
+                    Most relevant
+                  </strong>
+                  <i className="fa-solid fa-chevron-down thin-icon" />
+                </button>
+              </div>
+              <div className="mx-6 mb-5">
+                {comments.map((comment) => (
+                  <PostComment
+                    post={post}
+                    comment={comment}
+                    key={comment.id}
+                    onCommentLike={onCommentLike}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="font-sohne-italic text-grey grow flex flex-col justify-center items-center">
+              <p>There are currently no responses for this story.</p>
+              <p>Be the first to respond.</p>
+            </div>
+          )}
         </div>
       </aside>
     </div>
