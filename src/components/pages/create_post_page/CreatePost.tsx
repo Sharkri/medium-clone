@@ -39,19 +39,34 @@ export default function CreatePost() {
     );
 
   return (
-    <div className="flex flex-col items-center mb-12">
-      <div className="flex gap-3">
-        <button className="bg-red-500" onClick={() => setIsEditing(true)}>
-          Edit
+    <div className="flex flex-col items-center mb-12 pt-4">
+      <div className="flex gap-3 text-sm">
+        <button
+          className="flex items-center bg-lightblack px-4 py-2 text-white rounded-full"
+          onClick={() => setIsEditing(!isEditing)}
+        >
+          {isEditing ? (
+            <>
+              <i className="fa-regular fa-eye text-neutral-200 mr-2" />
+              Preview
+            </>
+          ) : (
+            <>
+              <i className="fa-regular fa-edit text-neutral-200 mr-2" />
+              Edit
+            </>
+          )}
         </button>
-        <button className="bg-red-500" onClick={() => setIsEditing(false)}>
-          Preview
+        <button
+          onClick={() => setIsPublishing(true)}
+          className="bg-green text-white rounded-full px-4"
+        >
+          Publish
         </button>
-        <button onClick={() => setIsPublishing(true)}>Publish</button>
       </div>
 
       <div
-        className={`grow flex flex-col w-full max-w-[740px] gap-3 ${
+        className={`flex flex-col w-full max-w-[740px] px-5 py-1 ${
           !isEditing && "hidden"
         }`}
       >
@@ -59,13 +74,13 @@ export default function CreatePost() {
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value.replace(/\n/g, ""))}
-          className="font-title text-[42px] leading-[52.5px] outline-none resize-none"
+          className="font-title mb-1 text-[42px] leading-[52.5px] outline-none resize-none"
         />
         <TextareaAutosize
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value.replace(/\n/g, ""))}
-          className="font-content-serif text-[28px] leading-[42.4px] text-grey outline-none resize-none"
+          className="font-content-serif mb-3 text-[26px] leading-[42.4px] text-grey outline-none resize-none"
         />
         <TextareaAutosize
           className="font-content-serif text-[21px] leading-[33.18px] outline-none resize-none"
