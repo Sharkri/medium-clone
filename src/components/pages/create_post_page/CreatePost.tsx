@@ -68,7 +68,7 @@ export default function CreatePost() {
           className="font-content-serif text-[28px] leading-[42.4px] text-grey outline-none resize-none"
         />
         <TextareaAutosize
-          className="font-content-serif text-[21px] leading-[33.18px] outline-none resize-none"
+          className="font-content-serif mb-12 text-[21px] leading-[33.18px] outline-none resize-none"
           value={blogContents}
           onChange={(e) => setBlogContents(e.target.value)}
           placeholder="Tell your story..."
@@ -77,7 +77,7 @@ export default function CreatePost() {
       </div>
 
       {!isEditing && (
-        <div className="max-w-[680px]">
+        <div className="max-w-[680px] mb-12">
           <BlogMarkdownWithTitleAndDesc
             title={title}
             description={description}
