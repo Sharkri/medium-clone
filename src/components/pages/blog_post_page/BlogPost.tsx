@@ -37,10 +37,10 @@ export default function BlogPost() {
   const currentUserLikeCount = currentUser ? post.likes[currentUser.uid] : 0;
 
   return (
-    <div className="max-w-[1336px] mx-auto h-[calc(100vh-57px)]">
-      <div className="flex justify-evenly max-lg:block h-full">
-        <article className="mx-6 mb-16 grow-[0.8] relative h-full">
-          <main className="mx-auto max-w-[680px] min-h-full">
+    <div className="max-w-[1336px] mx-auto">
+      <div className="flex justify-evenly max-lg:block">
+        <article className="mx-6 mb-16 grow-[0.8]">
+          <main className="mx-auto max-w-[680px] relative">
             <BlogPostHeader author={author} post={post} />
 
             <BlogMarkdownWithTitleAndDesc
@@ -48,21 +48,21 @@ export default function BlogPost() {
               description={post.description}
               blogContents={post.blogContents}
             />
-          </main>
 
-          <InteractionBar
-            post={post}
-            comments={comments}
-            currentUserLikeCount={currentUserLikeCount}
-            onLike={async () => {
-              if (!currentUser) setModalOpen(true, <SignUpOptions />);
-              else await likePost(postId, currentUser.uid);
-            }}
-            onCommentLike={async (commentPath: string) => {
-              if (!currentUser) setModalOpen(true, <SignUpOptions />);
-              else await likeComment(commentPath, currentUser.uid);
-            }}
-          />
+            <InteractionBar
+              post={post}
+              comments={comments}
+              currentUserLikeCount={currentUserLikeCount}
+              onLike={async () => {
+                if (!currentUser) setModalOpen(true, <SignUpOptions />);
+                else await likePost(postId, currentUser.uid);
+              }}
+              onCommentLike={async (commentPath: string) => {
+                if (!currentUser) setModalOpen(true, <SignUpOptions />);
+                else await likeComment(commentPath, currentUser.uid);
+              }}
+            />
+          </main>
         </article>
         <Sidebar>
           <div className="mt-10">
