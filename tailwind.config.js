@@ -101,6 +101,14 @@ module.exports = {
           "Times",
           "serif",
         ],
+        "source-serif-pro-bold": [
+          "source-serif-pro-bold",
+          "Georgia",
+          "Cambria",
+          "Times New Roman",
+          "Times",
+          "serif",
+        ],
         "content-sans": [
           "content-sans",
           "-apple-system",

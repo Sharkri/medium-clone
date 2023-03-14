@@ -51,6 +51,11 @@
     src: url("./assets/fonts/source-serif-pro-400-normal.woff");
   }
 
+  @font-face {
+    font-family: source-serif-pro-bold;
+    src: url("./assets/fonts/source-serif-pro-700-normal.woff");
+  }
+
   /* Apply color to google icon */
   .fa-google {
     background: conic-gradient(

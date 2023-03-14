@@ -73,12 +73,13 @@ export default function CreatePost() {
           />
         </div>
       ) : (
-        // preview markdown
-        <BlogMarkdownWithTitleAndDesc
-          title={title}
-          description={description}
-          blogContents={blogContents}
-        />
+        <div className="max-w-[680px]">
+          <BlogMarkdownWithTitleAndDesc
+            title={title}
+            description={description}
+            blogContents={blogContents}
+          />
+        </div>
       )}
     </div>
   );
