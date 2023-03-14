@@ -22,6 +22,7 @@ import {
   doc,
   setDoc,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -207,6 +208,9 @@ async function likeComment(commentPath: string, userUid: string) {
   });
 }
 
+const deleteComment = async (commentPath: string) =>
+  deleteDoc(doc(getFirestore(), commentPath));
+
 async function getAllPostsByUser(uid: string) {
   const { docs } = await getDocs(
     query(getCollectionRef("posts"), where("authorUid", "==", uid))
@@ -242,4 +246,5 @@ export {
   likeComment,
   changeEmail,
   getCollectionRef,
+  deleteComment,
 };
