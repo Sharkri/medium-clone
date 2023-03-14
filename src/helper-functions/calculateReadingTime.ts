@@ -1,4 +1,13 @@
-export default function calculateReadingTime(wordCount: number) {
+function getWordCount(str: string) {
+  return str.split(" ").filter((num) => num !== "").length;
+}
+
+export default function calculateReadingTime(...words: string[]) {
+  const wordCount = words.reduce(
+    (accumulator, currentVal) => accumulator + getWordCount(currentVal),
+    0
+  );
+
   // The number before the decimal is minutes and the number after is the seconds
   const divided = wordCount / 200;
 

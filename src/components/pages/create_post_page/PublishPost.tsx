@@ -31,7 +31,6 @@ export default function PublishPost({
     const imageUrl = file
       ? await getImageUrl(file, `posts/${postId}/thumbnail`)
       : "";
-    const wordCount = title.length + description.length + blogContents.length;
 
     await addPost({
       title,
@@ -39,7 +38,11 @@ export default function PublishPost({
       blogContents,
       authorUid: user.uid,
       timestamp: serverTimestamp(),
-      readingTimeInMinutes: calculateReadingTime(wordCount),
+      readingTimeInMinutes: calculateReadingTime(
+        title,
+        description,
+        blogContents
+      ),
       thumbnail: imageUrl || "",
       likes: {},
       id: postId,
