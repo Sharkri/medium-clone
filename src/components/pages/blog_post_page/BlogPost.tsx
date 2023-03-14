@@ -19,18 +19,17 @@ export default function BlogPost() {
 
   const { title } = useParams();
 
-  useEffect(() => {
-    if (!title) return;
-    const postTitle = title.split("-").slice(0, -1).join(" ");
+  const postId = title?.split("-").pop() || "";
+  const { post, author, comments } = usePost(postId);
 
-    document.title = postTitle;
+  useEffect(() => {
+    if (!post) return;
+
+    document.title = post.title;
     return () => {
       document.title = "Medium";
     };
-  }, [title]);
-
-  const postId = title?.split("-").pop() || "";
-  const { post, author, comments } = usePost(postId);
+  }, [post]);
 
   if (!post || !author || !postId) return null;
 
