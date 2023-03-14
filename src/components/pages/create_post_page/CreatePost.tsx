@@ -50,29 +50,33 @@ export default function CreatePost() {
         <button onClick={() => setIsPublishing(true)}>Publish</button>
       </div>
 
-      {isEditing ? (
-        <div className="grow flex flex-col w-full max-w-[740px] gap-3">
-          <TextareaAutosize
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value.replace(/\n/g, ""))}
-            className="font-title text-[42px] leading-[52.5px] outline-none resize-none"
-          />
-          <TextareaAutosize
-            placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value.replace(/\n/g, ""))}
-            className="font-content-serif text-[28px] leading-[42.4px] text-grey outline-none resize-none"
-          />
-          <TextareaAutosize
-            className="font-content-serif text-[21px] leading-[33.18px] outline-none resize-none"
-            value={blogContents}
-            onChange={(e) => setBlogContents(e.target.value)}
-            placeholder="Tell your story..."
-            autoFocus
-          />
-        </div>
-      ) : (
+      <div
+        className={`grow flex flex-col w-full max-w-[740px] gap-3 ${
+          !isEditing && "hidden"
+        }`}
+      >
+        <TextareaAutosize
+          placeholder="Title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value.replace(/\n/g, ""))}
+          className="font-title text-[42px] leading-[52.5px] outline-none resize-none"
+        />
+        <TextareaAutosize
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value.replace(/\n/g, ""))}
+          className="font-content-serif text-[28px] leading-[42.4px] text-grey outline-none resize-none"
+        />
+        <TextareaAutosize
+          className="font-content-serif text-[21px] leading-[33.18px] outline-none resize-none"
+          value={blogContents}
+          onChange={(e) => setBlogContents(e.target.value)}
+          placeholder="Tell your story..."
+          autoFocus
+        />
+      </div>
+
+      {!isEditing && (
         <div className="max-w-[680px]">
           <BlogMarkdownWithTitleAndDesc
             title={title}
