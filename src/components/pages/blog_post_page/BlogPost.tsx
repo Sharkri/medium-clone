@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 import { likeComment, likePost } from "../../../firebase/firebase-app";
@@ -18,8 +18,18 @@ export default function BlogPost() {
   const { setModalOpen } = useContext(ModalContext);
 
   const { title } = useParams();
-  const postId = title?.split("-").pop() || "";
 
+  useEffect(() => {
+    if (!title) return;
+    const postTitle = title.split("-").slice(0, -1).join(" ");
+
+    document.title = postTitle;
+    return () => {
+      document.title = "Medium";
+    };
+  }, [title]);
+
+  const postId = title?.split("-").pop() || "";
   const { post, author, comments } = usePost(postId);
 
   if (!post || !author || !postId) return null;
