@@ -39,7 +39,7 @@ export default function CreatePost() {
     );
 
   return (
-    <div className="flex flex-col items-center grow">
+    <div className="flex flex-col items-center mb-12">
       <div className="flex gap-3">
         <button className="bg-red-500" onClick={() => setIsEditing(true)}>
           Edit
@@ -68,7 +68,7 @@ export default function CreatePost() {
           className="font-content-serif text-[28px] leading-[42.4px] text-grey outline-none resize-none"
         />
         <TextareaAutosize
-          className="font-content-serif mb-12 text-[21px] leading-[33.18px] outline-none resize-none"
+          className="font-content-serif text-[21px] leading-[33.18px] outline-none resize-none"
           value={blogContents}
           onChange={(e) => setBlogContents(e.target.value)}
           placeholder="Tell your story..."
@@ -77,7 +77,7 @@ export default function CreatePost() {
       </div>
 
       {!isEditing && (
-        <div className="max-w-[680px] mb-12">
+        <div className="max-w-[680px]">
           <BlogMarkdownWithTitleAndDesc
             title={title}
             description={description}
