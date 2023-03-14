@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getUserById } from "../../firebase/firebase-app";
 import formatDate from "../../helper-functions/formatDate";
+import getLinkForPost from "../../helper-functions/getLinkForPost";
 import Post from "../../interfaces/PostInterface";
 import UserData from "../../interfaces/UserDataInterface";
 import ProfilePicture from "./ProfilePicture";
@@ -21,14 +22,7 @@ export default function PostPreview({
 
   if (!author) return null;
 
-  // lowercase title + trim extra whitespace + remove non-alphanumeric + convert spaces to dash
-  const linkSafeTitle = post.title
-    .toLowerCase()
-    .replace(/[\W_]+/g, " ")
-    .trim()
-    .replace(/ /g, "-");
-
-  const postLink = `/${author.username}/posts/${linkSafeTitle}-${post.id}`;
+  const postLink = getLinkForPost(author.username, post.title, post.id);
 
   return (
     <article className="max-w-[680px] mx-6 border-b border-neutral-200">

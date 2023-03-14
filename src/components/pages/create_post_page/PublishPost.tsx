@@ -8,6 +8,8 @@ import UserContext from "../../../UserContext";
 import calculateReadingTime from "../../../helper-functions/calculateReadingTime";
 import getRandomId from "../../../helper-functions/getRandomId";
 import useImagePreview from "../../hooks/useImagePreview";
+import { useNavigate } from "react-router-dom";
+import getLinkForPost from "../../../helper-functions/getLinkForPost";
 
 export default function PublishPost({
   title,
@@ -22,6 +24,7 @@ export default function PublishPost({
 }) {
   const { user } = useContext(UserContext);
   const [file, setFile] = useState<File>();
+  const navigate = useNavigate();
   const previewImage = useImagePreview(file);
 
   async function handlePublishPost() {
@@ -47,6 +50,9 @@ export default function PublishPost({
       likes: {},
       id: postId,
     });
+
+    // redirect to the new post that was created
+    navigate(getLinkForPost(user.username, title, postId));
   }
 
   return (
