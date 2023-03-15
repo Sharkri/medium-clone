@@ -5,10 +5,12 @@ import ProfilePicture from "../../helper-components/ProfilePicture";
 
 export default function CreateComment({
   onSubmit,
+  onCancel,
   placeholder = "What are your thoughts?",
   hideUserInfo,
 }: {
   onSubmit: Function;
+  onCancel?: Function;
   placeholder?: string;
   hideUserInfo?: boolean;
 }) {
@@ -17,9 +19,11 @@ export default function CreateComment({
   const [expanded, setExpanded] = useState(true);
   const [disabled, setDisabled] = useState(false);
 
-  function onCancel() {
+  function handleCancel() {
     setExpanded(false);
     setCommentText("");
+
+    if (typeof onCancel === "function") onCancel();
   }
 
   return (
@@ -73,7 +77,7 @@ export default function CreateComment({
           className="pt-1 px-3 pb-[6px] disabled:cursor-default"
           type="button"
           disabled={disabled}
-          onClick={onCancel}
+          onClick={handleCancel}
         >
           Cancel
         </button>

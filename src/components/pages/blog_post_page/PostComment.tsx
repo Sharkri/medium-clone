@@ -143,11 +143,14 @@ export default function PostComment({
       )}
 
       {replying && (
-        <CreateComment
-          placeholder={`Replying to ${author.displayName}`}
-          hideUserInfo
-          onSubmit={replyToComment}
-        />
+        <div className="border-l-[3px] border-l-neutral-200 pl-6 ml-3">
+          <CreateComment
+            placeholder={`Replying to ${author.displayName}`}
+            hideUserInfo
+            onCancel={() => setReplying(false)}
+            onSubmit={replyToComment}
+          />
+        </div>
       )}
 
       <div className="border-b border-neutral-200 group-last/comment:border-b-0" />
