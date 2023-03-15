@@ -27,11 +27,13 @@ export default function PostComment({
   comment,
   onCommentLike,
   commentPath = `posts/${post.id}/comments/${comment.id}`,
+  nestedLv = 0,
 }: {
   post: Post;
   comment: Comment;
   onCommentLike: Function;
   commentPath?: string;
+  nestedLv?: number;
 }) {
   const { user: currentUser } = useContext(UserContext);
 
@@ -128,22 +130,14 @@ export default function PostComment({
         </div>
       </div>
 
-      {showReplies && (
-        <div className="border-l-[3px] border-l-neutral-200 pl-6 ml-3 mb-6 animate-open">
-          {(replies || []).map((reply) => (
-            <PostComment
-              comment={reply as Comment}
-              post={post}
-              onCommentLike={onCommentLike}
-              commentPath={`${commentPath}/replies/${reply.id}`}
-              key={reply.id}
-            />
-          ))}
-        </div>
-      )}
-
       {replying && (
-        <div className="border-l-[3px] border-l-neutral-200 pl-6 ml-3">
+        <div
+          className={
+            nestedLv < 3
+              ? "border-l-[3px] border-l-neutral-200 pl-6 ml-3"
+              : undefined
+          }
+        >
           <CreateComment
             placeholder={`Replying to ${author.displayName}`}
             hideUserInfo
@@ -152,7 +146,24 @@ export default function PostComment({
           />
         </div>
       )}
-
+      {showReplies && (
+        <div
+          className={`${
+            nestedLv < 3 && "border-l-[3px] border-l-neutral-200 pl-6 ml-3"
+          } mb-6 animate-open`}
+        >
+          {(replies || []).map((reply) => (
+            <PostComment
+              comment={reply as Comment}
+              post={post}
+              onCommentLike={onCommentLike}
+              commentPath={`${commentPath}/replies/${reply.id}`}
+              nestedLv={nestedLv + 1}
+              key={reply.id}
+            />
+          ))}
+        </div>
+      )}
       <div className="border-b border-neutral-200 group-last/comment:border-b-0" />
     </div>
   );
