@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import formatDate from "../../../helper-functions/formatDate";
 import getLikeCount from "../../../helper-functions/getLikeCount";
+import removeExtraWhitespace from "../../../helper-functions/removeExtraWhitespace";
 import Comment from "../../../interfaces/CommentInterface";
 import Post from "../../../interfaces/PostInterface";
 import UserData from "../../../interfaces/UserDataInterface";
@@ -83,7 +84,7 @@ export default function PostCommentContent({
       </div>
 
       <p className="pt-3 pb-[5px] break-word whitespace-pre-wrap">
-        {comment.text}
+        {removeExtraWhitespace(comment.text)}
       </p>
 
       <CommentInteractBar
