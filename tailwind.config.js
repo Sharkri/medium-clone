@@ -208,7 +208,7 @@ module.exports = {
   },
 
   plugins: [
-    plugin(function ({ addUtilities }) {
+    plugin(function ({ addUtilities, addVariant }) {
       addUtilities({
         ".rotate-y-180": {
           transform: "rotateY(180deg)",

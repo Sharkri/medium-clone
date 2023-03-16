@@ -12,6 +12,7 @@ import UserContext from "../../../UserContext";
 import ModalContext from "../../modal/ModalContext";
 import SignUpOptions from "../../sign_in_and_up/SignUpOptions";
 import usePost from "../../hooks/usePost";
+import Topic from "../../helper-components/Topic";
 
 export default function BlogPost() {
   const { user: currentUser } = useContext(UserContext);
@@ -38,15 +39,27 @@ export default function BlogPost() {
   return (
     <div className="max-w-[1336px] mx-auto">
       <div className="flex justify-evenly max-lg:block">
-        <article className="mx-6 mb-16 grow-[0.8]">
+        <article className="mx-6 mb-4 grow-[0.8]">
           <main className="mx-auto max-w-[680px] relative">
-            <BlogPostHeader author={author} post={post} />
+            <div className="mb-12">
+              <BlogPostHeader author={author} post={post} />
 
-            <BlogMarkdownWithTitleAndDesc
-              title={post.title}
-              description={post.description}
-              blogContents={post.blogContents}
-            />
+              <BlogMarkdownWithTitleAndDesc
+                title={post.title}
+                description={post.description}
+                blogContents={post.blogContents}
+              />
+            </div>
+
+            <div className="flex flex-wrap">
+              {post.topics.map((topicName) => (
+                <Topic
+                  key={topicName}
+                  topicName={topicName}
+                  className="px-4 py-2 mr-2 text-sm"
+                />
+              ))}
+            </div>
 
             <InteractionBar
               post={post}

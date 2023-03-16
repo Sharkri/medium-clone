@@ -6,6 +6,7 @@ import getLinkForPost from "../../helper-functions/getLinkForPost";
 import Post from "../../interfaces/PostInterface";
 import UserData from "../../interfaces/UserDataInterface";
 import ProfilePicture from "./ProfilePicture";
+import Topic from "./Topic";
 
 export default function PostPreview({
   post,
@@ -82,10 +83,17 @@ export default function PostPreview({
           )}
         </div>
 
-        <div className="flex items-center py-8 max-sm:py-4">
-          <div className="grow">
+        <div className="flex items-center py-8 max-sm:py-4 ">
+          <div className="grow text-[13px]">
+            {post.topics.length > 0 && (
+              <Topic
+                topicName={post.topics[0]}
+                className="px-2 py-[2px] mr-2"
+              />
+            )}
+
             <Link to={postLink}>
-              <span className="text-grey text-sm">
+              <span className="text-grey">
                 {post.readingTimeInMinutes} min read
               </span>
             </Link>

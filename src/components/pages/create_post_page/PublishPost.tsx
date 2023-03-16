@@ -1,4 +1,4 @@
-import { MouseEventHandler, useContext, useState } from "react";
+import { ChangeEvent, MouseEventHandler, useContext, useState } from "react";
 
 import { serverTimestamp } from "firebase/firestore";
 import { addPost, getImageUrl } from "../../../firebase/firebase-app";
@@ -24,11 +24,20 @@ export default function PublishPost({
 }) {
   const { user } = useContext(UserContext);
   const [file, setFile] = useState<File>();
+  const [topicValue, setTopicValue] = useState("");
+  const [topicsArray, setTopicsArray] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const tooManyTopics = topicsArray.length > 5;
+
   const navigate = useNavigate();
   const previewImage = useImagePreview(file);
+  const allowedChars = /^$|^[A-Za-z0-9 _-]+$/;
 
   async function handlePublishPost() {
     if (!user?.uid) throw new Error("User does not exist.");
+    if (loading) return;
+
+    setLoading(true);
 
     const postId = getRandomId(12);
     const imageUrl = file
@@ -39,6 +48,8 @@ export default function PublishPost({
       title,
       description,
       blogContents,
+      topics: topicsArray,
+      lowercaseTopics: topicsArray.map((t) => t.toLowerCase()),
       authorUid: user.uid,
       timestamp: serverTimestamp(),
       readingTimeInMinutes: calculateReadingTime(
@@ -51,8 +62,50 @@ export default function PublishPost({
       id: postId,
     });
 
+    setLoading(false);
+
     // redirect to the new post that was created
     navigate(getLinkForPost(user.username, title, postId));
+  }
+
+  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+    const { files } = e.target;
+
+    // only use first file/image
+    if (!files?.length || !files[0].type.match("image.*")) {
+      setFile(undefined);
+    } else {
+      setFile(files[0]);
+    }
+  }
+
+  const addTopic = (topic: string) => {
+    topic = topic.trim();
+    if (tooManyTopics || !topic) return;
+    // no duplicates
+    const isDuplicate = topicsArray.some(
+      (t) => t.toLowerCase() === topic.toLowerCase()
+    );
+    if (isDuplicate) return;
+
+    setTopicsArray([...topicsArray, topic]);
+    setTopicValue("");
+  };
+
+  const removeTopic = (topic: string) => {
+    setTopicsArray((prevState) =>
+      prevState.filter((filteredTopic) => filteredTopic !== topic)
+    );
+  };
+
+  function onTopicChange(value: string) {
+    // if last key pressed is double space or comma
+    if (value.slice(-2) === "  " || value.slice(-1) === ",") {
+      // remove the trailing comma before adding topic
+      addTopic(value.replace(",", ""));
+    } else if (allowedChars.test(value) && value.length <= 25) {
+      setTopicValue(value);
+    }
   }
 
   return (
@@ -86,31 +139,63 @@ export default function PublishPost({
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => {
-                  if (
-                    !e.target.files?.length ||
-                    !e.target.files[0].type.match("image.*")
-                  ) {
-                    setFile(undefined);
-                  } else {
-                    setFile(e.target.files[0]);
-                  }
-                }}
+                onChange={handleFileChange}
               />
             </label>
           </div>
         </div>
 
-        <div className="grow-[0.7] p-8">
-          <p className="text-[19px] text-black/75 line-clamp-1 break-all mb-5">
+        <div className="p-8 flex-[50%]">
+          <p className="text-[19px] text-black/75 line-clamp-1 break-all mb-4">
             Publishing to:{" "}
             <b className="font-content-sans-bold">{user?.displayName}</b>
           </p>
+          <form
+            className="flex gap-2 flex-col"
+            onSubmit={(e) => {
+              e.preventDefault();
+              addTopic(topicValue);
+            }}
+          >
+            <label htmlFor="topic">
+              Add topics (up to 5) so readers know what your story is about
+            </label>
 
+            <div className="flex gap-5 flex-wrap">
+              {topicsArray.map((topic) => (
+                <div
+                  className="pl-2 py-1 bg-zinc-50 flex items-center gap-2 rounded-md"
+                  key={topic}
+                >
+                  <span className="text-[15px]">{topic}</span>
+                  <button
+                    type="button"
+                    className="text-lg text-black/50 pr-2 hover:text-black transition-colors duration-300"
+                    onClick={() => removeTopic(topic)}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <input
+              id="topic"
+              placeholder={tooManyTopics ? undefined : "topic 1, topic 2..."}
+              className="border border-black/10 outline-none px-4 py-2 mb-4 bg-zinc-50"
+              onChange={(e) => onTopicChange(e.target.value)}
+              value={topicValue}
+              disabled={tooManyTopics}
+              title={
+                tooManyTopics ? "You can only add up to 5 topics." : undefined
+              }
+            />
+          </form>
           <div className="flex">
             <button
               type="button"
-              className="bg-green hover:bg-dark-green rounded-full py-[5.5px] px-4 text-white transition-colors duration-100"
+              disabled={loading}
+              className="bg-green disabled:opacity-30 hover:bg-dark-green rounded-full py-[5.5px] px-4 text-white transition-colors duration-100"
               onClick={handlePublishPost}
             >
               Publish now

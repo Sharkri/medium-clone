@@ -18,6 +18,8 @@ function HomeFeed() {
               likes: {},
               id: ".",
               readingTimeInMinutes: 5,
+              topics: [],
+              lowercaseTopics: [],
             },
           ]}
         />

@@ -11,4 +11,7 @@ export default interface Post {
   likes: Likes;
   readingTimeInMinutes: number;
   id: string;
+  topics: string[];
+  // for case-insensitive querying purposes
+  lowercaseTopics: string[];
 }
