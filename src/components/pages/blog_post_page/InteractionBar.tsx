@@ -9,13 +9,11 @@ export default function InteractionBar({
   post,
   comments,
   onLike,
-  onCommentLike,
   currentUserLikeCount,
 }: {
   post: Post;
   comments: Comment[];
   onLike: Function;
-  onCommentLike: Function;
   currentUserLikeCount: number;
 }) {
   const [commentSectionOpen, setCommentSectionOpen] = useState(false);
@@ -55,7 +53,6 @@ export default function InteractionBar({
         onClose={closeCommentSection}
         post={post}
         comments={comments}
-        onCommentLike={onCommentLike}
       />
     </div>
   );

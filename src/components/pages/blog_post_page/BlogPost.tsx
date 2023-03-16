@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
-import { likeComment, likePost } from "../../../firebase/firebase-app";
+import { likePost } from "../../../firebase/firebase-app";
 
 import Sidebar from "../../main/Sidebar";
 import UserInfo from "../../helper-components/UserInfo";
@@ -55,10 +55,6 @@ export default function BlogPost() {
               onLike={async () => {
                 if (!currentUser) setModalOpen(true, <SignUpOptions />);
                 else await likePost(postId, currentUser.uid);
-              }}
-              onCommentLike={async (commentPath: string) => {
-                if (!currentUser) setModalOpen(true, <SignUpOptions />);
-                else await likeComment(commentPath, currentUser.uid);
               }}
             />
           </main>

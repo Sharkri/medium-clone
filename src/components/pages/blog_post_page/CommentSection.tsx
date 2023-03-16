@@ -11,13 +11,11 @@ export default function CommentSection({
   post,
   comments,
   onClose,
-  onCommentLike,
 }: {
   commentSectionOpen: boolean;
   post: Post;
   comments: Comment[];
   onClose: Function;
-  onCommentLike: Function;
 }) {
   const commentModalRef = useRef(null);
 
@@ -77,12 +75,7 @@ export default function CommentSection({
               </div>
               <div className="mx-6 mb-5">
                 {comments.map((comment) => (
-                  <PostComment
-                    post={post}
-                    comment={comment}
-                    key={comment.id}
-                    onCommentLike={onCommentLike}
-                  />
+                  <PostComment post={post} comment={comment} key={comment.id} />
                 ))}
               </div>
             </>
