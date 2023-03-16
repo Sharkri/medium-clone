@@ -211,6 +211,12 @@ async function likeComment(commentPath: string, userUid: string) {
 const deleteComment = async (commentPath: string) =>
   deleteDoc(doc(getFirestore(), commentPath));
 
+const editComment = async (commentPath: string, commentText: string) =>
+  updateDoc(doc(getFirestore(), commentPath), {
+    text: commentText,
+    edited: true,
+  });
+
 async function getAllPostsByUser(uid: string) {
   const { docs } = await getDocs(
     query(getCollectionRef("posts"), where("authorUid", "==", uid))
@@ -247,4 +253,5 @@ export {
   changeEmail,
   getCollectionRef,
   deleteComment,
+  editComment,
 };

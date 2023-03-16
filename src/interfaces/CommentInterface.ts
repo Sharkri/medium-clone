@@ -7,4 +7,5 @@ export default interface Comment {
   replies?: Comment[];
   id: string;
   timestamp: any;
+  edited?: boolean;
 }

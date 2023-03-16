@@ -6,16 +6,18 @@ import ProfilePicture from "../../helper-components/ProfilePicture";
 export default function CreateComment({
   onSubmit,
   onCancel,
+  initialText = "",
   placeholder = "What are your thoughts?",
   hideUserInfo,
 }: {
   onSubmit: Function;
   onCancel?: Function;
+  initialText?: string;
   placeholder?: string;
   hideUserInfo?: boolean;
 }) {
   const { user } = useContext(UserContext);
-  const [commentText, setCommentText] = useState("");
+  const [commentText, setCommentText] = useState(initialText);
   const [expanded, setExpanded] = useState(true);
   const [disabled, setDisabled] = useState(false);
 
@@ -28,7 +30,7 @@ export default function CreateComment({
 
   return (
     <form
-      className={`py-[14px] shadow-[rgb(0,0,0,0.12)_0px_2px_8px]`}
+      className="py-[14px] shadow-[rgb(0,0,0,0.12)_0px_2px_8px]"
       onSubmit={async (e: FormEvent) => {
         e.preventDefault();
         if (!user || !commentText || disabled) return;
