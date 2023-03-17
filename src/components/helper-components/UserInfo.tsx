@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import compactNumber from "../../helper-functions/abbreviateNumber";
+import compactNumber from "../../helper-functions/compactNumber";
 import UserData from "../../interfaces/UserDataInterface";
 import UserContext from "../../UserContext";
 import ProfilePicture from "./ProfilePicture";

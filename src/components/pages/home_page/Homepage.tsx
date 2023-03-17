@@ -20,7 +20,7 @@ export default function Homepage() {
   return (
     <div className="max-w-[1336px] m-auto">
       <div className="flex justify-evenly">
-        <main className="pt-[50px] w-full max-w-[728px] flex flex-col gap-6">
+        <main className="pt-[50px] w-full max-w-[680px] flex flex-col mx-6">
           {posts.map((post) => (
             <PostPreview post={post} key={post.id} />
           ))}

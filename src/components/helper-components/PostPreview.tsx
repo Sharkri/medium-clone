@@ -26,7 +26,7 @@ export default function PostPreview({
   const postLink = getLinkForPost(author.username, post.title, post.id);
 
   return (
-    <article className="max-w-[680px] mx-6 border-b border-neutral-200">
+    <article className="border-b border-neutral-200 py-6">
       <div className="flex gap-2">
         {!omitProfile && (
           <Link to={`/u/${author.username}`}>

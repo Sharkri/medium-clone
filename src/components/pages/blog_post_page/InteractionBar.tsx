@@ -1,5 +1,4 @@
 import { useState } from "react";
-import getLikeCount from "../../../helper-functions/getLikeCount";
 import Comment from "../../../interfaces/CommentInterface";
 import Post from "../../../interfaces/PostInterface";
 import CommentSection from "./CommentSection";
@@ -23,7 +22,7 @@ export default function InteractionBar({
     <div className="fixed h-[40px] bottom-4 w-full max-w-[680px] flex justify-center z-20">
       <div className="flex items-center h-[40px] shadow-lg pl-4 pr-[14px] rounded-full text-grey bg-white">
         <LikeButton
-          likeCount={getLikeCount(post.likes)}
+          likeCount={post.likeCount}
           currentUserLikeCount={currentUserLikeCount}
           onLike={onLike}
         />

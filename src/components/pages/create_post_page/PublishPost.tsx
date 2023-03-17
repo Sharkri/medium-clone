@@ -59,6 +59,7 @@ export default function PublishPost({
       ),
       thumbnail: imageUrl || "",
       likes: {},
+      likeCount: 0,
       id: postId,
     });
 

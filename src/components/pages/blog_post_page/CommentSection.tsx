@@ -49,6 +49,7 @@ export default function CommentSection({
               onSubmit={async (commentText: string, authorUid: string) => {
                 const comment = {
                   likes: {},
+                  likeCount: 0,
                   text: commentText,
                   authorUid,
                   id: getRandomId(12),

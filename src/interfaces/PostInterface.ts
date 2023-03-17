@@ -9,6 +9,7 @@ export default interface Post {
   timestamp: any;
   // array-like object
   likes: Likes;
+  likeCount: number;
   readingTimeInMinutes: number;
   id: string;
   topics: string[];

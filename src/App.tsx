@@ -17,6 +17,7 @@ import ProfilePage from "./components/pages/profile_page/ProfilePage";
 import Settings from "./components/pages/settings_page/Settings";
 import UserData from "./interfaces/UserDataInterface";
 import { useDocumentData } from "react-firebase-hooks/firestore";
+import PostsWithTopic from "./components/pages/posts_with_topic_page/PostsWithTopic";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -88,6 +89,15 @@ function App() {
             }
             path="/settings"
           ></Route>
+
+          <Route
+            element={<PostsWithTopic sortBy="latest" />}
+            path="/tag/:topicName"
+          />
+          <Route
+            element={<PostsWithTopic sortBy="best" />}
+            path="/tag/:topicName/best"
+          />
         </Routes>
       </UserContext.Provider>
     </ModalContext.Provider>

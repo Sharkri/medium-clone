@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import compactNumber from "../../../helper-functions/abbreviateNumber";
+import compactNumber from "../../../helper-functions/compactNumber";
 import formatDate from "../../../helper-functions/formatDate";
 import UserData from "../../../interfaces/UserDataInterface";
 

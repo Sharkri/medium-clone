@@ -50,6 +50,7 @@ export default function PostComment({
 
     const reply = {
       likes: {},
+      likeCount: 0,
       text: commentText,
       authorUid: currentUser.uid,
       id: getRandomId(12),

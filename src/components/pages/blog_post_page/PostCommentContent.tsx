@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import formatDate from "../../../helper-functions/formatDate";
-import getLikeCount from "../../../helper-functions/getLikeCount";
 import removeExtraWhitespace from "../../../helper-functions/removeExtraWhitespace";
 import Comment from "../../../interfaces/CommentInterface";
 import Post from "../../../interfaces/PostInterface";
@@ -90,7 +89,7 @@ export default function PostCommentContent({
       <CommentInteractBar
         onReply={onReplyComment}
         onLike={onLikeComment}
-        likeCount={getLikeCount(comment.likes)}
+        likeCount={comment.likeCount}
         currentUserLikeCount={user ? comment.likes[user.uid] : 0}
         onToggleOpenReplies={onToggleOpenReplies}
         isRepliesOpen={isRepliesOpen}

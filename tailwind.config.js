@@ -228,6 +228,11 @@ module.exports = {
         ".thinnest-icon:before": {
           "-webkit-text-stroke": "2px white",
         },
+
+        ".highlight": {
+          color: "rgb(41, 41, 41)",
+          "border-bottom": "1px solid #757575",
+        },
       });
     }),
 

@@ -16,6 +16,7 @@ function HomeFeed() {
               timestamp: serverTimestamp(),
               thumbnail: ".aa",
               likes: {},
+              likeCount: 0,
               id: ".",
               readingTimeInMinutes: 5,
               topics: [],
