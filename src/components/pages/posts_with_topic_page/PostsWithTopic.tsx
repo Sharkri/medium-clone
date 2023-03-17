@@ -7,6 +7,7 @@ import compactNumber from "../../../helper-functions/compactNumber";
 import Post from "../../../interfaces/PostInterface";
 import UserData from "../../../interfaces/UserDataInterface";
 import Dropdown from "../../helper-components/Dropdown";
+import FollowButton from "../../helper-components/FollowButton";
 import PostPreview from "../../helper-components/PostPreview";
 import ProfilePicture from "../../helper-components/ProfilePicture";
 import Sidebar from "../../main/Sidebar";
@@ -191,9 +192,10 @@ export default function PostsWithTopic({
                         </div>
                       </div>
 
-                      <button className="pt-1 px-3 pb-[6px] border border-grey text-sm rounded-full">
-                        Follow
-                      </button>
+                      <FollowButton
+                        className="pt-1 px-3 pb-[6px] border border-grey text-sm rounded-full"
+                        user={topWriter}
+                      />
                     </div>
                   )}
                 </div>

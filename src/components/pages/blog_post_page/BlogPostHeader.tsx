@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import formatDate from "../../../helper-functions/formatDate";
 import Post from "../../../interfaces/PostInterface";
 import UserData from "../../../interfaces/UserDataInterface";
+import FollowButton from "../../helper-components/FollowButton";
 import ProfilePicture from "../../helper-components/ProfilePicture";
 
 export default function BlogPostHeader({
@@ -22,10 +23,10 @@ export default function BlogPostHeader({
             <h2 className="text-lighterblack">{author.displayName}</h2>
           </Link>
 
-          {/* TODO: Follow button */}
-          <button className="lg:hidden ml-3 bg-blue-500 border border-blue-500 text-[13px] text-white rounded-full px-2 pb-[1px]">
-            Follow
-          </button>
+          <FollowButton
+            className="lg:hidden ml-3 bg-blue-500 border border-blue-500 text-[13px] text-white rounded-full px-2 pb-[1px]"
+            user={author}
+          />
         </div>
 
         <div className="flex text-sm text-grey">

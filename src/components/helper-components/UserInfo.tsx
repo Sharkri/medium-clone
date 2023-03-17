@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import compactNumber from "../../helper-functions/compactNumber";
 import UserData from "../../interfaces/UserDataInterface";
 import UserContext from "../../UserContext";
+import FollowButton from "./FollowButton";
 import ProfilePicture from "./ProfilePicture";
 
 // Component contains User PFP, displayName, followers, bio, follow or edit profile button
@@ -37,9 +38,10 @@ export default function UserInfo({ user }: { user: UserData }) {
           Edit profile
         </Link>
       ) : (
-        <button className="bg-blue-500 border border-blue-500 text-sm text-white rounded-full px-5 py-2">
-          Follow
-        </button>
+        <FollowButton
+          user={user}
+          className="bg-blue-500 border border-blue-500 text-sm text-white rounded-full px-5 py-2"
+        />
       )}
     </>
   );
