@@ -175,7 +175,10 @@ export default function PostsWithTopic({
                 <div className="pt-4">
                   {topWriter && (
                     <div className="flex gap-2 justify-between items-center">
-                      <div className="flex gap-4">
+                      <Link
+                        to={`/u/${topWriter.username}`}
+                        className="flex gap-4"
+                      >
                         <ProfilePicture
                           src={topWriter.photoURL}
                           className="w-8 h-8"
@@ -190,7 +193,7 @@ export default function PostsWithTopic({
                             </p>
                           )}
                         </div>
-                      </div>
+                      </Link>
 
                       <FollowButton
                         className="pt-1 px-3 pb-[6px] border border-grey text-sm rounded-full"

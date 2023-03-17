@@ -23,6 +23,8 @@ import {
   setDoc,
   getDoc,
   deleteDoc,
+  arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -242,6 +244,26 @@ async function getPostsByTopic(topicName: string, ...options: any) {
   return docs.docs.map((document) => document.data());
 }
 
+async function followUser(userUid: string, userToFollowUid: string) {
+  updateDoc(getDocRef(`users/${userUid}`), {
+    following: arrayUnion(userToFollowUid),
+  });
+
+  updateDoc(getDocRef(`users/${userToFollowUid}`), {
+    followers: arrayUnion(userUid),
+  });
+}
+
+async function unfollowUser(userUid: string, userToFollowUid: string) {
+  updateDoc(getDocRef(`users/${userUid}`), {
+    following: arrayRemove(userToFollowUid),
+  });
+
+  updateDoc(getDocRef(`users/${userToFollowUid}`), {
+    followers: arrayRemove(userUid),
+  });
+}
+
 const signOutUser = () => signOut(getAuthInstance());
 
 // Initialize Firebase
@@ -272,4 +294,6 @@ export {
   deleteComment,
   editComment,
   getPostsByTopic,
+  followUser,
+  unfollowUser,
 };
