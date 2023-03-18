@@ -26,6 +26,7 @@ export default function PostsWithTopic({
 
   useEffect(() => {
     async function getTopWriter(arrayPosts: Post[]) {
+      if (!arrayPosts.length) return;
       // return the top writer (the one with most liked post)
       const mostLikedPost = arrayPosts.reduce((prev, current) =>
         prev.likeCount >= current.likeCount ? prev : current
