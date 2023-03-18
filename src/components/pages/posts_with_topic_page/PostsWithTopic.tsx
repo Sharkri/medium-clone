@@ -10,6 +10,7 @@ import Dropdown from "../../helper-components/Dropdown";
 import FollowButton from "../../helper-components/FollowButton";
 import PostPreview from "../../helper-components/PostPreview";
 import ProfilePicture from "../../helper-components/ProfilePicture";
+import Spinner from "../../helper-components/Spinner";
 import Sidebar from "../../main/Sidebar";
 
 export default function PostsWithTopic({
@@ -67,11 +68,11 @@ export default function PostsWithTopic({
       }
     }
 
+    setPosts(null);
+
     if (sortBy === "latest") sortByLatest();
     else if (sortBy === "best") sortByBest();
   }, [topicName, sortBy, timeRange]);
-
-  if (posts == null) return null;
 
   return (
     <div className="max-w-[1336px] m-auto">
@@ -150,7 +151,11 @@ export default function PostsWithTopic({
             </div>
           </header>
 
-          {!posts.length ? (
+          {posts == null ? (
+            <div className="flex justify-center">
+              <Spinner className="w-12 h-12" />
+            </div>
+          ) : !posts.length ? (
             <p className="text-grey">
               No posts found with the current tag/filter...
             </p>
