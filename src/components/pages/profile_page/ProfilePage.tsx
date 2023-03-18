@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   getAllPostsByUser,
-  getUserByName,
+  getUserDocByName,
 } from "../../../firebase/firebase-app";
 import Post from "../../../interfaces/PostInterface";
-import UserData from "../../../interfaces/UserDataInterface";
 import AboutPage from "./AboutPage";
 import PostPreview from "../../helper-components/PostPreview";
 import Sidebar from "../../main/Sidebar";
 import UserInfo from "../../helper-components/UserInfo";
 import FollowersPage from "./FollowersPage";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { DocumentReference } from "firebase/firestore";
+import UserData from "../../../interfaces/UserDataInterface";
 
 export default function ProfilePage({
   page,
@@ -19,25 +21,22 @@ export default function ProfilePage({
 }) {
   const { username } = useParams();
 
-  const [user, setUser] = useState<UserData | null>(null);
+  const [userRef, setUserRef] = useState<DocumentReference | null>(null);
+  const user = useDocumentData(userRef)[0] as UserData;
   const [userPosts, setUserPosts] = useState<Post[]>([]);
 
+  // get user ref
   useEffect(() => {
-    async function fetchInfo() {
-      if (!username) return;
-
-      const userData = (await getUserByName(username)) as UserData | null;
-      if (!userData) return;
-
-      setUser(userData);
-
-      const allUserPosts = (await getAllPostsByUser(userData.uid)) as Post[];
-
-      setUserPosts(allUserPosts);
-    }
-
-    fetchInfo();
+    if (!username) return;
+    getUserDocByName(username).then((doc) => setUserRef(doc ? doc.ref : null));
   }, [username]);
+
+  // get user posts
+  useEffect(() => {
+    if (!user) return;
+
+    getAllPostsByUser(user.uid).then((posts) => setUserPosts(posts as Post[]));
+  }, [user]);
 
   const highlight = "border-b border-lighterblack text-lighterblack";
 

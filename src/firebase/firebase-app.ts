@@ -116,7 +116,7 @@ async function searchForDoc(
 
   if (docs.empty) return null;
 
-  return docs.docs[0].data();
+  return docs.docs[0];
 }
 
 async function getDocData(path: string) {
@@ -131,7 +131,7 @@ const getUserRef = (uid: string) => getDocRef(`users/${uid}`);
 const getPostById = async (id: string) => getDocData(`posts/${id}`);
 const getUserById = async (uid: string) => getDocData(`users/${uid}`);
 
-const getUserByName = async (name: string) =>
+const getUserDocByName = async (name: string) =>
   searchForDoc("users", "username", name);
 
 async function changeUsername(userUid: string, newUsername: string) {
@@ -280,7 +280,7 @@ export {
   getPostById,
   getUserById,
   getAllPosts,
-  getUserByName,
+  getUserDocByName,
   getAllPostsByUser,
   changeUsername,
   getUserRef,

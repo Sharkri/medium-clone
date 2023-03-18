@@ -21,7 +21,7 @@ import PostsWithTopic from "./components/pages/posts_with_topic_page/PostsWithTo
 
 function App() {
   const authState = useAuthState(getAuthInstance());
-  const [user, loading] = [authState[0] as User | null, authState[1]];
+  const [user, loading] = [authState[0] as User, authState[1]];
 
   const { pathname } = useLocation();
 
