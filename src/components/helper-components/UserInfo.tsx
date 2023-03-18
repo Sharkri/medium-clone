@@ -13,14 +13,16 @@ export default function UserInfo({ user }: { user: UserData }) {
 
   return (
     <>
-      <Link to={`/u/${username}`} className="block w-[88px] h-[88px]">
+      <Link
+        to={`/u/${username}`}
+        className="block w-12 h-12 lg:w-[88px] lg:h-[88px]"
+      >
         <ProfilePicture className="w-full h-full" src={photoURL} />
       </Link>
 
-      <h2 className="text-lighterblack font-sohne-semibold mt-4">
+      <h2 className="text-lighterblack font-sohne-semibold mt-4 line-clamp-1 break-all">
         <Link to={`/u/${username}`}>{displayName}</Link>
       </h2>
-
       <Link
         to={`/u/${username}/followers`}
         className="text-grey hover:text-lightblack mt-1 inline-block"
@@ -28,7 +30,11 @@ export default function UserInfo({ user }: { user: UserData }) {
         <span>{compactNumber(user.followers.length)} Followers</span>
       </Link>
 
-      <p className="text-grey text-sm mt-3 mb-6">{user.bio}</p>
+      <div className="mt-3" />
+
+      {user.bio && (
+        <p className="text-grey text-sm mb-6 max-sm:hidden">{user.bio}</p>
+      )}
 
       {loggedInUser?.uid === user.uid ? (
         <Link

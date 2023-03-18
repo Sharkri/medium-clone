@@ -80,6 +80,10 @@ function App() {
             element={<ProfilePage page="about" />}
             path="u/:username/about"
           />
+          <Route
+            element={<ProfilePage page="followers" />}
+            path="u/:username/followers"
+          />
 
           <Route
             element={

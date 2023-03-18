@@ -87,17 +87,17 @@ export default function PostsWithTopic({
             <div className="mt-2 ml-1 border-b -mb-[1px] border-b-neutral-200 text-grey text-sm [&>a]:py-4 flex gap-4">
               <Link
                 to={`/tag/${topicName}`}
-                className={`${
-                  sortBy === "latest" ? "highlight" : ""
-                } hover:text-lighterblack`}
+                className={
+                  sortBy === "latest" ? "highlight" : "hover:text-lighterblack"
+                }
               >
                 Latest
               </Link>
               <Link
                 to={`/tag/${topicName}/best`}
-                className={`${
-                  sortBy === "best" ? "highlight" : ""
-                } hover:text-lighterblack`}
+                className={
+                  sortBy === "best" ? "highlight" : "hover:text-lighterblack"
+                }
               >
                 Best
               </Link>

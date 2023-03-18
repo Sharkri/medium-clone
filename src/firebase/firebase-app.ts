@@ -73,7 +73,7 @@ async function addUser(user: User) {
       email: user.email,
       followers: [],
       following: [],
-      creationTime: user.metadata.creationTime,
+      creationTime: new Date(),
       bio: "",
     });
   } catch (error) {
