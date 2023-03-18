@@ -4,7 +4,6 @@ import formatDate from "../../../helper-functions/formatDate";
 import UserData from "../../../interfaces/UserDataInterface";
 
 export default function AboutPage({ user }: { user: UserData }) {
-  console.log(user);
   return (
     <div className="mx-6 flex flex-col gap-6">
       <span className="text-sm text-grey">

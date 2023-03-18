@@ -4,7 +4,7 @@ import { getUserDocByName } from "../../../firebase/firebase-app";
 import AboutPage from "./AboutPage";
 import Sidebar from "../../main/Sidebar";
 import UserInfo from "../../helper-components/UserInfo";
-import FollowersPage from "./FollowersPage";
+import FollowPage from "./FollowPage";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { DocumentReference } from "firebase/firestore";
 import UserData from "../../../interfaces/UserDataInterface";
@@ -13,7 +13,7 @@ import ProfilePosts from "./ProfilePosts";
 export default function ProfilePage({
   page,
 }: {
-  page: "profile" | "about" | "followers";
+  page: "profile" | "about" | "followers" | "following";
 }) {
   const { username } = useParams();
 
@@ -34,8 +34,8 @@ export default function ProfilePage({
     <div className="max-w-[1336px] m-auto">
       <div className="flex justify-evenly">
         <main className="max-w-[680px] grow">
-          {page === "followers" ? (
-            <FollowersPage user={user} />
+          {page === "followers" || page === "following" ? (
+            <FollowPage user={user} type={page} />
           ) : (
             <>
               <header className="m-6 sm:my-12">

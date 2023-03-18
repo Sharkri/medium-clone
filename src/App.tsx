@@ -84,7 +84,10 @@ function App() {
             element={<ProfilePage page="followers" />}
             path="u/:username/followers"
           />
-
+          <Route
+            element={<ProfilePage page="following" />}
+            path="u/:username/following"
+          />
           <Route
             element={
               <AuthenticatedRoute isLoggedIn={isLoggedIn}>
