@@ -21,5 +21,6 @@
     "project": "./tsconfig.json"
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
-  "rules": {}
+  "rules": {},
+  "ignorePatterns": ["node_modules*/"]
 }
