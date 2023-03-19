@@ -1,25 +1,21 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getUserById } from "../../firebase/firebase-app";
 import formatDate from "../../helper-functions/formatDate";
 import getLinkForPost from "../../helper-functions/getLinkForPost";
 import Post from "../../interfaces/PostInterface";
-import UserData from "../../interfaces/UserDataInterface";
+import useUser from "../hooks/useUser";
 import ProfilePicture from "./ProfilePicture";
 import Topic from "./Topic";
 
 export default function PostPreview({
   post,
+  initialThumbnailSize,
   omitProfile,
 }: {
   post: Post;
+  initialThumbnailSize?: string;
   omitProfile?: Boolean;
 }) {
-  const [author, setAuthor] = useState<UserData | null>(null);
-
-  useEffect(() => {
-    getUserById(post.authorUid).then((user) => setAuthor(user as UserData));
-  }, [post.authorUid]);
+  const author = useUser(post.authorUid);
 
   if (!author) return null;
 
@@ -71,19 +67,24 @@ export default function PostPreview({
           </Link>
 
           {post.thumbnail && (
-            <div className="ml-[60px] min-w-[112px] max-sm:min-w-[80px] max-sm:ml-6">
-              <Link to={postLink}>
+            <div className="ml-[60px] max-sm:ml-6">
+              <Link
+                to={postLink}
+                className={`block ${
+                  initialThumbnailSize || "w-[112px] h-[112px]"
+                } max-sm:w-[80px] max-sm:h-[56px]`}
+              >
                 <img
                   src={post.thumbnail}
                   alt={post.title}
-                  className="w-[112px] h-[112px] max-sm:w-[80px] max-sm:h-14 object-cover"
+                  className={`w-full h-full max-w-full max-h-full object-cover`}
                 />
               </Link>
             </div>
           )}
         </div>
 
-        <div className="flex items-center py-8 max-sm:py-4 ">
+        <div className="flex items-center mt-8 max-sm:mt-4 ">
           <div className="grow text-[13px]">
             {post.topics.length > 0 && (
               <Topic

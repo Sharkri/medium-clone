@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Logo from "../../helper-components/Logo";
 import Hero from "./Hero";
-import HomeFeed from "../../HomeFeed";
+import HomeFeed from "./HomeFeed";
 import OpenModalButton from "../../helper-components/OpenModalButton";
 import SignInOptions from "../../sign_in_and_up/SignInOptions";
 import SignUpOptions from "../../sign_in_and_up/SignUpOptions";
