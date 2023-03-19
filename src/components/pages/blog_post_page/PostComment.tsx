@@ -1,14 +1,10 @@
 import { useContext, useState } from "react";
-import {
-  useCollectionData,
-  useDocumentDataOnce,
-} from "react-firebase-hooks/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 import {
   addComment,
   deleteComment,
   editComment,
   getCollectionRef,
-  getUserRef,
   likeComment,
 } from "../../../firebase/firebase-app";
 import getRandomId from "../../../helper-functions/getRandomId";
@@ -16,6 +12,7 @@ import Comment from "../../../interfaces/CommentInterface";
 import Post from "../../../interfaces/PostInterface";
 import UserData from "../../../interfaces/UserDataInterface";
 import UserContext from "../../../UserContext";
+import useUser from "../../hooks/useUser";
 import ModalContext from "../../modal/ModalContext";
 import SignUpOptions from "../../sign_in_and_up/SignUpOptions";
 import CreateComment from "./CreateComment";
@@ -42,7 +39,7 @@ export default function PostComment({
   const [editingComment, setEditing] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
 
-  const [author] = useDocumentDataOnce(getUserRef(comment.authorUid));
+  const author = useUser(post.authorUid);
 
   async function replyToComment(commentText: string) {
     // only logged in user can reply

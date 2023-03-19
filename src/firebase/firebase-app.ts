@@ -194,10 +194,8 @@ async function addComment(commentPath: string, comment: Comment) {
 }
 
 // TODO: refactor later to only get 4-12 posts and infinite scrolling
-async function getAllPosts(...options: any) {
-  const q = query(getCollectionRef("posts"), ...options);
-
-  const { docs } = await getDocs(q);
+async function getAllPosts() {
+  const { docs } = await getDocs(collection(getFirestore(), "posts"));
 
   return docs.map((document) => document.data());
 }
