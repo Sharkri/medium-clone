@@ -89,8 +89,8 @@ export default function PostCommentContent({
       <CommentInteractBar
         onReply={onReplyComment}
         onLike={onLikeComment}
-        likeCount={comment.likeCount}
-        currentUserLikeCount={user ? comment.likes[user.uid] : 0}
+        comment={comment}
+        currUserUid={user ? user.uid : null}
         onToggleOpenReplies={onToggleOpenReplies}
         isRepliesOpen={isRepliesOpen}
         replyCount={replies?.length || 0}

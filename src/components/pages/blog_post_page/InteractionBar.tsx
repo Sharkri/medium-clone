@@ -9,11 +9,13 @@ export default function InteractionBar({
   comments,
   onLike,
   currentUserLikeCount,
+  currUserUid,
 }: {
   post: Post;
   comments: Comment[];
   onLike: Function;
   currentUserLikeCount: number;
+  currUserUid: string | undefined;
 }) {
   const [commentSectionOpen, setCommentSectionOpen] = useState(false);
   const closeCommentSection = () => setCommentSectionOpen(false);
@@ -25,6 +27,8 @@ export default function InteractionBar({
           likeCount={post.likeCount}
           currentUserLikeCount={currentUserLikeCount}
           onLike={onLike}
+          // author cannot like their own post
+          disabled={post.authorUid === currUserUid}
         />
 
         <div className="border border-neutral-200 h-3 mx-4" />

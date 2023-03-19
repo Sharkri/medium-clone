@@ -1,19 +1,20 @@
+import Comment from "../../../interfaces/CommentInterface";
 import LikeButton from "./LikeButton";
 
 export default function CommentInteractBar({
   onLike,
   onToggleOpenReplies,
   onReply,
-  likeCount,
-  currentUserLikeCount,
+  comment,
+  currUserUid,
   replyCount,
   isRepliesOpen,
 }: {
   onLike: Function;
   onToggleOpenReplies: Function;
   onReply: Function;
-  likeCount: number;
-  currentUserLikeCount: number;
+  comment: Comment;
+  currUserUid: string | null;
   replyCount: number;
   isRepliesOpen: boolean;
 }) {
@@ -22,9 +23,11 @@ export default function CommentInteractBar({
       <div className="flex gap-4">
         <LikeButton
           onLike={() => onLike()}
-          likeCount={likeCount}
+          likeCount={comment.likeCount}
           className="text-sm"
-          currentUserLikeCount={currentUserLikeCount}
+          currentUserLikeCount={currUserUid ? comment.likes[currUserUid] : 0}
+          // author cannot like their own comment
+          disabled={currUserUid === comment.authorUid}
         />
         {replyCount ? (
           <button

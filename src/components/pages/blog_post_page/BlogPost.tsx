@@ -65,6 +65,7 @@ export default function BlogPost() {
               post={post}
               comments={comments}
               currentUserLikeCount={currentUserLikeCount}
+              currUserUid={currentUser?.uid}
               onLike={async () => {
                 if (!currentUser) setModalOpen(true, <SignUpOptions />);
                 else await likePost(postId, currentUser.uid);
