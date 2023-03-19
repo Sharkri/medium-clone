@@ -8,7 +8,9 @@ function HomeFeedPosts({ posts }: { posts: Post[] }) {
         <PostPreview post={post} initialThumbnailSize="w-[200px] h-[134px]" />
       ))}
 
-      <div className="text-center mt-8 text-grey">No more posts to load...</div>
+      <div className="text-center mt-6 text-grey">
+        You've reached the end...
+      </div>
     </div>
   );
 }

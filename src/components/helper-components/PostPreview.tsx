@@ -94,9 +94,11 @@ export default function PostPreview({
             )}
 
             <Link to={postLink}>
-              <span className="text-grey">
-                {post.readingTimeInMinutes} min read
-              </span>
+              {post.readingTimeInMinutes > 0 && (
+                <span className="text-grey">
+                  {post.readingTimeInMinutes} min read
+                </span>
+              )}
             </Link>
           </div>
           <button className="p-2 flex">
