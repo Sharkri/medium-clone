@@ -16,7 +16,7 @@ function HomeFeed() {
 
   useEffect(() => {
     getAllPosts().then((psts) => setPosts(psts as Post[]));
-  });
+  }, []);
 
   if (!posts) return null;
 
