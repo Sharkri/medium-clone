@@ -6,7 +6,7 @@ import Spinner from "../../helper-components/Spinner";
 import Sidebar from "../../main/Sidebar";
 import HomeFeedPosts from "./HomeFeedPosts";
 
-function HomeFeed() {
+function HomeFeed({ headerTop }: { headerTop: string }) {
   const [posts, setPosts] = useState<Post[] | null>(null);
   const DEFAULT_TOPICS = [
     "Programming",
@@ -20,17 +20,18 @@ function HomeFeed() {
   }, []);
 
   return (
-    <div className="max-w-[1192px] m-auto">
-      <div className="flex gap-12 pt-12 mx-12">
-        <section className="grow flex justify-center">
+    <div className="max-w-[1192px] mx-auto">
+      <div className="flex gap-12 mx-12">
+        <section className="grow flex justify-center pt-12">
           {posts ? (
             <HomeFeedPosts posts={posts} />
           ) : (
             <Spinner className="w-10 h-10" />
           )}
         </section>
-        <Sidebar>
-          <div>
+
+        <Sidebar headerTop={headerTop}>
+          <div className="pt-12">
             <h2 className="font-sohne-semibold text-lg mb-4">
               Discover more of what matters to you
             </h2>
