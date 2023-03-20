@@ -4,7 +4,7 @@ import SignUpOptions from "../../sign_in_and_up/SignUpOptions";
 function Hero() {
   return (
     <div className="bg-yellow flex justify-center">
-      <div className="grow py-[25px] px-[18px] max-w-[1250px]">
+      <div className="grow py-6 px-11 max-w-[1250px]">
         <h2 className="text-8xl max-lg:text-[88px] max-sm:text-[70px] tracking-tighter mb-4 font-serif">
           Stay curious.
         </h2>
