@@ -3,7 +3,9 @@ export default function Spinner({ className }: { className?: string }) {
     <div role="status">
       <svg
         aria-hidden="true"
-        className={`w-6 h-6 text-white animate-spin dark:text-gray-600 fill-blue-500 ${className}`}
+        className={`${
+          className || "w-6 h-6"
+        } text-white animate-spin dark:text-gray-600 fill-blue-500`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
