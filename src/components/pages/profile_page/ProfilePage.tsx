@@ -9,6 +9,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import { DocumentReference } from "firebase/firestore";
 import UserData from "../../../interfaces/UserDataInterface";
 import ProfilePosts from "./ProfilePosts";
+import ScrollerItems from "../../helper-components/ScrollerItems";
 
 export default function ProfilePage({
   page,
@@ -25,8 +26,6 @@ export default function ProfilePage({
     if (!username) return;
     getUserDocByName(username).then((doc) => setUserRef(doc ? doc.ref : null));
   }, [username]);
-
-  const highlight = "border-b border-lighterblack text-lighterblack";
 
   if (!user) return null;
 
@@ -47,24 +46,20 @@ export default function ProfilePage({
                   <UserInfo user={user} />
                 </div>
 
-                <nav className="mt-10 flex border-b border-neutral-200 text-sm text-grey [&>a]:pb-4 [&>a]:mr-8">
+                <ScrollerItems className="mt-10">
                   <Link
-                    className={
-                      page === "profile" ? highlight : "hover:text-lighterblack"
-                    }
                     to={`/u/${username}`}
+                    className={page === "profile" ? "highlight" : undefined}
                   >
                     Home
                   </Link>
                   <Link
-                    className={
-                      page === "about" ? highlight : "hover:text-lighterblack"
-                    }
                     to={`/u/${username}/about`}
+                    className={page === "about" ? "highlight" : undefined}
                   >
                     About
                   </Link>
-                </nav>
+                </ScrollerItems>
               </header>
               {page === "about" ? (
                 <AboutPage user={user} />
