@@ -1,13 +1,8 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllPosts } from "../../../firebase/firebase-app";
-import Post from "../../../interfaces/PostInterface";
-import Spinner from "../../helper-components/Spinner";
+import Posts from "../../helper-components/Posts";
 import Sidebar from "../../main/Sidebar";
-import HomeFeedPosts from "./HomeFeedPosts";
 
 function HomeFeed({ headerTop }: { headerTop: string }) {
-  const [posts, setPosts] = useState<Post[] | null>(null);
   const DEFAULT_TOPICS = [
     "Programming",
     "Data Science",
@@ -15,19 +10,11 @@ function HomeFeed({ headerTop }: { headerTop: string }) {
     "Writing",
   ];
 
-  useEffect(() => {
-    getAllPosts().then((psts) => setPosts(psts as Post[]));
-  }, []);
-
   return (
     <div className="max-w-[1192px] mx-auto">
       <div className="flex gap-12 mx-12">
-        <section className="grow flex justify-center pt-12">
-          {posts ? (
-            <HomeFeedPosts posts={posts} />
-          ) : (
-            <Spinner className="w-10 h-10" />
-          )}
+        <section className="grow pt-12">
+          <Posts />
         </section>
 
         <Sidebar headerTop={headerTop}>
