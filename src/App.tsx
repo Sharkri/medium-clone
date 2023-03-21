@@ -31,7 +31,7 @@ function App() {
   const { modalContent, setModalOpen, isModalOpen } = useModal();
 
   // hide scrollbar when modal open
-  document.body.style.overflow = isModalOpen ? "hidden" : "unset";
+  document.body.style.overflow = isModalOpen ? "hidden" : "auto";
 
   if (loading) return null;
 

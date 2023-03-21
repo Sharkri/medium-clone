@@ -202,6 +202,14 @@ async function getAllPosts(...options: any) {
   return docs.map((document) => document.data());
 }
 
+async function getAllPostsDoc(...options: any) {
+  const q = query(getCollectionRef("posts"), ...options);
+
+  const { docs } = await getDocs(q);
+
+  return docs;
+}
+
 async function likePost(postId: string, userUid: string) {
   updateDoc(getPostRef(postId), {
     [`likes.${userUid}`]: increment(1),
@@ -298,4 +306,5 @@ export {
   getPostsByTopic,
   followUser,
   unfollowUser,
+  getAllPostsDoc,
 };
