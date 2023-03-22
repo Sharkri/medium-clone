@@ -1,9 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  clearNotifications,
-  getUserById,
-} from "../../../firebase/firebase-app";
+import { getUserById, updateUser } from "../../../firebase/firebase-app";
 import formatDate from "../../../helper-functions/formatDate";
 import UserData from "../../../interfaces/UserDataInterface";
 import UserContext from "../../../UserContext";
@@ -47,6 +44,11 @@ export default function NotificationPage() {
     fetchNotifications();
   }, [currentUser?.notifications]);
 
+  function clearNotifications() {
+    if (!currentUser) return;
+    updateUser(currentUser.uid, { bookmarks: [] });
+  }
+
   if (!currentUser || notifications == null) return null;
 
   return (
@@ -79,7 +81,7 @@ export default function NotificationPage() {
         {notifications.length ? (
           <button
             className="text-green text-sm px-5 my-2"
-            onClick={() => clearNotifications(currentUser.uid)}
+            onClick={clearNotifications}
           >
             Clear all notifications
           </button>

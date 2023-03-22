@@ -1,6 +1,6 @@
 import { FormEvent, useContext, useState } from "react";
 
-import { changeUsername } from "../../../firebase/firebase-app";
+import { updateUser } from "../../../firebase/firebase-app";
 
 import UserData from "../../../interfaces/UserDataInterface";
 
@@ -27,7 +27,10 @@ export default function UsernameModal({ user }: { user: UserData }) {
     if (error || user.username === newUsername || loading) return;
     setLoading(true);
 
-    await changeUsername(user.uid, newUsername);
+    await updateUser(user.uid, {
+      username: newUsername,
+      lowercaseUsername: newUsername.toLowerCase(),
+    });
 
     setLoading(false);
 

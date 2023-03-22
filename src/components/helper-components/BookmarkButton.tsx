@@ -1,5 +1,6 @@
+import { arrayRemove, arrayUnion } from "firebase/firestore";
 import { useContext } from "react";
-import { bookmarkPost, unBookmarkPost } from "../../firebase/firebase-app";
+import { updateUser } from "../../firebase/firebase-app";
 import ModalContext from "../modal/ModalContext";
 import SignUpOptions from "../sign_in_and_up/SignUpOptions";
 
@@ -14,6 +15,11 @@ export default function BookmarkButton({
 }) {
   const { setModalOpen } = useContext(ModalContext);
 
+  const unBookmarkPost = () =>
+    updateUser(uid!, { bookmarks: arrayRemove(postId) });
+  const bookmarkPost = () =>
+    updateUser(uid!, { bookmarks: arrayUnion(postId) });
+
   return (
     <button
       onClick={() => {
@@ -22,8 +28,8 @@ export default function BookmarkButton({
           return;
         }
 
-        if (isBookmarked) unBookmarkPost(uid, postId);
-        else bookmarkPost(uid, postId);
+        if (isBookmarked) unBookmarkPost();
+        else bookmarkPost();
       }}
       className="text-grey hover:text-zinc-700 text-lg px-2"
     >

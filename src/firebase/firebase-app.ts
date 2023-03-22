@@ -140,15 +140,8 @@ const getUserById = async (uid: string) => getDocData(`users/${uid}`);
 const getUserDocByName = async (name: string) =>
   searchForDoc("users", "username", name);
 
-async function changeUsername(userUid: string, newUsername: string) {
-  try {
-    await updateDoc(getUserRef(userUid), {
-      username: newUsername,
-      lowercaseUsername: newUsername.toLowerCase(),
-    });
-  } catch (error) {
-    console.error("Error writing to Firebase Database", error);
-  }
+async function updateUser(uid: string, obj: {}) {
+  updateDoc(getUserRef(uid), obj);
 }
 
 async function changeEmail(newEmail: string) {
@@ -156,22 +149,7 @@ async function changeEmail(newEmail: string) {
   if (!currentUser) return;
 
   await updateEmail(currentUser, newEmail);
-  await updateDoc(getUserRef(currentUser.uid), { email: newEmail });
-}
-
-async function updateUser(
-  uid: string,
-  newData: {
-    photoURL?: string | null;
-    displayName?: string;
-    bio?: string;
-  }
-) {
-  try {
-    await updateDoc(getUserRef(uid), newData);
-  } catch (error) {
-    console.error("Error writing to Firebase Database", error);
-  }
+  await updateUser(currentUser.uid, { email: newEmail });
 }
 
 async function getImageUrl(file: File, filePath: string) {
@@ -273,29 +251,18 @@ async function sendNotificationToFollowers(
   notification: Notification
 ) {
   for (const follower of followers) {
-    const user = await getUserById(follower);
-    if (!user) continue;
+    const followerData = await getUserById(follower);
+    if (!followerData) continue;
+
+    const { notifications } = followerData;
 
     // limit notifications to 100
-    if (user.notifications.length > 99) user.notifications.pop();
+    if (notifications.length > 99) notifications.pop();
 
-    user.notifications.unshift(notification);
+    notifications.unshift(notification);
 
-    await updateDoc(getUserRef(follower), {
-      notifications: user.notifications,
-    });
+    await updateUser(follower, { notifications });
   }
-}
-
-const clearNotifications = (uid: string) =>
-  updateDoc(getUserRef(uid), { notifications: [] });
-
-function bookmarkPost(uid: string, postId: string) {
-  updateDoc(getUserRef(uid), { bookmarks: arrayUnion(postId) });
-}
-
-function unBookmarkPost(uid: string, postId: string) {
-  updateDoc(getUserRef(uid), { bookmarks: arrayRemove(postId) });
 }
 
 const signOutUser = () => signOut(getAuthInstance());
@@ -316,7 +283,6 @@ export {
   getPosts,
   getUserDocByName,
   getPostsByUser,
-  changeUsername,
   getUserRef,
   updateUser,
   addComment,
@@ -332,7 +298,4 @@ export {
   getPostDocs,
   getPostCount,
   sendNotificationToFollowers,
-  clearNotifications,
-  bookmarkPost,
-  unBookmarkPost,
 };
