@@ -60,6 +60,7 @@ export default function Homepage() {
                 <Topic
                   topicName={topic}
                   className="py-2 px-4 mr-2 mb-[10px] text-sm"
+                  key={topic}
                 />
               ))}
             </div>
