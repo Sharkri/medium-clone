@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllPostsByUser } from "../../../firebase/firebase-app";
+import { getPostsByUser } from "../../../firebase/firebase-app";
 import Post from "../../../interfaces/PostInterface";
 import PostPreview from "../../helper-components/PostPreview";
 import Spinner from "../../helper-components/Spinner";
 
+// TODO?: don't fetch all at once. i.e. infinite scrolling
 export default function FollowingPosts({
   following,
 }: {
@@ -14,15 +15,21 @@ export default function FollowingPosts({
   useEffect(() => {
     if (!following) return;
 
-    const followingPosts = Promise.all(following.map(getAllPostsByUser));
-    followingPosts.then((p) => setPosts(p.flat() as Post[]));
+    // get all posts by following uids
+    const followingPosts = following.map((uid) => getPostsByUser(uid));
+
+    Promise.all(followingPosts).then((p) => setPosts(p.flat() as Post[]));
   }, [following]);
 
   return posts ? (
     <>
-      {posts.map((post) => (
-        <PostPreview post={post} key={post.id} />
-      ))}
+      {posts.length ? (
+        posts.map((post) => <PostPreview post={post} key={post.id} />)
+      ) : (
+        <p className="text-grey text-center">
+          No one you follow has posted anything yet.
+        </p>
+      )}
     </>
   ) : (
     <div className="mx-auto">

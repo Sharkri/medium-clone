@@ -193,21 +193,22 @@ async function addComment(commentPath: string, comment: Comment) {
   setDoc(doc(getFirestore(), commentPath), comment);
 }
 
-// TODO: refactor later to only get 4-12 posts and infinite scrolling
-async function getAllPosts(...options: any) {
-  const q = query(getCollectionRef("posts"), ...options);
-
-  const { docs } = await getDocs(q);
-
-  return docs.map((document) => document.data());
-}
-
-async function getAllPostsDoc(...options: any) {
+async function getPostDocs(...options: any[]) {
   const q = query(getCollectionRef("posts"), ...options);
 
   const { docs } = await getDocs(q);
 
   return docs;
+}
+
+async function getPosts(...options: any[]) {
+  const docs = await getPostDocs(...options);
+
+  return docs.map((document) => document.data());
+}
+
+async function getPostsByUser(uid: string, ...options: any[]) {
+  return getPosts(where("authorUid", "==", uid), ...options);
 }
 
 async function likePost(postId: string, userUid: string) {
@@ -233,16 +234,8 @@ const editComment = async (commentPath: string, commentText: string) =>
     edited: true,
   });
 
-async function getAllPostsByUser(uid: string) {
-  const { docs } = await getDocs(
-    query(getCollectionRef("posts"), where("authorUid", "==", uid))
-  );
-
-  return docs.map((document) => document.data());
-}
-
 // TODO: DON'T GRAB ALL POSTS AT ONCE. MAYBE 4-12 POSTS AND WHEN SCROLL TO BOTTOM, SHOW MORE
-async function getPostsByTopic(topicName: string, ...options: any) {
+async function getPostsByTopic(topicName: string, ...options: any[]) {
   const q = query(
     getCollectionRef("posts"),
     ...options,
@@ -289,9 +282,9 @@ export {
   isUniqueUsername,
   getPostById,
   getUserById,
-  getAllPosts,
+  getPosts,
   getUserDocByName,
-  getAllPostsByUser,
+  getPostsByUser,
   changeUsername,
   getUserRef,
   updateUser,
@@ -306,5 +299,5 @@ export {
   getPostsByTopic,
   followUser,
   unfollowUser,
-  getAllPostsDoc,
+  getPostDocs,
 };
