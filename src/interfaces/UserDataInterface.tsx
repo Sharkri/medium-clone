@@ -1,7 +1,8 @@
-// prob add more stuff later
+import Notification from "./NotificationInterface";
+
 export default interface UserData {
   displayName: string;
-  photoURL?: string;
+  photoURL: string | null;
   email: string;
   uid: string;
   username: string;
@@ -11,4 +12,5 @@ export default interface UserData {
   following: string[];
   creationTime: any;
   bio: string;
+  notifications: Notification[];
 }

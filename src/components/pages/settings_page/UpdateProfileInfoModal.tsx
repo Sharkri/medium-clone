@@ -10,9 +10,7 @@ import ModalContext from "../../modal/ModalContext";
 export default function UpdateProfileInfoModal({ user }: { user: UserData }) {
   const { setModalOpen } = useContext(ModalContext);
 
-  const [newPhoto, setNewPhoto] = useState<File | string | undefined>(
-    user.photoURL
-  );
+  const [newPhoto, setNewPhoto] = useState<File | string | null>(user.photoURL);
   const previewImage = useImagePreview(newPhoto);
 
   const unsupportedFile =
@@ -87,7 +85,7 @@ export default function UpdateProfileInfoModal({ user }: { user: UserData }) {
               onChange={(e) => {
                 const selectedFile = e.target.files?.[0];
 
-                setNewPhoto(selectedFile);
+                setNewPhoto(selectedFile || null);
               }}
             />
             <p className="text-grey text-sm mb-[10px]">Photo</p>
@@ -109,7 +107,7 @@ export default function UpdateProfileInfoModal({ user }: { user: UserData }) {
                   <button
                     type="button"
                     className="text-sm text-red-700"
-                    onClick={() => setNewPhoto(undefined)}
+                    onClick={() => setNewPhoto(null)}
                   >
                     Remove
                   </button>

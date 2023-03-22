@@ -1,7 +1,11 @@
 import { ChangeEvent, MouseEventHandler, useContext, useState } from "react";
 
 import { serverTimestamp } from "firebase/firestore";
-import { addPost, getImageUrl } from "../../../firebase/firebase-app";
+import {
+  addPost,
+  getImageUrl,
+  sendNotificationToFollowers,
+} from "../../../firebase/firebase-app";
 
 import UserContext from "../../../UserContext";
 
@@ -23,7 +27,7 @@ export default function PublishPost({
   onGoBack: MouseEventHandler;
 }) {
   const { user } = useContext(UserContext);
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<File | null>(null);
   const [topicValue, setTopicValue] = useState("");
   const [topicsArray, setTopicsArray] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -63,6 +67,13 @@ export default function PublishPost({
       id: postId,
     });
 
+    sendNotificationToFollowers(user.followers, {
+      message: "published a new post",
+      uid: user.uid,
+      timestamp: new Date(),
+      id: getRandomId(12),
+    });
+
     setLoading(false);
 
     // redirect to the new post that was created
@@ -74,7 +85,7 @@ export default function PublishPost({
 
     // only use first file/image
     if (!files?.length || !files[0].type.match("image.*")) {
-      setFile(undefined);
+      setFile(null);
     } else {
       setFile(files[0]);
     }

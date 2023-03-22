@@ -36,6 +36,8 @@ import {
 import Post from "../interfaces/PostInterface";
 import generateUniqueUsername from "../helper-functions/generateUniqueUsername";
 import Comment from "../interfaces/CommentInterface";
+import UserData from "../interfaces/UserDataInterface";
+import Notification from "../interfaces/NotificationInterface";
 
 const getAuthInstance = getAuth;
 
@@ -63,10 +65,9 @@ async function addUser(user: User) {
 
   try {
     const username = await generateUniqueUsername(user.email);
-
-    await setDoc(doc(getFirestore(), "users", user.uid), {
+    const userData: UserData = {
       uid: user.uid,
-      displayName: user.displayName,
+      displayName: user.displayName || "",
       username,
       // for case-insensitive search purposes
       lowercaseUsername: username.toLowerCase(),
@@ -76,7 +77,10 @@ async function addUser(user: User) {
       following: [],
       creationTime: new Date(),
       bio: "",
-    });
+      notifications: [],
+    };
+
+    await setDoc(doc(getFirestore(), "users", user.uid), userData);
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
@@ -263,6 +267,28 @@ async function unfollowUser(userUid: string, userToFollowUid: string) {
   });
 }
 
+async function sendNotificationToFollowers(
+  followers: string[],
+  notification: Notification
+) {
+  for (const follower of followers) {
+    const user = await getUserById(follower);
+    if (!user) continue;
+
+    // limit notifications to 100
+    if (user.notifications.length > 99) user.notifications.shift();
+
+    user.notifications.push(notification);
+
+    await updateDoc(getUserRef(follower), {
+      notifications: user.notifications,
+    });
+  }
+}
+
+const clearNotifications = (uid: string) =>
+  updateDoc(getUserRef(uid), { notifications: [] });
+
 const signOutUser = () => signOut(getAuthInstance());
 
 // Initialize Firebase
@@ -296,4 +322,6 @@ export {
   unfollowUser,
   getPostDocs,
   getPostCount,
+  sendNotificationToFollowers,
+  clearNotifications,
 };

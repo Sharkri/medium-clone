@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function useImagePreview(file: File | string | undefined) {
+export default function useImagePreview(file: File | string | null) {
   const [previewImage, setPreviewImage] = useState("");
 
   useEffect(() => {

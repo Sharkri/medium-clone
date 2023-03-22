@@ -18,6 +18,7 @@ import Settings from "./components/pages/settings_page/Settings";
 import UserData from "./interfaces/UserDataInterface";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import PostsWithTopic from "./components/pages/posts_with_topic_page/PostsWithTopic";
+import NotificationPage from "./components/pages/notification_page/NotificationPage";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -71,6 +72,15 @@ function App() {
               </AuthenticatedRoute>
             }
             path="/new-story"
+          />
+
+          <Route
+            element={
+              <AuthenticatedRoute isLoggedIn={isLoggedIn}>
+                <NotificationPage />
+              </AuthenticatedRoute>
+            }
+            path="/notifications"
           />
 
           <Route element={<BlogPost />} path=":username/posts/:title" />
