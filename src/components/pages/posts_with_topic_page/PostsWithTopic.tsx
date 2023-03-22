@@ -85,7 +85,7 @@ export default function PostsWithTopic({
               {sortBy === "best" && (
                 <Dropdown
                   buttonStyles="text-lighterblack flex gap-2 items-center"
-                  dropdownStyles="absolute z-10 bg-white shadow-md border border-neutral-200 rounded-sm overflow-y-auto"
+                  dropdownStyles="rounded-sm"
                 >
                   <>
                     {time[timeRange]}

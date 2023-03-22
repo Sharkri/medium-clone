@@ -31,7 +31,9 @@ export default function BookmarkButton({
         if (isBookmarked) unBookmarkPost();
         else bookmarkPost();
       }}
-      className="text-grey hover:text-zinc-700 text-lg px-2"
+      className={`text-grey ${
+        isBookmarked ? "hover:text-black/60" : "hover:text-zinc-700"
+      } text-lg px-2`}
     >
       <i
         className={`${isBookmarked ? "fa-solid" : "fa-regular"} fa-bookmark`}

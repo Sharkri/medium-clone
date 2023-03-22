@@ -23,7 +23,7 @@ function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
 
       <Dropdown
         buttonStyles="flex items-center hover:text-lighterblack"
-        dropdownStyles="absolute right-0 z-10 bg-white w-[264px] shadow-md border border-neutral-200 rounded-[4px] overflow-y-auto"
+        dropdownStyles="w-[264px]"
       >
         <>
           <ProfilePicture className="h-[31px] w-[31px]" src={user.photoURL} />

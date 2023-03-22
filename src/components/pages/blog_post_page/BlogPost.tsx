@@ -13,6 +13,8 @@ import ModalContext from "../../modal/ModalContext";
 import SignUpOptions from "../../sign_in_and_up/SignUpOptions";
 import usePost from "../../hooks/usePost";
 import Topic from "../../helper-components/Topic";
+import BookmarkButton from "../../helper-components/BookmarkButton";
+import CopyLink from "./CopyLink";
 
 export default function BlogPost() {
   const { user: currentUser } = useContext(UserContext);
@@ -51,7 +53,7 @@ export default function BlogPost() {
               />
             </div>
 
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap mb-6">
               {post.topics.map((topicName) => (
                 <Topic
                   key={topicName}
@@ -59,6 +61,16 @@ export default function BlogPost() {
                   className="px-4 py-2 mr-2 text-sm"
                 />
               ))}
+            </div>
+
+            <div className="flex items-center gap-4 justify-end">
+              <CopyLink link={window.location.href} />
+
+              <BookmarkButton
+                uid={currentUser?.uid}
+                postId={post.id}
+                isBookmarked={currentUser?.bookmarks.includes(post.id)}
+              ></BookmarkButton>
             </div>
 
             <InteractionBar

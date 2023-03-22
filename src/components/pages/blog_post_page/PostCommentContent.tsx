@@ -60,10 +60,7 @@ export default function PostCommentContent({
           </div>
         </div>
 
-        <Dropdown
-          buttonStyles="px-[6px]"
-          dropdownStyles="absolute z-10 right-0 bg-white min-w-[150px] shadow-md border border-black/[0.1] rounded-sm py-2 overflow-y-auto"
-        >
+        <Dropdown buttonStyles="px-[6px]" dropdownStyles="min-w-[150px] py-2">
           <i className="fa-solid fa-ellipsis text-zinc-700 text-lg" />
           <div className="text-grey text-sm">
             <button

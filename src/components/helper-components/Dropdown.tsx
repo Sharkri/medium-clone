@@ -45,7 +45,10 @@ export default function Dropdown({
       </button>
 
       {isDropdownOpen && (
-        <div ref={dropdownRef} className={dropdownStyles}>
+        <div
+          ref={dropdownRef}
+          className={`absolute z-10 overflow-y-auto right-0 bg-white shadow-md border border-neutral-200 rounded-[4px] ${dropdownStyles} `}
+        >
           {children[1]}
         </div>
       )}
