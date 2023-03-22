@@ -78,6 +78,7 @@ async function addUser(user: User) {
       creationTime: new Date(),
       bio: "",
       notifications: [],
+      bookmarks: [],
     };
 
     await setDoc(doc(getFirestore(), "users", user.uid), userData);
@@ -276,9 +277,9 @@ async function sendNotificationToFollowers(
     if (!user) continue;
 
     // limit notifications to 100
-    if (user.notifications.length > 99) user.notifications.shift();
+    if (user.notifications.length > 99) user.notifications.pop();
 
-    user.notifications.push(notification);
+    user.notifications.unshift(notification);
 
     await updateDoc(getUserRef(follower), {
       notifications: user.notifications,
@@ -288,6 +289,14 @@ async function sendNotificationToFollowers(
 
 const clearNotifications = (uid: string) =>
   updateDoc(getUserRef(uid), { notifications: [] });
+
+function bookmarkPost(uid: string, postId: string) {
+  updateDoc(getUserRef(uid), { bookmarks: arrayUnion(postId) });
+}
+
+function unBookmarkPost(uid: string, postId: string) {
+  updateDoc(getUserRef(uid), { bookmarks: arrayRemove(postId) });
+}
 
 const signOutUser = () => signOut(getAuthInstance());
 
@@ -324,4 +333,6 @@ export {
   getPostCount,
   sendNotificationToFollowers,
   clearNotifications,
+  bookmarkPost,
+  unBookmarkPost,
 };

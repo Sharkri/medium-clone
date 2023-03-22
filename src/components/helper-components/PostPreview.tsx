@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import formatDate from "../../helper-functions/formatDate";
 import getLinkForPost from "../../helper-functions/getLinkForPost";
 import Post from "../../interfaces/PostInterface";
+import UserContext from "../../UserContext";
 import useUser from "../hooks/useUser";
+import BookmarkButton from "./BookmarkButton";
 import ProfilePicture from "./ProfilePicture";
 import Topic from "./Topic";
 
@@ -16,6 +19,7 @@ export default function PostPreview({
   omitProfile?: Boolean;
 }) {
   const author = useUser(post.authorUid);
+  const { user } = useContext(UserContext);
 
   if (!author) return null;
 
@@ -101,9 +105,12 @@ export default function PostPreview({
               )}
             </Link>
           </div>
-          <button className="p-2 flex">
-            <i className="fa-regular fa-bookmark thin-icon text-black/80 text-lg" />
-          </button>
+
+          <BookmarkButton
+            postId={post.id}
+            uid={user?.uid}
+            isBookmarked={user?.bookmarks.includes(post.id)}
+          />
         </div>
       </div>
     </article>

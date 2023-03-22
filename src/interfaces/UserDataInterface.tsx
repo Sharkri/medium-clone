@@ -13,4 +13,6 @@ export default interface UserData {
   creationTime: any;
   bio: string;
   notifications: Notification[];
+  // array of post ids
+  bookmarks: string[];
 }
