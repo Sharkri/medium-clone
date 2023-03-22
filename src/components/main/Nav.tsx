@@ -31,30 +31,26 @@ function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
         </>
 
         <>
-          <div className="flex flex-col py-4 border-b border-b-neutral-200">
-            <Link
-              to="/new-story"
-              className="grow hidden max-md:flex gap-4 items-center py-2 px-6 hover:text-lighterblack"
-            >
+          <div className="flex flex-col py-4 child:grow child:flex child:gap-4 child:items-center child:py-2 child:px-6 child-hover:text-lighterblack">
+            <Link to="/new-story" className="md:hidden">
               <i className="fa-regular fa-pen-to-square thinner-icon text-[21px] min-w-[24px]" />
               <span className="text-sm">Write</span>
             </Link>
-            <Link
-              to={`/u/${user.username}`}
-              className="grow flex gap-4 items-center py-2 px-6 hover:text-lighterblack"
-            >
+
+            <Link to={`/u/${user.username}`}>
               <i className="fa-regular fa-user thinner-icon text-[21px] min-w-[24px]" />
-              <p className="text-sm break-all">Profile</p>
+              <p className="text-sm">Profile</p>
             </Link>
-            <Link
-              to="/library"
-              className="grow flex gap-4 items-center py-2 px-6 hover:text-lighterblack"
-            >
+
+            <Link to="/library">
               <i className="fa-regular fa-bookmark thinner-icon text-xl min-w-[24px]" />
-              <p className="text-sm break-all">Library</p>
+              <p className="text-sm">Library</p>
             </Link>
           </div>
-          <div className="flex py-[18px] border-b border-b-neutral-200">
+
+          <div className="border-b border-b-neutral-200" />
+
+          <div className="flex py-[18px]">
             <Link
               to="/settings"
               className="grow text-sm py-[6px] px-6 hover:text-lighterblack"
@@ -62,6 +58,9 @@ function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
               Settings
             </Link>
           </div>
+
+          <div className="border-b border-b-neutral-200" />
+
           <div className="py-[18px] flex">
             <button
               onClick={() => onSignOut()}

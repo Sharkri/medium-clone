@@ -9,7 +9,7 @@ export default function ScrollerItems({
 }) {
   return (
     <nav
-      className={`flex border-b border-neutral-200 text-sm text-grey [&>*]:pb-4 [&>*]:mr-8 ${className}`}
+      className={`flex border-b border-neutral-200 text-sm text-grey child:pb-4 child:mr-8 child-hover:text-lighterblack ${className}`}
     >
       {children}
     </nav>

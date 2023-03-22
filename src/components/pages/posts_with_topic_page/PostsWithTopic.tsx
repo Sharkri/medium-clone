@@ -6,6 +6,7 @@ import compactNumber from "../../../helper-functions/compactNumber";
 import Post from "../../../interfaces/PostInterface";
 import Dropdown from "../../helper-components/Dropdown";
 import Posts from "../../helper-components/Posts";
+import ScrollerItems from "../../helper-components/ScrollerItems";
 import Sidebar from "../../main/Sidebar";
 
 export default function PostsWithTopic({
@@ -55,7 +56,7 @@ export default function PostsWithTopic({
               </h1>
             </div>
 
-            <div className="mt-2 ml-1 border-b -mb-[1px] border-b-neutral-200 text-grey text-sm [&>a]:py-4 flex gap-6">
+            <ScrollerItems className="mt-2 ml-1 -mb-[1px]">
               <Link
                 to={`/tag/${topicName}`}
                 className={sortBy === "latest" ? "highlight" : undefined}
@@ -71,7 +72,7 @@ export default function PostsWithTopic({
 
               {sortBy === "best" && (
                 <Dropdown
-                  buttonStyles="text-lighterblack flex gap-2 items-center py-4 px-[10px]"
+                  buttonStyles="text-lighterblack flex gap-2 items-center"
                   dropdownStyles="absolute z-10 bg-white shadow-md border border-neutral-200 rounded-sm overflow-y-auto"
                 >
                   <>
@@ -87,7 +88,7 @@ export default function PostsWithTopic({
                   </div>
                 </Dropdown>
               )}
-            </div>
+            </ScrollerItems>
           </header>
 
           {topicName ? (

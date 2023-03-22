@@ -90,7 +90,7 @@ export default function Settings() {
             <h2 className="font-sohne-bold mt-16 mb-8">
               Suggested help articles
             </h2>
-            <div className="text-sm flex flex-col gap-4 text-lighterblack [&>button]:text-left">
+            <div className="text-sm flex flex-col gap-4 text-lighterblack child:text-left">
               <button>Sign in or sign up to Medium</button>
               <button>Your profile page</button>
               <button>Writing and publishing your first story</button>

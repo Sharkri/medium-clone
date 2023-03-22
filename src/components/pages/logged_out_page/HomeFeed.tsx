@@ -45,7 +45,7 @@ function HomeFeed({ headerTop }: { headerTop: string }) {
               </div>
             </div>
 
-            <footer className="py-6 flex flex-wrap text-grey text-sm [&>button]:mr-6 [&>button]:mb-2">
+            <footer className="py-6 flex flex-wrap text-grey text-sm child:mr-6 child:mb-2">
               <button>Help</button>
               <button>Status</button>
               <button>Writers</button>
