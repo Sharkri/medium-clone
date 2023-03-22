@@ -234,19 +234,6 @@ const editComment = async (commentPath: string, commentText: string) =>
     edited: true,
   });
 
-// TODO: DON'T GRAB ALL POSTS AT ONCE. MAYBE 4-12 POSTS AND WHEN SCROLL TO BOTTOM, SHOW MORE
-async function getPostsByTopic(topicName: string, ...options: any[]) {
-  const q = query(
-    getCollectionRef("posts"),
-    ...options,
-    where("lowercaseTopics", "array-contains", topicName.toLowerCase())
-  );
-
-  const docs = await getDocs(q);
-
-  return docs.docs.map((document) => document.data());
-}
-
 async function followUser(userUid: string, userToFollowUid: string) {
   updateDoc(getDocRef(`users/${userUid}`), {
     following: arrayUnion(userToFollowUid),
@@ -296,7 +283,6 @@ export {
   getCollectionRef,
   deleteComment,
   editComment,
-  getPostsByTopic,
   followUser,
   unfollowUser,
   getPostDocs,
