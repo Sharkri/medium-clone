@@ -54,7 +54,7 @@ export default function NotificationPage() {
   return (
     <div className="mx-6 mt-12">
       <div className="max-w-[728px] mx-auto">
-        <h1 className="font-sohne-semibold text-[42px] break-all mb-10">
+        <h1 className="font-sohne-semibold text-[42px] break-all mb-10 max-md:text-[22px]">
           Notifications
         </h1>
 
