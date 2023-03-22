@@ -1,7 +1,8 @@
 import { sub } from "date-fns";
 import { where } from "firebase/firestore";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { getPostCount } from "../../../firebase/firebase-app";
 import compactNumber from "../../../helper-functions/compactNumber";
 import Post from "../../../interfaces/PostInterface";
 import Dropdown from "../../helper-components/Dropdown";
@@ -15,7 +16,14 @@ export default function PostsWithTopic({
   sortBy: "latest" | "best";
 }) {
   const { topicName } = useParams();
-  const [storyCount] = useState(0);
+
+  const options = useMemo(() => {
+    return [
+      where("lowercaseTopics", "array-contains", topicName?.toLowerCase()),
+    ];
+  }, [topicName]);
+
+  const [storyCount, setStoryCount] = useState(0);
   // 0 = all-time. 365 = year, 30 = month, 7 = week
   const [timeRange, setTimeRange] = useState<0 | 365 | 30 | 7>(0);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -43,6 +51,10 @@ export default function PostsWithTopic({
     365: "This year",
     0: "All time",
   };
+
+  useEffect(() => {
+    getPostCount(...options).then(setStoryCount);
+  }, [options]);
 
   return (
     <div className="max-w-[1336px] m-auto">
@@ -90,27 +102,15 @@ export default function PostsWithTopic({
               )}
             </ScrollerItems>
           </header>
-
-          {topicName ? (
+          {
             <Posts
-              options={[
-                where(
-                  "lowercaseTopics",
-                  "array-contains",
-                  topicName.toLowerCase()
-                ),
-              ]}
+              options={options}
               posts={sortBy === "latest" ? latestPosts : bestPosts}
               onPostChange={(newPosts: Post[]) =>
                 setPosts(posts.concat(newPosts))
               }
             />
-          ) : (
-            // FIX THIS SH
-            <p className="text-grey">
-              No posts found with the current tag/filter...
-            </p>
-          )}
+          }
         </main>
 
         <Sidebar>

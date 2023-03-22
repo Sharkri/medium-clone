@@ -25,6 +25,7 @@ import {
   deleteDoc,
   arrayUnion,
   arrayRemove,
+  getCountFromServer,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -207,6 +208,14 @@ async function getPosts(...options: any[]) {
   return docs.map((document) => document.data());
 }
 
+async function getPostCount(...options: any) {
+  const q = query(getCollectionRef("posts"), ...options);
+
+  const snapshot = await getCountFromServer(q);
+
+  return snapshot.data().count;
+}
+
 async function getPostsByUser(uid: string, ...options: any[]) {
   return getPosts(where("authorUid", "==", uid), ...options);
 }
@@ -286,4 +295,5 @@ export {
   followUser,
   unfollowUser,
   getPostDocs,
+  getPostCount,
 };
