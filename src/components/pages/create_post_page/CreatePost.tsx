@@ -15,7 +15,7 @@ export default function CreatePost() {
   useEffect(() => {
     function onBeforeClose(e: BeforeUnloadEvent) {
       // if nothing was typed, close with no confirmation
-      if (!title && !blogContents) return;
+      if (!title && !blogContents && !description) return;
 
       // confirm to close with unsaved changes
       e.preventDefault();
@@ -26,7 +26,7 @@ export default function CreatePost() {
     window.addEventListener("beforeunload", onBeforeClose);
 
     return () => window.removeEventListener("beforeunload", onBeforeClose);
-  }, [blogContents, title]);
+  }, [blogContents, title, description]);
 
   return (
     <>
@@ -62,8 +62,16 @@ export default function CreatePost() {
             )}
           </button>
           <button
-            onClick={() => setIsPublishing(true)}
-            className="bg-green text-white rounded-full px-4"
+            onClick={() => {
+              if (title && blogContents) setIsPublishing(true);
+            }}
+            disabled={!title || !blogContents}
+            title={
+              !title || !blogContents
+                ? "You must enter a title and story"
+                : undefined
+            }
+            className="bg-green disabled:opacity-40 text-white rounded-full px-4"
           >
             Publish
           </button>
