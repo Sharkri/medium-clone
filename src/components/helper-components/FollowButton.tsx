@@ -1,5 +1,10 @@
 import { useContext, useState } from "react";
-import { followUser, unfollowUser } from "../../firebase/firebase-app";
+import {
+  followUser,
+  sendNotificationToFollowers,
+  unfollowUser,
+} from "../../firebase/firebase-app";
+import getRandomId from "../../helper-functions/getRandomId";
 import UserData from "../../interfaces/UserDataInterface";
 import UserContext from "../../UserContext";
 import ModalContext from "../modal/ModalContext";
@@ -27,7 +32,16 @@ export default function FollowButton({
     setLoading(true);
 
     if (isFollowing) await unfollowUser(currentUser.uid, userToFollow.uid);
-    else await followUser(currentUser.uid, userToFollow.uid);
+    else {
+      await followUser(currentUser.uid, userToFollow.uid);
+
+      await sendNotificationToFollowers(currentUser.followers, {
+        uid: currentUser.uid,
+        message: "started following you",
+        timestamp: new Date(),
+        id: getRandomId(12),
+      });
+    }
 
     setLoading(false);
   }
