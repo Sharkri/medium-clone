@@ -6,8 +6,15 @@ import Post from "../../interfaces/PostInterface";
 import PostPreview from "./PostPreview";
 import Spinner from "./Spinner";
 
-export default function Posts({ options }: { options?: any[] }) {
-  const [posts, setPosts] = useState<Post[]>([]);
+export default function Posts({
+  options = [],
+  posts,
+  onPostChange,
+}: {
+  options?: any[];
+  posts: Post[];
+  onPostChange: Function;
+}) {
   const [lastDoc, setLastDoc] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
 
@@ -18,12 +25,11 @@ export default function Posts({ options }: { options?: any[] }) {
   async function fetchNewPosts() {
     // if reached bottom, fetch new posts.
     const docs = await getPostDocs(
+      ...options,
       orderBy("id"),
       startAfter(lastDoc),
-      limit(3),
-      ...(options || [])
+      limit(3)
     );
-
     // if no more posts
     if (!docs.length) {
       setHasMore(false);
@@ -31,7 +37,9 @@ export default function Posts({ options }: { options?: any[] }) {
       setLastDoc(docs[docs.length - 1].id);
 
       const data = docs.map((doc) => doc.data()) as Post[];
-      setPosts((p) => filterDuplicatePosts((p || []).concat(data)));
+
+      // DOES THE DUPS DUP?
+      onPostChange(filterDuplicatePosts(data));
     }
   }
 

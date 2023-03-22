@@ -1,16 +1,11 @@
 import { sub } from "date-fns";
-import { orderBy } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { where } from "firebase/firestore";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getPostsByTopic, getUserById } from "../../../firebase/firebase-app";
 import compactNumber from "../../../helper-functions/compactNumber";
 import Post from "../../../interfaces/PostInterface";
-import UserData from "../../../interfaces/UserDataInterface";
 import Dropdown from "../../helper-components/Dropdown";
-import FollowButton from "../../helper-components/FollowButton";
-import PostPreview from "../../helper-components/PostPreview";
-import ProfilePicture from "../../helper-components/ProfilePicture";
-import Spinner from "../../helper-components/Spinner";
+import Posts from "../../helper-components/Posts";
 import Sidebar from "../../main/Sidebar";
 
 export default function PostsWithTopic({
@@ -19,60 +14,34 @@ export default function PostsWithTopic({
   sortBy: "latest" | "best";
 }) {
   const { topicName } = useParams();
-  const [posts, setPosts] = useState<Post[] | null>(null);
-  const [storyCount, setStoryCount] = useState(0);
-  const [topWriter, setTopWriter] = useState<UserData | null>(null);
+  const [storyCount] = useState(0);
   // 0 = all-time. 365 = year, 30 = month, 7 = week
   const [timeRange, setTimeRange] = useState<0 | 365 | 30 | 7>(0);
+  const [posts, setPosts] = useState<Post[]>([]);
 
-  useEffect(() => {
-    async function getTopWriter(arrayPosts: Post[]) {
-      if (!arrayPosts.length) return;
-      // return the top writer (the one with most liked post)
-      const mostLikedPost = arrayPosts.reduce((prev, current) =>
-        prev.likeCount >= current.likeCount ? prev : current
-      );
+  function getBestPosts() {
+    // sort by most liked
+    const mostLiked = posts.sort((a, b) => b.likeCount - a.likeCount);
 
-      return getUserById(mostLikedPost.authorUid);
+    if (timeRange === 0) return mostLiked;
+    else {
+      // filter by minDate (This week, This month. etc)
+      const minDate = sub(new Date(), { days: timeRange });
+      return mostLiked.filter((post) => post.timestamp.toDate() > minDate);
     }
+  }
 
-    async function sortByLatest() {
-      if (!topicName) return;
-      // newest posts
-      const latestPosts = (await getPostsByTopic(
-        topicName,
-        orderBy("timestamp", "desc")
-      )) as Post[];
+  const bestPosts = getBestPosts();
+  const latestPosts = posts.sort(
+    (a, b) => b.timestamp.seconds - a.timestamp.seconds
+  );
 
-      setStoryCount(latestPosts.length);
-      setTopWriter((await getTopWriter(latestPosts)) as UserData);
-      setPosts(latestPosts);
-    }
-
-    async function sortByBest() {
-      if (!topicName) return;
-      // most liked posts
-      const bestPosts = (await getPostsByTopic(
-        topicName,
-        orderBy("likeCount", "desc")
-      )) as Post[];
-
-      setStoryCount(bestPosts.length);
-      setTopWriter((await getTopWriter(bestPosts)) as UserData);
-      // if all time best posts
-      if (timeRange === 0) setPosts(bestPosts);
-      else {
-        const minDate = sub(new Date(), { days: timeRange });
-        // all posts that are newer than minDate
-        setPosts(bestPosts.filter((post) => post.timestamp.toDate() > minDate));
-      }
-    }
-
-    setPosts(null);
-
-    if (sortBy === "latest") sortByLatest();
-    else if (sortBy === "best") sortByBest();
-  }, [topicName, sortBy, timeRange]);
+  const time = {
+    7: "This week",
+    30: "This month",
+    365: "This year",
+    0: "All time",
+  };
 
   return (
     <div className="max-w-[1336px] m-auto">
@@ -86,20 +55,16 @@ export default function PostsWithTopic({
               </h1>
             </div>
 
-            <div className="mt-2 ml-1 border-b -mb-[1px] border-b-neutral-200 text-grey text-sm [&>a]:py-4 flex gap-4">
+            <div className="mt-2 ml-1 border-b -mb-[1px] border-b-neutral-200 text-grey text-sm [&>a]:py-4 flex gap-6">
               <Link
                 to={`/tag/${topicName}`}
-                className={
-                  sortBy === "latest" ? "highlight" : "hover:text-lighterblack"
-                }
+                className={sortBy === "latest" ? "highlight" : undefined}
               >
                 Latest
               </Link>
               <Link
                 to={`/tag/${topicName}/best`}
-                className={
-                  sortBy === "best" ? "highlight" : "hover:text-lighterblack"
-                }
+                className={sortBy === "best" ? "highlight" : undefined}
               >
                 Best
               </Link>
@@ -110,57 +75,40 @@ export default function PostsWithTopic({
                   dropdownStyles="absolute z-10 bg-white shadow-md border border-neutral-200 rounded-sm overflow-y-auto"
                 >
                   <>
-                    {timeRange === 7
-                      ? "This week"
-                      : timeRange === 30
-                      ? "This month"
-                      : timeRange === 365
-                      ? "This year"
-                      : "All time"}
+                    {time[timeRange]}
                     <i className="fa-solid fa-chevron-down text-[10px]" />
                   </>
 
-                  <div className="py-2 [&>button]:px-4 [&>button]:py-[10px] [&>button]:whitespace-nowrap">
-                    <button
-                      className="hover:text-lighterblack"
-                      onClick={() => setTimeRange(7)}
-                    >
-                      This week
-                    </button>
-                    <button
-                      className="hover:text-lighterblack"
-                      onClick={() => setTimeRange(30)}
-                    >
-                      This month
-                    </button>
-                    <button
-                      className="hover:text-lighterblack"
-                      onClick={() => setTimeRange(365)}
-                    >
-                      This year
-                    </button>
-                    <button
-                      className="hover:text-lighterblack"
-                      onClick={() => setTimeRange(0)}
-                    >
-                      All time
-                    </button>
+                  <div className="py-2 child:px-4 child:py-[10px] child:whitespace-nowrap child-hover:text-lighterblack">
+                    <button onClick={() => setTimeRange(7)}>This week</button>
+                    <button onClick={() => setTimeRange(30)}>This month</button>
+                    <button onClick={() => setTimeRange(365)}>This year</button>
+                    <button onClick={() => setTimeRange(0)}>All time</button>
                   </div>
                 </Dropdown>
               )}
             </div>
           </header>
 
-          {posts == null ? (
-            <div className="flex justify-center">
-              <Spinner className="w-12 h-12" />
-            </div>
-          ) : !posts.length ? (
+          {topicName ? (
+            <Posts
+              options={[
+                where(
+                  "lowercaseTopics",
+                  "array-contains",
+                  topicName.toLowerCase()
+                ),
+              ]}
+              posts={sortBy === "latest" ? latestPosts : bestPosts}
+              onPostChange={(newPosts: Post[]) =>
+                setPosts(posts.concat(newPosts))
+              }
+            />
+          ) : (
+            // FIX THIS SH
             <p className="text-grey">
               No posts found with the current tag/filter...
             </p>
-          ) : (
-            posts.map((post) => <PostPreview post={post} key={post.id} />)
           )}
         </main>
 
@@ -172,44 +120,6 @@ export default function PostsWithTopic({
               </h2>
               <span className="text-black/80">Stories</span>
             </div>
-
-            <div className="border-b border-b-neutral-200"></div>
-
-            {topWriter && (
-              <div className="text-lighterblack">
-                <p className="font-sohne-semibold">Top Writers</p>
-                <div className="pt-4">
-                  {topWriter && (
-                    <div className="flex gap-2 justify-between items-center">
-                      <Link
-                        to={`/u/${topWriter.username}`}
-                        className="flex gap-4"
-                      >
-                        <ProfilePicture
-                          src={topWriter.photoURL}
-                          className="w-8 h-8"
-                        />
-                        <div>
-                          <p className="font-sohne-bold">
-                            {topWriter.displayName}
-                          </p>
-                          {topWriter.bio && (
-                            <p className="text-[13px] text-grey">
-                              {topWriter.bio}
-                            </p>
-                          )}
-                        </div>
-                      </Link>
-
-                      <FollowButton
-                        className="pt-1 px-3 pb-[6px] border border-grey text-sm rounded-full"
-                        user={topWriter}
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         </Sidebar>
       </div>

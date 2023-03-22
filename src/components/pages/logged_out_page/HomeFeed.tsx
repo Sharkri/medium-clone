@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import Post from "../../../interfaces/PostInterface";
 import Posts from "../../helper-components/Posts";
 import Sidebar from "../../main/Sidebar";
 
@@ -9,12 +11,18 @@ function HomeFeed({ headerTop }: { headerTop: string }) {
     "Technology",
     "Writing",
   ];
+  const [posts, setPosts] = useState<Post[]>([]);
 
   return (
     <div className="max-w-[1192px] mx-auto">
       <div className="flex gap-12 mx-12">
         <section className="grow pt-12">
-          <Posts />
+          <Posts
+            posts={posts}
+            onPostChange={(newPosts: Post[]) =>
+              setPosts(posts.concat(newPosts))
+            }
+          />
         </section>
 
         <Sidebar headerTop={headerTop}>

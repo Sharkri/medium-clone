@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import Post from "../../../interfaces/PostInterface";
 
 import UserContext from "../../../UserContext";
 import Posts from "../../helper-components/Posts";
 import ScrollerItems from "../../helper-components/ScrollerItems";
+import Topic from "../../helper-components/Topic";
 import Sidebar from "../../main/Sidebar";
 import FollowingPosts from "./FollowingPosts";
 
@@ -13,6 +15,14 @@ export default function Homepage() {
 
   // null feed means for you page
   const feed = search.get("feed");
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  const RECOMMENDED_TOPICS = [
+    "Programming",
+    "Data Science",
+    "Technology",
+    "Writing",
+  ];
 
   return (
     <div className="max-w-[1336px] m-auto">
@@ -33,10 +43,28 @@ export default function Homepage() {
           {feed === "following" ? (
             <FollowingPosts following={user?.following} />
           ) : (
-            <Posts />
+            <Posts
+              posts={posts}
+              onPostChange={(newPosts: Post[]) =>
+                setPosts(posts.concat(newPosts))
+              }
+            />
           )}
         </main>
-        <Sidebar>siderbar!~!! !</Sidebar>
+        <Sidebar>
+          <div className="mt-10">
+            <h2 className="font-sohne-semibold mb-4">Recommended topics</h2>
+
+            <div className="flex flex-wrap">
+              {RECOMMENDED_TOPICS.map((topic) => (
+                <Topic
+                  topicName={topic}
+                  className="py-2 px-4 mr-2 mb-[10px] text-sm"
+                />
+              ))}
+            </div>
+          </div>
+        </Sidebar>
       </div>
     </div>
   );

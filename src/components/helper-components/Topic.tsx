@@ -10,7 +10,7 @@ export default function Topic({
   return (
     <Link
       to={`/tag/${topicName}`}
-      className={`text-grey bg-subtle-white rounded-full hover:bg-neutral-200 transition-colors duration-300 ${className}`}
+      className={`text-lighterblack bg-subtle-white rounded-full hover:bg-neutral-200 transition-colors duration-300 ${className}`}
     >
       {topicName}
     </Link>

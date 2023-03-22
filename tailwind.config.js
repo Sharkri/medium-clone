@@ -233,7 +233,9 @@ module.exports = {
           color: "rgb(41, 41, 41)",
           "border-bottom": "1px solid #757575",
         },
-      });
+      }),
+        addVariant("child", "& > *");
+      addVariant("child-hover", "& > *:hover");
     }),
 
     require("@tailwindcss/typography"),
