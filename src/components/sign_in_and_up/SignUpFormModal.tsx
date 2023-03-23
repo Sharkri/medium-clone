@@ -76,7 +76,12 @@ export default function SignUpFormModal() {
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          if (checkForEmptyInputs()) return;
+          if (
+            checkForEmptyInputs() ||
+            email.length > 256 ||
+            fullName.length > 50
+          )
+            return;
 
           setIsLoading(true);
 
@@ -109,6 +114,7 @@ export default function SignUpFormModal() {
           value={email}
           autoComplete="email"
           labelText="Your email"
+          maxLength={256}
           required
         />
         <Input
@@ -117,6 +123,7 @@ export default function SignUpFormModal() {
           onChange={setFullName}
           value={fullName}
           labelText="Your full name"
+          maxLength={50}
           autoComplete="name"
           required
         />

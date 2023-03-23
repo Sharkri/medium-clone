@@ -13,6 +13,7 @@ export default function Input({
   type,
   labelText,
   children,
+  maxLength,
   className = "",
 }: {
   error: Error | null;
@@ -23,6 +24,7 @@ export default function Input({
   autoComplete?: string;
   labelText: string;
   children?: ReactNode;
+  maxLength?: number;
   className?: string;
 }) {
   const id = useId();
@@ -47,6 +49,7 @@ export default function Input({
           className={`pb-[3px] text-lighterblack outline-none border-b border-neutral-400 w-[270px] text-center transition-colors duration-300 hover:border-neutral-600 focus:border-lighterblack ${
             error ? "animate-shake !border-red-500" : ""
           }`}
+          maxLength={maxLength}
         />
         {children}
       </div>

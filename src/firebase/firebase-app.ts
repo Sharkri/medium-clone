@@ -63,7 +63,7 @@ async function isUniqueUsername(username: string) {
 }
 
 async function addUser(user: User) {
-  if (!user.email) return;
+  if (!user.email || !user.displayName) return;
 
   const { uid, displayName, photoURL, email } = user;
 
@@ -71,11 +71,11 @@ async function addUser(user: User) {
     const username = await generateUniqueUsername(email);
     const userData: UserData = {
       uid: uid,
-      displayName: displayName || "",
+      displayName: displayName,
       username,
       // for case-insensitive search purposes
       lowercaseUsername: username.toLowerCase(),
-      photoURL: photoURL,
+      photoURL,
       followers: [],
       following: [],
       creationTime: new Date(),
