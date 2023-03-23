@@ -1,4 +1,3 @@
-import { FirebaseError } from "firebase/app";
 import { FormEvent, useContext, useState } from "react";
 import { changeEmail } from "../../../firebase/firebase-app";
 import UserData from "../../../interfaces/UserDataInterface";
@@ -23,17 +22,8 @@ export default function UpdateEmailModal({ user }: { user: UserData }) {
       await changeEmail(newEmail);
       setModalOpen(false);
     } catch (err: unknown) {
-      if (err instanceof FirebaseError) {
-        if (err.code === "auth/requires-recent-login") {
-          setErrorMsg(
-            "Changing your email requires recent login. Please re-login."
-          );
-        } else if (err.code === "auth/invalid-email") {
-          setErrorMsg("Please enter a valid email.");
-        }
-      } else {
-        console.error(err);
-        if (err instanceof Error) setErrorMsg(err.message);
+      if (err instanceof Error) {
+        setErrorMsg(err.message);
       }
     } finally {
       setLoading(false);
