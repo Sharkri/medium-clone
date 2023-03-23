@@ -40,7 +40,10 @@ function Nav({
         dropdownStyles="w-[264px]"
       >
         <>
-          <ProfilePicture className="h-[31px] w-[31px]" src={user?.photoURL} />
+          <ProfilePicture
+            className="h-[31px] w-[31px] min-w-[31px]"
+            src={user?.photoURL}
+          />
           <i className="fa-solid fa-chevron-down text-[8.7px] thin-icon ml-2" />
         </>
 

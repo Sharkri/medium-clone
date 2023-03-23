@@ -23,7 +23,7 @@ const SearchBar = () => {
       <input
         type="text"
         placeholder="Search Medium"
-        className="pr-4 py-2 bg-transparent focus:outline-none text-sm"
+        className="pr-2 py-2 bg-transparent focus:outline-none text-sm w-full"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
