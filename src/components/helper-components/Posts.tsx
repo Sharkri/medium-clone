@@ -10,10 +10,12 @@ export default function Posts({
   options = [],
   posts,
   onPostChange,
+  extraDeps = [],
 }: {
   options?: any[];
   posts: Post[] | null;
   onPostChange: Function;
+  extraDeps?: any[];
 }) {
   const [lastDoc, setLastDoc] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(true);
@@ -51,8 +53,14 @@ export default function Posts({
     }
   }, [posts, hasMore]);
 
-  if (posts == null && !hasMore)
+  useEffect(() => {
+    if (extraDeps.length) fetchNewPosts();
+  }, extraDeps);
+
+  if (posts == null && !hasMore) {
     return <p className="text-grey text-center my-4">No stories found..</p>;
+  }
+
   if (posts == null) return null;
 
   return (

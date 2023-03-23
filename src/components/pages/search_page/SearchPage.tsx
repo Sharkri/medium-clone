@@ -33,6 +33,7 @@ export default function SearchPage() {
             where("title", ">=", query),
             where("title", "<=", query + "\uf8ff"),
           ]}
+          extraDeps={[query]}
         />
       </div>
     </div>
