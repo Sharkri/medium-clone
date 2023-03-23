@@ -1,6 +1,6 @@
-import { FormEvent, useContext, useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 
-import { updateUser } from "../../../firebase/firebase-app";
+import { isUniqueUsername, updateUser } from "../../../firebase/firebase-app";
 
 import UserData from "../../../interfaces/UserDataInterface";
 
@@ -12,19 +12,46 @@ import LoadingButton from "../../helper-components/LoadingButton";
 export default function UsernameModal({ user }: { user: UserData }) {
   const [newUsername, setNewUsername] = useState(user.username);
   const [loading, setLoading] = useState(false);
+
   const { setModalOpen } = useContext(ModalContext);
 
-  const isAlphanumericUsername = newUsername.match(/^[\w]+$/);
+  const isValidUsername =
+    newUsername.length > 0 &&
+    newUsername.length <= 30 &&
+    newUsername.match(/^[\w]+$/);
 
-  const error =
-    newUsername.length > 30 ||
-    newUsername.length === 0 ||
-    !isAlphanumericUsername;
+  const [error, setError] = useState("");
+  const isSameName = user.username === newUsername;
+
+  useEffect(() => {
+    if (!isValidUsername) {
+      setError(
+        `Username can only contain alphanumeric and "_", and must be 1-30`
+      );
+    } else {
+      setError("");
+    }
+  }, [newUsername]);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    if (error || user.username === newUsername || loading) return;
+    if (error || isSameName || loading) return;
+
+    // if they are both the same but different case
+    const isChangingCase =
+      user.username.toLowerCase() === newUsername.toLowerCase();
+
+    // disallow already taken usernames unless they are changing case i.e. Jim -> jim
+    if (!isChangingCase) {
+      const isUnique = await isUniqueUsername(newUsername);
+
+      if (!isUnique) {
+        setError("Username already taken");
+        return;
+      }
+    }
+
     setLoading(true);
 
     await updateUser(user.uid, {
@@ -60,11 +87,7 @@ export default function UsernameModal({ user }: { user: UserData }) {
 
           <div className="flex justify-between gap-4 text-[13px] text-grey mt-1">
             {error ? (
-              <p className="text-red-700 text-left max-w-xs">
-                {newUsername.length > 30 || newUsername.length === 0
-                  ? "Username length must be 1-30 characters in length"
-                  : 'Username can only contain letters, numbers, and "_"'}
-              </p>
+              <p className="text-red-700 text-left max-w-xs">{error}</p>
             ) : (
               <p>medium.com/@{newUsername}</p>
             )}
@@ -91,7 +114,7 @@ export default function UsernameModal({ user }: { user: UserData }) {
           <LoadingButton
             type="submit"
             className="disabled:opacity-30 bg-green pt-2 px-7 pb-[10px] text-white rounded-full"
-            disabled={error || newUsername === user.username || loading}
+            disabled={!isValidUsername || isSameName || loading}
             loading={loading}
           >
             Save
