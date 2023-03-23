@@ -14,7 +14,7 @@ interface FetchedNotification {
 }
 
 export default function NotificationPage() {
-  const { user: currentUser } = useContext(UserContext);
+  const { user: currentUser, isAnonymous } = useContext(UserContext);
 
   const [notifications, setNotifications] = useState<
     FetchedNotification[] | null
@@ -49,7 +49,7 @@ export default function NotificationPage() {
     updateUser(currentUser.uid, { bookmarks: [] });
   }
 
-  if (!currentUser || notifications == null) return null;
+  if (notifications == null && !isAnonymous) return null;
 
   return (
     <div className="mx-6 mt-12">
@@ -62,7 +62,7 @@ export default function NotificationPage() {
           <button className="highlight">All notifications</button>
         </ScrollerItems>
 
-        {notifications.map(({ user, message, timestamp }) => (
+        {notifications?.map(({ user, message, timestamp }) => (
           <Link
             to={`/u/${user.username}`}
             className="flex gap-4 items-center p-5 text-sm"
@@ -78,7 +78,7 @@ export default function NotificationPage() {
           </Link>
         ))}
 
-        {notifications.length ? (
+        {notifications?.length ? (
           <button
             className="text-green text-sm px-5 my-2"
             onClick={clearNotifications}

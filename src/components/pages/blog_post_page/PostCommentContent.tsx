@@ -60,23 +60,32 @@ export default function PostCommentContent({
           </div>
         </div>
 
-        <Dropdown buttonStyles="px-[6px]" dropdownStyles="min-w-[150px] py-2">
-          <i className="fa-solid fa-ellipsis text-zinc-700 text-lg" />
-          <div className="text-grey text-sm">
-            <button
-              className="py-2 px-5 hover:text-lighterblack whitespace-nowrap"
-              onClick={() => onEditComment()}
+        {
+          // only original poster can edit/delete their comment
+          comment.authorUid === user?.uid && (
+            <Dropdown
+              buttonStyles="px-[6px]"
+              dropdownStyles="min-w-[150px] py-2"
             >
-              Edit this response
-            </button>
-            <button
-              className="py-2 px-5 hover:text-lighterblack"
-              onClick={() => onDeleteComment()}
-            >
-              Delete
-            </button>
-          </div>
-        </Dropdown>
+              <i className="fa-solid fa-ellipsis text-zinc-700 text-lg" />
+              <div className="text-grey text-sm">
+                <button
+                  className="py-2 px-5 hover:text-lighterblack whitespace-nowrap"
+                  onClick={() => onEditComment()}
+                >
+                  Edit this response
+                </button>
+
+                <button
+                  className="py-2 px-5 hover:text-lighterblack"
+                  onClick={() => onDeleteComment()}
+                >
+                  Delete
+                </button>
+              </div>
+            </Dropdown>
+          )
+        }
       </div>
 
       <p className="pt-3 pb-[5px] break-word whitespace-pre-wrap">

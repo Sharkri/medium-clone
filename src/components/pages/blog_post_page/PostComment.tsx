@@ -39,7 +39,7 @@ export default function PostComment({
   const [editingComment, setEditing] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
 
-  const author = useUser(post.authorUid);
+  const commentAuthor = useUser(comment.authorUid);
 
   async function replyToComment(commentText: string) {
     // only logged in user can reply
@@ -61,11 +61,11 @@ export default function PostComment({
   }
 
   async function onLikeComment() {
-    if (!currentUser) setModalOpen(true, <SignUpOptions />);
+    if (!currentUser) setModalOpen(true, <SignUpOptions hideAnonymousOption />);
     else await likeComment(commentPath, currentUser.uid);
   }
 
-  if (author == null) return null;
+  if (commentAuthor == null) return null;
 
   return (
     <div className="group/comment">
@@ -85,10 +85,10 @@ export default function PostComment({
             comment={comment}
             replies={replies as Comment[]}
             post={post}
-            author={author as UserData}
+            author={commentAuthor as UserData}
             onEditComment={() => setEditing(true)}
             onDeleteComment={() => deleteComment(commentPath)}
-            onReplyComment={() => setReplying(true)}
+            onReplyComment={() => setReplying(!replying)}
             onLikeComment={onLikeComment}
             onToggleOpenReplies={() => setShowReplies(!showReplies)}
             isRepliesOpen={showReplies}
@@ -105,7 +105,7 @@ export default function PostComment({
           }
         >
           <CreateComment
-            placeholder={`Replying to ${author.displayName}`}
+            placeholder={`Replying to ${commentAuthor.displayName}`}
             hideUserInfo
             onCancel={() => setReplying(false)}
             onSubmit={replyToComment}

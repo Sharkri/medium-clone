@@ -4,6 +4,7 @@ import {
   getAdditionalUserInfo,
   getAuth,
   GoogleAuthProvider,
+  signInAnonymously,
   signInWithPopup,
   signOut,
   updateEmail,
@@ -265,6 +266,10 @@ async function sendNotificationToFollowers(
   }
 }
 
+async function continueAnonymously() {
+  await signInAnonymously(getAuthInstance());
+}
+
 const signOutUser = () => signOut(getAuthInstance());
 
 // Initialize Firebase
@@ -298,4 +303,5 @@ export {
   getPostDocs,
   getPostCount,
   sendNotificationToFollowers,
+  continueAnonymously,
 };

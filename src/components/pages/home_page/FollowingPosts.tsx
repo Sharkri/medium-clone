@@ -4,7 +4,6 @@ import Post from "../../../interfaces/PostInterface";
 import PostPreview from "../../helper-components/PostPreview";
 import Spinner from "../../helper-components/Spinner";
 
-// TODO?: don't fetch all at once. i.e. infinite scrolling
 export default function FollowingPosts({
   following,
 }: {
@@ -13,27 +12,28 @@ export default function FollowingPosts({
   const [posts, setPosts] = useState<Post[] | null>(null);
 
   useEffect(() => {
-    if (!following) return;
-
     // get all posts by following uids
-    const followingPosts = following.map((uid) => getPostsByUser(uid));
+    const followingPosts = following?.map((uid) => getPostsByUser(uid)) || [];
 
     Promise.all(followingPosts).then((p) => setPosts(p.flat() as Post[]));
   }, [following]);
 
-  return posts ? (
+  if (posts == null)
+    return (
+      <div className="mx-auto">
+        <Spinner className="w-8 h-8" />
+      </div>
+    );
+
+  return (
     <>
-      {posts.length ? (
-        posts.map((post) => <PostPreview post={post} key={post.id} />)
-      ) : (
+      {!posts.length ? (
         <p className="text-grey text-center">
           No one you follow has posted anything yet.
         </p>
+      ) : (
+        posts.map((post) => <PostPreview post={post} key={post.id} />)
       )}
     </>
-  ) : (
-    <div className="mx-auto">
-      <Spinner className="w-8 h-8" />
-    </div>
   );
 }

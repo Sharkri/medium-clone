@@ -8,9 +8,11 @@ import SignUpOptions from "./SignUpOptions";
 export default function AuthenticationPage({
   children,
   isSignUpPage,
+  hideAnonymousOption,
 }: {
   children: ReactNode;
   isSignUpPage: boolean;
+  hideAnonymousOption?: boolean;
 }) {
   return (
     <ModalContent className="grid place-items-center py-10 px-14 text-center max-w-[678px] max-h-[695px] w-full h-full animate-fade-scale-in">
@@ -26,7 +28,13 @@ export default function AuthenticationPage({
             {isSignUpPage ? "Already have an account? " : "No account? "}
           </span>
           <OpenModalButton
-            element={isSignUpPage ? <SignInOptions /> : <SignUpOptions />}
+            element={
+              isSignUpPage ? (
+                <SignInOptions hideAnonymousOption={hideAnonymousOption} />
+              ) : (
+                <SignUpOptions hideAnonymousOption={hideAnonymousOption} />
+              )
+            }
           >
             <b className="text-green hover:text-dark-green leading-6 font-sohne-bold">
               {isSignUpPage ? "Sign In" : "Create one"}

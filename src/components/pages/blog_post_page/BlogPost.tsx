@@ -17,7 +17,7 @@ import BookmarkButton from "../../helper-components/BookmarkButton";
 import CopyLink from "./CopyLink";
 
 export default function BlogPost() {
-  const { user: currentUser } = useContext(UserContext);
+  const { user: currentUser, isAnonymous } = useContext(UserContext);
   const { setModalOpen } = useContext(ModalContext);
 
   const { title } = useParams();
@@ -70,6 +70,7 @@ export default function BlogPost() {
                 uid={currentUser?.uid}
                 postId={post.id}
                 isBookmarked={currentUser?.bookmarks.includes(post.id)}
+                isAnonymous={isAnonymous}
               ></BookmarkButton>
             </div>
 
@@ -79,7 +80,8 @@ export default function BlogPost() {
               currentUserLikeCount={currentUserLikeCount}
               currUserUid={currentUser?.uid}
               onLike={async () => {
-                if (!currentUser) setModalOpen(true, <SignUpOptions />);
+                if (!currentUser)
+                  setModalOpen(true, <SignUpOptions hideAnonymousOption />);
                 else await likePost(postId, currentUser.uid);
               }}
             />

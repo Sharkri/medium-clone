@@ -34,7 +34,7 @@ export default function LikeButton({
 
   useEffect(() => {
     // skip initial render
-    if (isMount) return;
+    if (isMount || currentUserLikeCount === 0) return;
     // show popup when currentUserLikeCount is incremented
     activatePopup();
 

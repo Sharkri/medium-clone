@@ -76,7 +76,6 @@ export default function CreatePost() {
             Publish
           </button>
         </div>
-
         <div
           className={`flex flex-col w-full max-w-[740px] px-5 pt-2 ${
             !isEditing && "hidden"
@@ -102,7 +101,6 @@ export default function CreatePost() {
             autoFocus
           />
         </div>
-
         {!isEditing && (
           <div className="max-w-[680px]">
             <BlogMarkdownWithTitleAndDesc

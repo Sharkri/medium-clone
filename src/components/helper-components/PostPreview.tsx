@@ -19,7 +19,7 @@ export default function PostPreview({
   omitProfile?: Boolean;
 }) {
   const author = useUser(post.authorUid);
-  const { user } = useContext(UserContext);
+  const { user, isAnonymous } = useContext(UserContext);
 
   if (!author) return null;
 
@@ -109,6 +109,7 @@ export default function PostPreview({
           <BookmarkButton
             postId={post.id}
             uid={user?.uid}
+            isAnonymous={isAnonymous}
             isBookmarked={user?.bookmarks.includes(post.id)}
           />
         </div>

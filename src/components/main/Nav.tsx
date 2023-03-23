@@ -3,16 +3,30 @@ import UserData from "../../interfaces/UserDataInterface";
 import Dropdown from "../helper-components/Dropdown";
 import ProfilePicture from "../helper-components/ProfilePicture";
 
-function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
+function Nav({
+  user,
+  onSignOut,
+}: {
+  user: UserData | null;
+  onSignOut: Function;
+}) {
   return (
     <nav className="flex items-center gap-8 text-neutral-500">
-      <Link
-        to="/new-story"
-        className="flex items-center gap-2 hover:text-lighterblack max-md:hidden"
+      <span
+        className={!user ? "opacity-50 cursor-not-allowed" : ""}
+        title={!user ? "Anonymous users cannot write posts" : undefined}
       >
-        <i className="fa-regular fa-pen-to-square text-[19px] thinner-icon" />
-        <span className="text-sm">Write</span>
-      </Link>
+        <Link
+          to="/new-story"
+          className={`flex items-center gap-2 hover:text-lighterblack max-md:hidden ${
+            !user ? "pointer-events-none" : ""
+          }`}
+          title={!user ? "Anonymous cannot write posts" : undefined}
+        >
+          <i className="fa-regular fa-pen-to-square text-[19px] thinner-icon" />
+          <span className="text-sm">Write</span>
+        </Link>
+      </span>
 
       <Link
         to="/notifications"
@@ -26,7 +40,7 @@ function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
         dropdownStyles="w-[264px]"
       >
         <>
-          <ProfilePicture className="h-[31px] w-[31px]" src={user.photoURL} />
+          <ProfilePicture className="h-[31px] w-[31px]" src={user?.photoURL} />
           <i className="fa-solid fa-chevron-down text-[8.7px] thin-icon ml-2" />
         </>
 
@@ -37,12 +51,12 @@ function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
               <span className="text-sm">Write</span>
             </Link>
 
-            <Link to={`/u/${user.username}`}>
+            <Link to={user ? `/u/${user.username}` : "/404"}>
               <i className="fa-regular fa-user thinner-icon text-[21px] min-w-[24px]" />
               <p className="text-sm">Profile</p>
             </Link>
 
-            <Link to="/library">
+            <Link to={user ? "/library" : "/404"}>
               <i className="fa-regular fa-bookmark thinner-icon text-xl min-w-[24px]" />
               <p className="text-sm">Library</p>
             </Link>
@@ -52,7 +66,7 @@ function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
 
           <div className="flex py-[18px]">
             <Link
-              to="/settings"
+              to={user ? "/settings" : "/404"}
               className="grow text-sm py-[6px] px-6 hover:text-lighterblack"
             >
               Settings
@@ -69,7 +83,11 @@ function Nav({ user, onSignOut }: { user: UserData; onSignOut: Function }) {
               <div className="text-sm mb-1 group-hover:text-lighterblack">
                 Sign out
               </div>
-              <p className="text-[13px] break-all line-clamp-1">{user.email}</p>
+              {user && (
+                <p className="text-[13px] break-all line-clamp-1">
+                  {user.email}
+                </p>
+              )}
             </button>
           </div>
         </>

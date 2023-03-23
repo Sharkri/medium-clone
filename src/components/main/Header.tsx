@@ -11,7 +11,13 @@ import SignUpOptions from "../sign_in_and_up/SignUpOptions";
 import SignInOptions from "../sign_in_and_up/SignInOptions";
 import LogoWithoutText from "../helper-components/LogoWithoutText";
 
-export default function Header({ user }: { user: UserData | null }) {
+export default function Header({
+  user,
+  isAnonymous,
+}: {
+  user: UserData | null;
+  isAnonymous: boolean;
+}) {
   const scrollDirection = useScrollDirection();
 
   return (
@@ -27,7 +33,7 @@ export default function Header({ user }: { user: UserData | null }) {
         {/* TODO: Implement search bar */}
       </div>
 
-      {user ? (
+      {user || isAnonymous ? (
         <Nav user={user} onSignOut={signOutUser} />
       ) : (
         <div>

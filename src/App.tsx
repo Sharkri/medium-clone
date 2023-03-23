@@ -27,7 +27,7 @@ function App() {
 
   const { pathname } = useLocation();
 
-  const userRef = user ? getUserRef(user.uid) : null;
+  const userRef = !user || user.isAnonymous ? null : getUserRef(user.uid);
   const userData = useDocumentData(userRef)[0] as UserData;
 
   const { modalContent, setModalOpen, isModalOpen } = useModal();
@@ -50,6 +50,7 @@ function App() {
       <UserContext.Provider
         value={{
           user: userData,
+          isAnonymous: user?.isAnonymous,
           loading,
         }}
       >
@@ -57,7 +58,9 @@ function App() {
 
         {
           // show header anywhere except "/" path unless logged in
-          (pathname !== "/" || isLoggedIn) && <Header user={userData} />
+          (pathname !== "/" || isLoggedIn) && (
+            <Header user={userData} isAnonymous={user?.isAnonymous} />
+          )
         }
 
         <Routes>

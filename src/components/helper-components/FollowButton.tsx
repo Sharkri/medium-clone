@@ -25,7 +25,7 @@ export default function FollowButton({
 
   async function handleFollow() {
     if (!currentUser) {
-      setModalOpen(true, <SignUpOptions />);
+      setModalOpen(true, <SignUpOptions hideAnonymousOption />);
       return;
     }
 
