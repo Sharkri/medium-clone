@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ModalContext from "../modal/ModalContext";
 
 import {
@@ -16,6 +16,7 @@ export default function SignInOptions({
   hideAnonymousOption?: boolean;
 }) {
   const { setModalOpen } = useContext(ModalContext);
+  const [disabled, setDisabled] = useState(false);
 
   return (
     <AuthenticationPage
@@ -44,7 +45,9 @@ export default function SignInOptions({
           <span className="text-grey">or</span>
           <ButtonWithIcon
             icon="fa-solid fa-user-secret"
+            disabled={disabled}
             onClick={async () => {
+              setDisabled(true);
               await continueAnonymously();
               setModalOpen(false);
             }}
