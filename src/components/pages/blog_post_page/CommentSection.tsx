@@ -64,22 +64,14 @@ export default function CommentSection({
             />
           </div>
 
+          <div className="mb-4 border-b border-b-neutral-200 pt-5 px-5 pb-3" />
+
           {comments.length ? (
-            <>
-              <div className="mb-4 border-b border-b-neutral-200 pt-5 px-5 pb-3">
-                <button className="text-xs px-3">
-                  <strong className="uppercase font-sohne-bold mr-2">
-                    Most relevant
-                  </strong>
-                  <i className="fa-solid fa-chevron-down thin-icon" />
-                </button>
-              </div>
-              <div className="mx-6 mb-5">
-                {comments.map((comment) => (
-                  <PostComment post={post} comment={comment} key={comment.id} />
-                ))}
-              </div>
-            </>
+            <div className="mx-6 mb-5">
+              {comments.map((comment) => (
+                <PostComment post={post} comment={comment} key={comment.id} />
+              ))}
+            </div>
           ) : (
             <div className="font-sohne-italic text-grey grow flex flex-col justify-center items-center">
               <p>There are currently no responses for this story.</p>
