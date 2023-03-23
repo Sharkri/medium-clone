@@ -1,7 +1,7 @@
-import UserData from "./UserDataInterface";
+import AllUserData from "./AllUserData";
 
 export default interface IUserContext {
-  user: UserData | null;
+  user: AllUserData | null;
   loading: Boolean;
   isAnonymous: boolean;
 }

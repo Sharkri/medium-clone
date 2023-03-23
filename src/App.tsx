@@ -15,12 +15,12 @@ import BlogPost from "./components/pages/blog_post_page/BlogPost";
 import { User } from "firebase/auth";
 import ProfilePage from "./components/pages/profile_page/ProfilePage";
 import Settings from "./components/pages/settings_page/Settings";
-import UserData from "./interfaces/UserDataInterface";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import PostsWithTopic from "./components/pages/posts_with_topic_page/PostsWithTopic";
 import NotificationPage from "./components/pages/notification_page/NotificationPage";
 import Library from "./components/pages/library_page/Library";
 import SearchPage from "./components/pages/search_page/SearchPage";
+import AllUserData from "./interfaces/AllUserData";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -28,8 +28,20 @@ function App() {
 
   const { pathname } = useLocation();
 
-  const userRef = !user || user.isAnonymous ? null : getUserRef(user.uid);
-  const userData = useDocumentData(userRef)[0] as UserData;
+  // if user is not anonymous or signed out
+  const isAuthenticated = user && !user.isAnonymous;
+
+  // userData anyone can see
+  const [userData] = useDocumentData(
+    isAuthenticated ? getUserRef(user.uid) : null
+  );
+
+  // private user data (bookmarks, notifications, email)
+  const [privateUserData] = useDocumentData(
+    isAuthenticated ? getUserRef(`${user.uid}/private/private-info`) : null
+  );
+
+  const allUserData = { ...userData, ...privateUserData } as AllUserData;
 
   const { modalContent, setModalOpen, isModalOpen } = useModal();
 
@@ -38,6 +50,7 @@ function App() {
 
   if (loading) return null;
 
+  // anonymous account also counts as logged in
   const isLoggedIn = !!user;
 
   return (
@@ -50,7 +63,7 @@ function App() {
     >
       <UserContext.Provider
         value={{
-          user: userData,
+          user: allUserData,
           isAnonymous: user?.isAnonymous,
           loading,
         }}
@@ -60,7 +73,7 @@ function App() {
         {
           // show header anywhere except "/" path unless logged in
           (pathname !== "/" || isLoggedIn) && (
-            <Header user={userData} isAnonymous={user?.isAnonymous} />
+            <Header user={allUserData} isAnonymous={user?.isAnonymous} />
           )
         }
 

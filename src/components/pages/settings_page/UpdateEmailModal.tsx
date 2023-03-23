@@ -1,11 +1,11 @@
 import { FormEvent, useContext, useState } from "react";
 import { changeEmail } from "../../../firebase/firebase-app";
-import UserData from "../../../interfaces/UserDataInterface";
+import AllUserData from "../../../interfaces/AllUserData";
 import LoadingButton from "../../helper-components/LoadingButton";
 import ModalContent from "../../modal/ModalContent";
 import ModalContext from "../../modal/ModalContext";
 
-export default function UpdateEmailModal({ user }: { user: UserData }) {
+export default function UpdateEmailModal({ user }: { user: AllUserData }) {
   const [newEmail, setNewEmail] = useState(user.email || "");
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);

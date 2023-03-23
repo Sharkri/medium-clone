@@ -1,6 +1,6 @@
 import { arrayRemove, arrayUnion } from "firebase/firestore";
 import { useContext } from "react";
-import { updateUser } from "../../firebase/firebase-app";
+import { updatePrivateUserInfo } from "../../firebase/firebase-app";
 import ModalContext from "../modal/ModalContext";
 import SignUpOptions from "../sign_in_and_up/SignUpOptions";
 
@@ -17,10 +17,12 @@ export default function BookmarkButton({
 }) {
   const { setModalOpen } = useContext(ModalContext);
 
-  const unBookmarkPost = () =>
-    updateUser(uid!, { bookmarks: arrayRemove(postId) });
-  const bookmarkPost = () =>
-    updateUser(uid!, { bookmarks: arrayUnion(postId) });
+  const unBookmarkPost = () => {
+    updatePrivateUserInfo(uid!, { bookmarks: arrayRemove(postId) });
+  };
+  const bookmarkPost = () => {
+    updatePrivateUserInfo(uid!, { bookmarks: arrayUnion(postId) });
+  };
 
   return (
     <button

@@ -11,7 +11,7 @@ function HomeFeed({ headerTop }: { headerTop: string }) {
     "Technology",
     "Writing",
   ];
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[] | null>(null);
 
   return (
     <div className="max-w-[1192px] mx-auto">
@@ -20,7 +20,7 @@ function HomeFeed({ headerTop }: { headerTop: string }) {
           <Posts
             posts={posts}
             onPostChange={(newPosts: Post[]) =>
-              setPosts(posts.concat(newPosts))
+              setPosts((posts || []).concat(newPosts))
             }
           />
         </section>

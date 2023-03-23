@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { signOutUser } from "../../firebase/firebase-app";
 
-import UserData from "../../interfaces/UserDataInterface";
+import AllUserData from "../../interfaces/AllUserData";
 
 import useScrollDirection from "../hooks/useScrollDirection";
 
@@ -16,7 +16,7 @@ export default function Header({
   user,
   isAnonymous,
 }: {
-  user: UserData | null;
+  user: AllUserData | null;
   isAnonymous: boolean;
 }) {
   const scrollDirection = useScrollDirection();

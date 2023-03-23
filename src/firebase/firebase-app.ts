@@ -39,6 +39,7 @@ import generateUniqueUsername from "../helper-functions/generateUniqueUsername";
 import Comment from "../interfaces/CommentInterface";
 import UserData from "../interfaces/UserDataInterface";
 import Notification from "../interfaces/NotificationInterface";
+import PrivateUserData from "../interfaces/PrivateUserData";
 
 const getAuthInstance = getAuth;
 
@@ -64,25 +65,34 @@ async function isUniqueUsername(username: string) {
 async function addUser(user: User) {
   if (!user.email) return;
 
+  const { uid, displayName, photoURL, email } = user;
+
   try {
-    const username = await generateUniqueUsername(user.email);
+    const username = await generateUniqueUsername(email);
     const userData: UserData = {
-      uid: user.uid,
-      displayName: user.displayName || "",
+      uid: uid,
+      displayName: displayName || "",
       username,
       // for case-insensitive search purposes
       lowercaseUsername: username.toLowerCase(),
-      photoURL: user.photoURL,
-      email: user.email,
+      photoURL: photoURL,
       followers: [],
       following: [],
       creationTime: new Date(),
       bio: "",
-      notifications: [],
-      bookmarks: [],
     };
 
-    await setDoc(doc(getFirestore(), "users", user.uid), userData);
+    const privateUserData: PrivateUserData = {
+      bookmarks: [],
+      email: email,
+      notifications: [],
+    };
+
+    await setDoc(doc(getFirestore(), "users", uid), userData);
+    await setDoc(
+      doc(getFirestore(), `users/${uid}/private`, "private-info"),
+      privateUserData
+    );
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
@@ -145,12 +155,17 @@ async function updateUser(uid: string, obj: {}) {
   updateDoc(getUserRef(uid), obj);
 }
 
+// private user info. bookmarks, notifications, email
+async function updatePrivateUserInfo(uid: string, obj: {}) {
+  updateDoc(getUserRef(`${uid}/private/private-info`), obj);
+}
+
 async function changeEmail(newEmail: string) {
   const { currentUser } = getAuthInstance();
   if (!currentUser) return;
 
   await updateEmail(currentUser, newEmail);
-  await updateUser(currentUser.uid, { email: newEmail });
+  await updatePrivateUserInfo(currentUser.uid, { email: newEmail });
 }
 
 async function getImageUrl(file: File, filePath: string) {
@@ -257,7 +272,7 @@ async function sendNotificationToUser(uid: string, notification: Notification) {
 
   user.notifications.unshift(notification);
 
-  await updateUser(uid, { notifications: user.notifications });
+  await updatePrivateUserInfo(uid, { notifications: user.notifications });
 }
 
 async function sendNotificationToUsers(
@@ -308,4 +323,5 @@ export {
   sendNotificationToUsers,
   sendNotificationToUser,
   continueAnonymously,
+  updatePrivateUserInfo,
 };

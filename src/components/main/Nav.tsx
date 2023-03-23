@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import UserData from "../../interfaces/UserDataInterface";
+import AllUserData from "../../interfaces/AllUserData";
 import Dropdown from "../helper-components/Dropdown";
 import ProfilePicture from "../helper-components/ProfilePicture";
 
@@ -7,7 +7,7 @@ function Nav({
   user,
   onSignOut,
 }: {
-  user: UserData | null;
+  user: AllUserData | null;
   onSignOut: Function;
 }) {
   return (
