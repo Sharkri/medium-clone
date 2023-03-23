@@ -88,7 +88,7 @@ export default function PostCommentContent({
         }
       </div>
 
-      <p className="pt-3 pb-[5px] break-word whitespace-pre-wrap">
+      <p className="pt-3 pb-[5px] break-word whitespace-pre-wrap max-h-96 overflow-y-auto">
         {removeExtraWhitespace(comment.text)}
       </p>
 
