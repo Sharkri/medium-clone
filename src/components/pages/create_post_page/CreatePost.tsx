@@ -84,12 +84,14 @@ export default function CreatePost() {
           <TextareaAutosize
             placeholder="Title"
             value={title}
+            maxLength={100}
             onChange={(e) => setTitle(e.target.value.replace(/\n/g, ""))}
             className="font-title mb-1 text-[42px] leading-[52.5px] outline-none resize-none"
           />
           <TextareaAutosize
             placeholder="Description"
             value={description}
+            maxLength={140}
             onChange={(e) => setDescription(e.target.value.replace(/\n/g, ""))}
             className="font-content-serif mb-3 text-[26px] leading-[42.4px] text-grey outline-none resize-none"
           />
