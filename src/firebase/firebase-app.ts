@@ -48,19 +48,16 @@ const isNewUser = (user: UserCredential) =>
 
 const getCollectionRef = (name: string) => collection(getFirestore(), name);
 
-async function isUniqueUsername(username: string) {
-  const lowercaseUsername = username.toLowerCase();
-
-  const docs = await getDocs(
-    query(
-      getCollectionRef("users"),
-      where("lowercaseUsername", "==", lowercaseUsername),
-      limit(1)
-    )
+async function getUsernameDoc(username: string) {
+  const document = await getDoc(
+    doc(getFirestore(), "usernames", username.toLowerCase())
   );
 
-  return docs.empty;
+  return document;
 }
+
+const isUsernameTaken = async (username: string) =>
+  (await getUsernameDoc(username)).exists();
 
 async function addUser(user: User) {
   if (!user.email || !user.displayName) return;
@@ -69,12 +66,13 @@ async function addUser(user: User) {
 
   try {
     const username = await generateUniqueUsername(email);
+    const lowercaseUsername = username.toLowerCase();
     const userData: UserData = {
       uid: uid,
-      displayName: displayName,
+      displayName,
       username,
       // for case-insensitive search purposes
-      lowercaseUsername: username.toLowerCase(),
+      lowercaseUsername,
       photoURL,
       followers: [],
       following: [],
@@ -84,7 +82,7 @@ async function addUser(user: User) {
 
     const privateUserData: PrivateUserData = {
       bookmarks: [],
-      email: email,
+      email,
       notifications: [],
     };
 
@@ -93,6 +91,8 @@ async function addUser(user: User) {
       doc(getFirestore(), `users/${uid}/private`, "private-info"),
       privateUserData
     );
+    // for checking if username is unique
+    await setDoc(doc(getFirestore(), `usernames`, lowercaseUsername), { uid });
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
@@ -117,6 +117,11 @@ async function signInWithGoogle() {
 function getDocRef(path: string) {
   return doc(getFirestore(), path);
 }
+async function getDocData(path: string) {
+  const document = await getDoc(doc(getFirestore(), path));
+
+  return document?.data();
+}
 
 async function searchForDoc(
   collectionToSearch: string,
@@ -136,12 +141,6 @@ async function searchForDoc(
   return docs.docs[0];
 }
 
-async function getDocData(path: string) {
-  const document = await getDoc(doc(getFirestore(), path));
-
-  return document?.data();
-}
-
 const getPostRef = (id: string) => getDocRef(`posts/${id}`);
 const getUserRef = (uid: string) => getDocRef(`users/${uid}`);
 
@@ -158,6 +157,20 @@ async function updateUser(uid: string, obj: {}) {
 // private user info. bookmarks, notifications, email
 async function updatePrivateUserInfo(uid: string, obj: {}) {
   updateDoc(getUserRef(`${uid}/private/private-info`), obj);
+}
+
+async function changeUsername(
+  uid: string,
+  oldUsername: string,
+  newUsername: string
+) {
+  const lowercaseUsername = newUsername.toLowerCase();
+  // delete old username
+  await deleteDoc(getDocRef(`usernames/${oldUsername.toLowerCase()}`));
+  // set new username
+  await setDoc(doc(getFirestore(), "usernames", lowercaseUsername), { uid });
+
+  await updateUser(uid, { username: newUsername, lowercaseUsername });
 }
 
 async function changeEmail(newEmail: string) {
@@ -296,11 +309,12 @@ initializeApp(firebaseConfig);
 export {
   getAuthInstance,
   signInWithGoogle,
+  changeUsername,
   signOutUser,
   addUser,
   addPost,
   getImageUrl,
-  isUniqueUsername,
+  isUsernameTaken,
   getPostById,
   getUserById,
   getPosts,
@@ -324,4 +338,5 @@ export {
   sendNotificationToUser,
   continueAnonymously,
   updatePrivateUserInfo,
+  getUsernameDoc,
 };

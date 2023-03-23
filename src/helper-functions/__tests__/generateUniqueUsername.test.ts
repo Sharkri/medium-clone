@@ -1,10 +1,10 @@
-import { isUniqueUsername } from "../../firebase/firebase-app";
+import { isUsernameTaken } from "../../firebase/firebase-app";
 import generateUniqueUsername from "../generateUniqueUsername";
 import getRandomId from "../getRandomId";
 
 jest.mock("../getRandomId.ts", () => jest.fn());
 jest.mock("../../firebase/firebase-app.ts", () => ({
-  isUniqueUsername: jest.fn(),
+  isUsernameTaken: jest.fn(),
 }));
 
 it("should generate username with random 4 characters", async () => {
@@ -13,10 +13,10 @@ it("should generate username with random 4 characters", async () => {
     .mockReturnValueOnce("amog");
 
   // should reject first username and accept second username
-  (isUniqueUsername as jest.Mock)
-    .mockReturnValueOnce(Promise.resolve(false))
-    .mockReturnValueOnce(Promise.resolve(false))
-    .mockReturnValueOnce(Promise.resolve(true));
+  (isUsernameTaken as jest.Mock)
+    .mockReturnValueOnce(Promise.resolve(true))
+    .mockReturnValueOnce(Promise.resolve(true))
+    .mockReturnValueOnce(Promise.resolve(false));
 
   const result = await generateUniqueUsername("john@gmail.com");
 
@@ -30,9 +30,9 @@ it("should truncate username to maximum of 30 chars", async () => {
     .mockReturnValueOnce("12ab")
     .mockReturnValueOnce("amog");
 
-  (isUniqueUsername as jest.Mock)
-    .mockReturnValueOnce(Promise.resolve(false))
-    .mockReturnValueOnce(Promise.resolve(true));
+  (isUsernameTaken as jest.Mock)
+    .mockReturnValueOnce(Promise.resolve(true))
+    .mockReturnValueOnce(Promise.resolve(false));
 
   // enter email with length 27. so that 27 + (4 unique chars) > 30 length
   const result = await generateUniqueUsername(`${"h".repeat(27)}@gmail.com`);
@@ -43,7 +43,7 @@ it("should truncate username to maximum of 30 chars", async () => {
 });
 
 it("should give original name if username is already unique", async () => {
-  (isUniqueUsername as jest.Mock).mockReturnValueOnce(Promise.resolve(true));
+  (isUsernameTaken as jest.Mock).mockReturnValueOnce(Promise.resolve(false));
 
   const result = await generateUniqueUsername("john@gmail.com");
 

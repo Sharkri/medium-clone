@@ -1,4 +1,4 @@
-import { isUniqueUsername } from "../firebase/firebase-app";
+import { isUsernameTaken } from "../firebase/firebase-app";
 import getRandomId from "./getRandomId";
 
 const ID_LENGTH = 4;
@@ -9,10 +9,10 @@ async function getUniqueUsername(name: string): Promise<string> {
   const id = getRandomId(ID_LENGTH);
   const username = `${name}${SEPARATOR}${id}`;
 
-  const isUnique = await isUniqueUsername(username);
+  const isTaken = await isUsernameTaken(username);
 
   // if is unique username return username, else try another username.
-  return isUnique ? username : getUniqueUsername(name);
+  return isTaken ? getUniqueUsername(name) : username;
 }
 
 export default async function generateUniqueUsername(email: string) {
@@ -26,8 +26,8 @@ export default async function generateUniqueUsername(email: string) {
     name = name.substring(0, MAX_USERNAME_LEN - ID_LENGTH - SEPARATOR.length);
   }
 
-  // if original username is already unique
-  if (await isUniqueUsername(name)) return name;
+  // if username is already taken, add random characters to it
+  if (await isUsernameTaken(name)) return getUniqueUsername(name);
 
-  return getUniqueUsername(name);
+  return name;
 }

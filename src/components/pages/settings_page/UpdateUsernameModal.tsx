@@ -1,6 +1,6 @@
 import { FormEvent, useContext, useEffect, useState } from "react";
 
-import { isUniqueUsername, updateUser } from "../../../firebase/firebase-app";
+import { changeUsername, getUsernameDoc } from "../../../firebase/firebase-app";
 
 import UserData from "../../../interfaces/UserDataInterface";
 
@@ -38,29 +38,19 @@ export default function UsernameModal({ user }: { user: UserData }) {
 
     if (error || isSameName || loading) return;
 
-    // if they are both the same but different case
-    const isChangingCase =
-      user.username.toLowerCase() === newUsername.toLowerCase();
+    const usernameDoc = await getUsernameDoc(newUsername);
 
-    // disallow already taken usernames unless they are changing case i.e. Jim -> jim
-    if (!isChangingCase) {
-      const isUnique = await isUniqueUsername(newUsername);
-
-      if (!isUnique) {
-        setError("Username already taken");
-        return;
-      }
+    // if username already taken and not owned by user
+    if (usernameDoc.exists() && usernameDoc.data().uid !== user.uid) {
+      setError("Username already taken");
+      return;
     }
 
     setLoading(true);
 
-    await updateUser(user.uid, {
-      username: newUsername,
-      lowercaseUsername: newUsername.toLowerCase(),
-    });
+    await changeUsername(user.uid, user.username, newUsername);
 
     setLoading(false);
-
     setModalOpen(false);
   }
 
