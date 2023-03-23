@@ -63,14 +63,10 @@ export default function CreatePost() {
           </button>
           <button
             onClick={() => {
-              if (title && blogContents) setIsPublishing(true);
+              if (title) setIsPublishing(true);
             }}
-            disabled={!title || !blogContents}
-            title={
-              !title || !blogContents
-                ? "You must enter a title and story"
-                : undefined
-            }
+            disabled={!title}
+            title={!title ? "You must enter a title" : undefined}
             className="bg-green disabled:opacity-40 text-white rounded-full px-4"
           >
             Publish
