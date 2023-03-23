@@ -20,6 +20,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import PostsWithTopic from "./components/pages/posts_with_topic_page/PostsWithTopic";
 import NotificationPage from "./components/pages/notification_page/NotificationPage";
 import Library from "./components/pages/library_page/Library";
+import SearchPage from "./components/pages/search_page/SearchPage";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -77,6 +78,8 @@ function App() {
             }
             path="/new-story"
           />
+
+          <Route element={<SearchPage />} path="/search" />
 
           <Route
             element={

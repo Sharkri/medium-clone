@@ -10,6 +10,7 @@ import OpenModalButton from "../helper-components/OpenModalButton";
 import SignUpOptions from "../sign_in_and_up/SignUpOptions";
 import SignInOptions from "../sign_in_and_up/SignInOptions";
 import LogoWithoutText from "../helper-components/LogoWithoutText";
+import Searchbar from "./Searchbar";
 
 export default function Header({
   user,
@@ -26,11 +27,12 @@ export default function Header({
         scrollDirection === "down" ? "-top-[57px]" : "top-0"
       }  z-10 min-h-[57px] bg-white px-6 border-b border-b-subtle-white flex items-center transition-all duration-250`}
     >
-      <div className="grow flex">
+      <div className="grow flex items-center gap-4">
         <Link to="/">
           <LogoWithoutText />
         </Link>
-        {/* TODO: Implement search bar */}
+
+        <Searchbar />
       </div>
 
       {user || isAnonymous ? (

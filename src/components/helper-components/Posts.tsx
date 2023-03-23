@@ -12,7 +12,7 @@ export default function Posts({
   onPostChange,
 }: {
   options?: any[];
-  posts: Post[];
+  posts: Post[] | null;
   onPostChange: Function;
 }) {
   const [lastDoc, setLastDoc] = useState<string | null>(null);
@@ -38,7 +38,6 @@ export default function Posts({
 
       const data = docs.map((doc) => doc.data()) as Post[];
 
-      // DOES THE DUPS DUP?
       onPostChange(filterDuplicatePosts(data));
     }
   }
@@ -51,6 +50,10 @@ export default function Posts({
       if (hasMore) fetchNewPosts();
     }
   }, [posts, hasMore]);
+
+  if (posts == null && !hasMore)
+    return <p className="text-grey text-center my-4">No stories found..</p>;
+  if (posts == null) return null;
 
   return (
     <InfiniteScroll
