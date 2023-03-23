@@ -11,6 +11,7 @@ interface FetchedNotification {
   user: UserData;
   message: string;
   timestamp: string;
+  id: string;
 }
 
 export default function NotificationPage() {
@@ -25,17 +26,19 @@ export default function NotificationPage() {
       if (!currentUser?.notifications) return;
 
       const fetchedNotifications = await Promise.all(
-        currentUser.notifications.map(async ({ uid, message, timestamp }) => {
-          const user = (await getUserById(uid)) as UserData;
-          if (!user) return;
+        currentUser.notifications.map(
+          async ({ uid, id, message, timestamp }) => {
+            const user = (await getUserById(uid)) as UserData;
+            if (!user) return;
 
-          const formatted = formatDate(timestamp.toDate(), {
-            omitIfCurrentYear: true,
-            relativeIfLast7Days: true,
-          });
+            const formatted = formatDate(timestamp.toDate(), {
+              omitIfCurrentYear: true,
+              relativeIfLast7Days: true,
+            });
 
-          return { message, user, timestamp: formatted };
-        })
+            return { message, user, timestamp: formatted, id };
+          }
+        )
       );
 
       setNotifications(fetchedNotifications as FetchedNotification[]);
@@ -62,10 +65,11 @@ export default function NotificationPage() {
           <button className="highlight">All notifications</button>
         </ScrollerItems>
 
-        {notifications?.map(({ user, message, timestamp }) => (
+        {notifications?.map(({ user, message, timestamp, id }) => (
           <Link
             to={`/u/${user.username}`}
             className="flex gap-4 items-center p-5 text-sm"
+            key={id}
           >
             <ProfilePicture src={user.photoURL} className="w-8 h-8" />
             <div>

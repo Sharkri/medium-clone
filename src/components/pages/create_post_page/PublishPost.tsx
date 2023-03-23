@@ -4,7 +4,7 @@ import { serverTimestamp } from "firebase/firestore";
 import {
   addPost,
   getImageUrl,
-  sendNotificationToFollowers,
+  sendNotificationToUsers,
 } from "../../../firebase/firebase-app";
 
 import UserContext from "../../../UserContext";
@@ -67,7 +67,8 @@ export default function PublishPost({
       id: postId,
     });
 
-    sendNotificationToFollowers(user.followers, {
+    // send notification to all followers
+    sendNotificationToUsers(user.followers, {
       message: "published a new post",
       uid: user.uid,
       timestamp: new Date(),

@@ -247,22 +247,25 @@ async function unfollowUser(userUid: string, userToFollowUid: string) {
   });
 }
 
-async function sendNotificationToFollowers(
-  followers: string[],
+async function sendNotificationToUser(uid: string, notification: Notification) {
+  const user = await getUserById(uid);
+
+  if (!user) return;
+
+  // limit notifications to 100
+  if (user.notifications.length > 99) user.notifications.pop();
+
+  user.notifications.unshift(notification);
+
+  await updateUser(uid, { notifications: user.notifications });
+}
+
+async function sendNotificationToUsers(
+  uids: string[],
   notification: Notification
 ) {
-  for (const follower of followers) {
-    const followerData = await getUserById(follower);
-    if (!followerData) continue;
-
-    const { notifications } = followerData;
-
-    // limit notifications to 100
-    if (notifications.length > 99) notifications.pop();
-
-    notifications.unshift(notification);
-
-    await updateUser(follower, { notifications });
+  for (const uid of uids) {
+    await sendNotificationToUser(uid, notification);
   }
 }
 
@@ -302,6 +305,7 @@ export {
   unfollowUser,
   getPostDocs,
   getPostCount,
-  sendNotificationToFollowers,
+  sendNotificationToUsers,
+  sendNotificationToUser,
   continueAnonymously,
 };

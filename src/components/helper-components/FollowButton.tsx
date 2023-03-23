@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import {
   followUser,
-  sendNotificationToFollowers,
+  sendNotificationToUser,
   unfollowUser,
 } from "../../firebase/firebase-app";
 import getRandomId from "../../helper-functions/getRandomId";
@@ -35,12 +35,15 @@ export default function FollowButton({
     else {
       await followUser(currentUser.uid, userToFollow.uid);
 
-      await sendNotificationToFollowers(currentUser.followers, {
+      const notification = {
         uid: currentUser.uid,
         message: "started following you",
         timestamp: new Date(),
         id: getRandomId(12),
-      });
+      };
+
+      // send notification to the person who just got followed
+      await sendNotificationToUser(userToFollow.uid, notification);
     }
 
     setLoading(false);
