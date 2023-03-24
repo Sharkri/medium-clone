@@ -1,7 +1,6 @@
 import {
   useCollectionData,
   useDocumentData,
-  useDocumentDataOnce,
 } from "react-firebase-hooks/firestore";
 import {
   getCollectionRef,
@@ -20,7 +19,7 @@ export default function usePost(postId: string) {
   const comments = useCollectionData(commentRef)[0] as Comment[];
 
   const authorRef = post ? getUserRef(post.authorUid) : null;
-  const author = useDocumentDataOnce(authorRef)[0] as UserData;
+  const author = useDocumentData(authorRef)[0] as UserData;
 
   return { post, comments, author };
 }

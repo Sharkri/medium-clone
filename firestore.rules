@@ -44,14 +44,15 @@ service cloud.firestore {
       
       allow update: if isSignedIn() && isValidLike();
     }
-      match /posts/{postId}/comments/{document=**} {
-        allow read: if true;
+
+    match /posts/{postId}/comments/{document=**} {
+      allow read: if true;
+      
+      allow create: if isSignedIn() && isValidComment();
         
-        allow create: if isSignedIn() && isValidComment();
-         
-        allow update: if isValidCommentEdit() || isValidLike();
-        allow delete: if belongsTo(existingData().uid);
-      } 
+      allow update: if isValidCommentEdit() || isValidLike();
+      allow delete: if belongsTo(existingData().authorUid);
+    } 
 
     function incomingData() {
       return request.resource.data;
@@ -309,8 +310,8 @@ service cloud.firestore {
 
         return request.auth.uid != story.authorUid // author cannot like their own story
                  && story.likes[request.auth.uid] < 50 // max likes per user is 50
-                 && story.likes.diff(prevStory).changedKeys() == [request.auth.uid].toSet() // only likes that changed should be user's  
-                 && story.likes[request.auth.uid] == prevStory.likes[request.auth.uid] + 1 // user's like count should be incremented
+                 && story.likes.diff(prevStory.likes).affectedKeys() == [request.auth.uid].toSet() // only likes that changed should be user's  
+                 && story.likes[request.auth.uid] == (prevStory.likes.get(request.auth.uid, 0) + 1) // user's like count should be incremented
                  && story.likeCount == prevStory.likeCount + 1 // story like count should be incremented
                  && affectedHasOnly(["likeCount", 'likes'])
     }
