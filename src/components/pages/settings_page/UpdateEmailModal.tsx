@@ -14,12 +14,12 @@ export default function UpdateEmailModal({ user }: { user: AllUserData }) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    if (newEmail.toLowerCase() === user.email.toLowerCase()) return;
+    if (newEmail === user.email) return;
 
     try {
       setLoading(true);
 
-      await changeEmail(user.email, newEmail);
+      await changeEmail(newEmail);
       setModalOpen(false);
     } catch (err: unknown) {
       if (err instanceof Error) {

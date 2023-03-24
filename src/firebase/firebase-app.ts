@@ -91,9 +91,8 @@ async function addUser(user: User) {
       doc(getFirestore(), `users/${uid}/private`, "private-info"),
       privateUserData
     );
-    // for checking if username and email is unique.
+    // for checking if username is unique
     await setDoc(doc(getFirestore(), `usernames`, lowercaseUsername), { uid });
-    await setDoc(doc(getFirestore(), "emails", email), { uid });
   } catch (error) {
     console.error("Error writing to Firebase Database", error);
   }
@@ -174,20 +173,12 @@ async function changeUsername(
   await updateUser(uid, { username: newUsername, lowercaseUsername });
 }
 
-async function changeEmail(oldEmail: string, newEmail: string) {
-  const lowercaseEmail = newEmail.toLowerCase();
-
+async function changeEmail(newEmail: string) {
   const { currentUser } = getAuthInstance();
   if (!currentUser) return;
 
   await updateEmail(currentUser, newEmail);
-
-  await deleteDoc(getDocRef(`emails/${oldEmail.toLowerCase()}`));
-  await setDoc(doc(getFirestore(), "emails", lowercaseEmail), {
-    uid: currentUser.uid,
-  });
-
-  await updatePrivateUserInfo(currentUser.uid, { email: lowercaseEmail });
+  await updatePrivateUserInfo(currentUser.uid, { email: newEmail });
 }
 
 async function getImageUrl(file: File, filePath: string) {
