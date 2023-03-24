@@ -88,7 +88,7 @@ async function addUser(user: User) {
 
     await setDoc(doc(getFirestore(), "users", uid), userData);
     await setDoc(
-      doc(getFirestore(), `users/${uid}/private`, uid),
+      doc(getFirestore(), `users/${uid}/private`, "private-info"),
       privateUserData
     );
     // for checking if username is unique
@@ -156,7 +156,7 @@ async function updateUser(uid: string, obj: {}) {
 
 // private user info. bookmarks, notifications, email
 async function updatePrivateUserInfo(uid: string, obj: {}) {
-  updateDoc(getUserRef(`${uid}/private/${uid}`), obj);
+  updateDoc(getUserRef(`${uid}/private/private-info`), obj);
 }
 
 async function changeUsername(

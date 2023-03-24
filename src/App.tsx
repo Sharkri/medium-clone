@@ -38,7 +38,7 @@ function App() {
 
   // private user data (bookmarks, notifications, email)
   const [privateUserData] = useDocumentData(
-    isAuthenticated ? getUserRef(`${user.uid}/private/${user.uid}`) : null
+    isAuthenticated ? getUserRef(`${user.uid}/private/private-info`) : null
   );
 
   const allUserData = { ...userData, ...privateUserData } as AllUserData;
