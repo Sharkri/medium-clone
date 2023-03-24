@@ -41,7 +41,11 @@ function App() {
     isAuthenticated ? getUserRef(`${user.uid}/private/private-info`) : null
   );
 
-  const allUserData = { ...userData, ...privateUserData } as AllUserData;
+  const allUserData = (
+    userData && privateUserData
+      ? Object.assign({}, userData, privateUserData)
+      : null
+  ) as AllUserData | null;
 
   const { modalContent, setModalOpen, isModalOpen } = useModal();
 
@@ -64,7 +68,7 @@ function App() {
       <UserContext.Provider
         value={{
           user: allUserData,
-          isAnonymous: user?.isAnonymous,
+          isAnonymous: !!user?.isAnonymous,
           loading,
         }}
       >

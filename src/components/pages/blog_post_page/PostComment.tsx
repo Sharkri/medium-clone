@@ -1,3 +1,4 @@
+import { serverTimestamp } from "firebase/firestore";
 import { useContext, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import {
@@ -51,7 +52,7 @@ export default function PostComment({
       text: commentText,
       authorUid: currentUser.uid,
       id: getRandomId(12),
-      timestamp: new Date(),
+      timestamp: serverTimestamp(),
     };
 
     await addComment(`${commentPath}/replies/${reply.id}`, reply);

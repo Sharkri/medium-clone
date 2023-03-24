@@ -1,9 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  getUserById,
-  updatePrivateUserInfo,
-} from "../../../firebase/firebase-app";
+import { getUserById, updateUser } from "../../../firebase/firebase-app";
 import formatDate from "../../../helper-functions/formatDate";
 import UserData from "../../../interfaces/UserDataInterface";
 import UserContext from "../../../UserContext";
@@ -52,7 +49,7 @@ export default function NotificationPage() {
 
   function clearNotifications() {
     if (!currentUser) return;
-    updatePrivateUserInfo(currentUser.uid, { notifications: [] });
+    updateUser(currentUser.uid, { notifications: [] });
   }
 
   if (notifications == null && !isAnonymous) return null;

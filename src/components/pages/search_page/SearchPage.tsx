@@ -1,5 +1,5 @@
 import { orderBy, where } from "firebase/firestore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Post from "../../../interfaces/PostInterface";
 import Posts from "../../helper-components/Posts";
@@ -8,8 +8,17 @@ import ScrollerItems from "../../helper-components/ScrollerItems";
 export default function SearchPage() {
   const [search] = useSearchParams();
   const [posts, setPosts] = useState<Post[] | null>(null);
+  const [seed, setSeed] = useState(0);
 
   const query = search.get("q");
+
+  useEffect(() => {
+    // on query change, reset posts and re-render posts
+    if (query) {
+      setPosts([]);
+      setSeed(Math.random());
+    }
+  }, [query]);
 
   if (!query) return null;
 
@@ -33,7 +42,7 @@ export default function SearchPage() {
             where("title", ">=", query),
             where("title", "<=", query + "\uf8ff"),
           ]}
-          extraDeps={[query]}
+          key={seed}
         />
       </div>
     </div>

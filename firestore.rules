@@ -1,0 +1,344 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    match /users/{userId} {
+      allow read: if true;
+
+      allow create: if request.auth.uid == userId && isValidUser();
+      allow update: if (
+            request.auth.uid == userId && (
+                 isValidUpdateUserData() || isValidClearNotifications() || isValidFollowing())
+                 ) || (
+                      isSignedIn() && request.auth.uid != userId && (isValidNotificationSend() || isValidFollower())
+                      );
+    }
+
+    match /users/{userId}/private/{privateInfo} {
+      allow read: if request.auth.uid == userId;
+
+      allow create: if request.auth.uid == userId && isValidPrivateInfo();
+      allow update: if request.auth.uid == userId && isValidUpdatePrivateInfo();
+    }
+
+    match /usernames/{username} {
+      allow read: if true;
+      allow create: if onlyAddedKeys(['uid']) &&
+           belongsTo(incomingData().uid) &&
+          username.size() <= 30;
+
+      allow delete: if belongsTo(existingData().uid);
+    }
+    
+    match /posts/{postId} {
+      // anyone can read
+      allow read: if true;
+
+      allow create: if isSignedIn() && isValidPost();
+      
+      allow update: if isSignedIn() && isValidLike();
+    }
+      match /posts/{postId}/comments/{document=**} {
+        allow read: if true;
+        
+        allow create: if isSignedIn() && isValidComment();
+         
+        allow update: if isValidCommentEdit() || isValidLike();
+        allow delete: if belongsTo(existingData().uid);
+      } 
+
+    function incomingData() {
+      return request.resource.data;
+    }
+
+    function existingData() {
+      return resource.data;
+    }
+
+    function isUniquePostId(postId) {
+      return !exists(/databases/$(database)/documents/posts/$(postId));
+    }
+
+    function userExists(uid) {
+      return exists(/databases/$(database)/documents/users/$(uid));
+    }
+
+    function isUniqueUsername(username) {
+      // if username does not exist or username is owned by user
+      return !exists(/databases/$(database)/documents/usernames/$(username)) 
+              || get(/databases/$(database)/documents/usernames/$(username)).data.uid == request.auth.uid
+
+    }
+
+    function isNonEmptyString(str) {
+      return str is string && str.size() > 0
+    }
+
+    function isValidId(id) {
+      return id.size() == 12 && id.matches('[a-z0-9]+') && request.resource.id == id
+    }
+
+    function isArrayUnshift(prevArray, newArray) {
+      return newArray is list && newArray.size() == prevArray.size() + 1 // Ensure only one item was added.
+      && newArray.hasAll(prevArray) // make sure did not modify anything else
+      && (newArray.size() == 1 || prevArray[0] != newArray[0]) // check if unshifted
+    }
+
+    function isArrayPopAndUnshift(prevArray, newArray) {
+        return newArray is list && newArray.size() == prevArray.size() && // pop + unshift means array should be same size still
+          !(prevArray[prevArray.size() - 1] in newArray) && // the last element from prev should be popped
+          newArray.hasAll(prevArray[1:prevArray.size() - 1]) // all elements should stay the same excluding first and last
+          && prevArray[0] != newArray[0] // first element should be different
+    }
+
+    function isArrayUnion(prevArray, newArray) {
+        return newArray.size() == prevArray.size() + 1 && newArray.hasAll(prevArray) && 
+                (
+                  newArray.size() == 1 || (prevArray[prevArray.size() - 1] != newArray[newArray.size() - 1])
+                  )
+    }
+
+    function belongsTo(userId) {
+        return request.auth.uid == userId
+    }
+
+    // returns boolean. if incomingData().diff({}) is equal to param
+    function onlyAddedKeys(values) {
+      return incomingData().diff({}).addedKeys().hasOnly(values)
+    }
+
+    function isValidPost() {
+        let post = incomingData();
+
+        return post.authorUid == request.auth.uid && isValidId(post.id) && 
+                isUniquePostId(post.id) &&
+                isNonEmptyString(post.title) &&
+                post.title.size() < 100 &&
+
+                post.description is string && 
+                post.description.size() < 140 && 
+
+                post.blogContents is string &&
+                post.likeCount == 0 &&
+                post.likes is map &&
+                post.likes.size() == 0 &&
+
+                post.lowercaseTopics is list &&
+                post.topics is list &&
+                post.lowercaseTopics.size() == post.topics.size() &&
+
+                post.readingTimeInMinutes >= 0 &&
+                post.thumbnail is string &&
+                post.timestamp == request.time &&
+                onlyAddedKeys([
+                  'title',
+                  'description',
+                  'blogContents',
+                  'authorUid',
+                  'id',
+                  'likeCount',
+                  'likes',
+                  'lowercaseTopics',
+                  'topics',
+                  'readingTimeInMinutes',
+                  'thumbnail',
+                  'timestamp'
+                  ])
+    }
+
+    function affectedHasOnly(array) {
+      return incomingData().diff(existingData()).affectedKeys().hasOnly(array)
+    }
+
+    function isValidComment() {
+        let comment = incomingData();
+        // author of comment should be current user
+        return comment.authorUid == request.auth.uid && isValidId(comment.id) &&
+               isNonEmptyString(comment.text) &&
+               comment.likeCount == 0 &&
+               comment.likes is map &&
+               comment.likes.size() == 0 &&
+               comment.timestamp == request.time &&
+               onlyAddedKeys(
+                  ['authorUid', 'id', 'likeCount', 'likes', 'text', 'timestamp']
+                )
+    }
+
+    function isSignedIn() {
+        return request.auth != null
+                     && request.auth.token.firebase.sign_in_provider != 'anonymous'
+    }
+
+
+    function isValidUsername(username) {
+      return username.matches('[a-zA-Z0-9_]+') && username.size() <= 30 && isUniqueUsername(username);
+    }
+
+    function isValidUser() {
+      let user = incomingData();
+
+      return !(userExists(user.uid)) &&
+              isNonEmptyString(user.displayName) &&
+              user.displayName.size() <= 50 &&
+              
+              isValidUsername(user.username) &&
+              user.lowercaseUsername == user.username.lower() &&
+
+              user.bio is string &&
+              user.bio.size() <= 160 &&
+
+              user.followers is list &&
+              user.following is list &&
+              user.followers.size() == 0 &&
+              user.following.size() == 0 &&
+
+              user.notifications is list &&
+              user.notifications.size() == 0 &&
+
+              (user.photoURL is string || user.photoURL == null) &&
+              user.creationTime == request.time &&
+              onlyAddedKeys([
+                'bio',
+                'creationTime',
+                'displayName',
+                'followers',
+                'following',
+                'photoURL',
+                'uid',
+                'username',
+                'lowercaseUsername',
+                'notifications'
+                ])
+    }
+
+    function isValidUpdateUserData() {
+        let user = incomingData();
+
+        return affectedHasOnly(
+          ['bio', 'displayName', 'photoURL', 'username', 'lowercaseUsername']) &&
+            user.bio is string &&
+            user.bio.size() <= 160 &&
+
+            isNonEmptyString(user.displayName) &&
+            user.displayName.size() <= 50 &&
+
+            (user.photoURL is string || user.photoURL == null) && 
+            isValidUsername(user.username) &&
+            user.lowercaseUsername == user.username.lower()
+    }
+
+    function isValidClearNotifications() {
+        let user = incomingData();
+
+        return affectedHasOnly(['notifications']) && user.notifications.size() == 0
+    }
+
+    function getLastArrayItem(list) {
+      return list[list.size()-1];
+    }
+
+    function isValidNotification(notification) {
+        return notification is map && notification.keys().hasOnly(['message', 'timestamp', 'uid', 'id']) &&
+              (notification.message == 'started following you'
+               || notification.message == 'published a new post') &&
+              notification.timestamp is timestamp &&
+              notification.uid == request.auth.uid &&
+              notification.id is string &&
+              notification.id.size() == 12
+    }
+
+    function isValidNotificationSend() {
+      let newNotifications = incomingData().notifications;
+      let prevNotifications = existingData().notifications;
+
+      return affectedHasOnly(['notifications']) && isArrayUnshift(prevNotifications, newNotifications) &&
+              (prevNotifications.size() < 100 || isArrayPopAndUnshift(prevNotifications, newNotifications)) && // max 100 notifications
+              isValidNotification(newNotifications[0]) // check if the notification added is valid
+    }
+
+    function isValidFollower() {
+        let user = incomingData();
+        let prevUser = existingData();
+        // if user adding their uid
+        return affectedHasOnly(['followers']) && (
+            (
+            (request.auth.uid in prevUser.followers) == false && // check if user is not already a follower
+            isArrayUnion(prevUser.followers, user.followers) &&
+            getLastArrayItem(user.followers) == request.auth.uid
+            ) ||
+            // if user removing their uid
+            (
+              prevUser.followers.hasAll(user.followers) &&
+              prevUser.followers.hasAll([request.auth.uid]) &&
+              !user.followers.hasAll([request.auth.uid]) &&
+              user.followers.size() == prevUser.followers.size() - 1
+            )
+          )
+    }
+
+    function isValidFollowing() {
+        let user = incomingData();
+        let prevUser = existingData();
+
+        return affectedHasOnly(['following']) &&
+            (
+              // if user added following uid
+              (
+                user.uid == request.auth.uid && // only user themself can follow someone
+                isArrayUnion(prevUser.following, user.following) && // user following should be arrayUnion()
+                (getLastArrayItem(user.following) in prevUser.following) == false && // cannot follow more than once
+                userExists(getLastArrayItem(user.following))
+              ) || 
+              // if user removed following uid
+              (
+              prevUser.following.hasAll(user.following) &&
+              user.following.size() == prevUser.following.size() - 1
+              )
+            )
+    }
+
+    function isValidLike() {
+        let story = incomingData();
+        let prevStory = existingData();
+
+        return request.auth.uid != story.authorUid // author cannot like their own story
+                 && story.likes[request.auth.uid] < 50 // max likes per user is 50
+                 && story.likes.diff(prevStory).changedKeys() == [request.auth.uid].toSet() // only likes that changed should be user's  
+                 && story.likes[request.auth.uid] == prevStory.likes[request.auth.uid] + 1 // user's like count should be incremented
+                 && story.likeCount == prevStory.likeCount + 1 // story like count should be incremented
+                 && affectedHasOnly(["likeCount", 'likes'])
+    }
+
+
+
+    function isValidCommentEdit() {
+      let comment = existingData();
+      let newComment = incomingData();
+      // only original poster can edit text
+      return belongsTo(comment.authorUid) && affectedHasOnly(['text', 'edited'])
+               && isNonEmptyString(newComment.text) &&
+               newComment.edited == true
+    }
+
+    function isValidPrivateInfo() {
+      let privateInfo = incomingData();
+
+      return privateInfo.bookmarks is list && privateInfo.bookmarks.size() == 0 &&
+              privateInfo.email == request.auth.token.email
+    }
+
+    function isValidUpdatePrivateInfo() {
+      let privateInfo = incomingData();
+
+      return affectedHasOnly(['bookmarks', 'email']) &&
+              privateInfo.bookmarks is list &&
+              privateInfo.email is string
+    }
+  } 
+}

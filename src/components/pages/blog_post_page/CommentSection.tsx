@@ -1,3 +1,4 @@
+import { serverTimestamp } from "firebase/firestore";
 import { useRef } from "react";
 import { addComment } from "../../../firebase/firebase-app";
 import getRandomId from "../../../helper-functions/getRandomId";
@@ -53,7 +54,7 @@ export default function CommentSection({
                   text: commentText,
                   authorUid,
                   id: getRandomId(12),
-                  timestamp: new Date(),
+                  timestamp: serverTimestamp(),
                 };
 
                 await addComment(

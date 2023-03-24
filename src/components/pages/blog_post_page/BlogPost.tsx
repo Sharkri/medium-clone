@@ -34,7 +34,7 @@ export default function BlogPost() {
     };
   }, [post]);
 
-  if (!post || !author || !postId) return null;
+  if (!post || !author || !comments || !postId) return null;
 
   const currentUserLikeCount = currentUser ? post.likes[currentUser.uid] : 0;
 

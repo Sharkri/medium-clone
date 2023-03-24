@@ -31,6 +31,8 @@ export default function FollowButton({
 
     setLoading(true);
 
+    console.log({ userToFollow, isFollowing, currentUser });
+
     if (isFollowing) await unfollowUser(currentUser.uid, userToFollow.uid);
     else {
       await followUser(currentUser.uid, userToFollow.uid);

@@ -1,13 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import Post from "../../../interfaces/PostInterface";
 
 import UserContext from "../../../UserContext";
-import Posts from "../../helper-components/Posts";
 import ScrollerItems from "../../helper-components/ScrollerItems";
 import Topic from "../../helper-components/Topic";
 import Sidebar from "../../main/Sidebar";
 import FollowingPosts from "./FollowingPosts";
+import ForYouPosts from "./ForYouPosts";
 
 export default function Homepage() {
   const [search] = useSearchParams();
@@ -15,7 +14,6 @@ export default function Homepage() {
 
   // null feed means for you page
   const feed = search.get("feed");
-  const [posts, setPosts] = useState<Post[] | null>(null);
 
   const RECOMMENDED_TOPICS = [
     "Programming",
@@ -43,12 +41,7 @@ export default function Homepage() {
           {feed === "following" ? (
             <FollowingPosts following={user?.following} />
           ) : (
-            <Posts
-              posts={posts}
-              onPostChange={(newPosts: Post[]) =>
-                setPosts((posts || []).concat(newPosts))
-              }
-            />
+            <ForYouPosts />
           )}
         </main>
         <Sidebar>

@@ -22,7 +22,6 @@ export default function PostPreview({
   const { user, isAnonymous } = useContext(UserContext);
 
   if (!author) return null;
-
   const postLink = getLinkForPost(author.username, post.title, post.id);
 
   return (
@@ -110,7 +109,7 @@ export default function PostPreview({
             postId={post.id}
             uid={user?.uid}
             isAnonymous={isAnonymous}
-            isBookmarked={user?.bookmarks.includes(post.id)}
+            isBookmarked={user?.bookmarks?.includes(post.id)}
           />
         </div>
       </div>

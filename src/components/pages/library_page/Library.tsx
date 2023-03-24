@@ -37,7 +37,7 @@ export default function Library() {
         </ScrollerItems>
 
         {posts.length ? (
-          posts.map((post) => <PostPreview post={post} />)
+          posts.map((post) => <PostPreview post={post} key={post.id} />)
         ) : (
           <p className="text-grey text-center mt-4">
             Posts you bookmark will appear here.

@@ -27,6 +27,7 @@ import {
   arrayUnion,
   arrayRemove,
   getCountFromServer,
+  serverTimestamp,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -76,14 +77,14 @@ async function addUser(user: User) {
       photoURL,
       followers: [],
       following: [],
-      creationTime: new Date(),
+      creationTime: serverTimestamp(),
       bio: "",
+      notifications: [],
     };
 
     const privateUserData: PrivateUserData = {
       bookmarks: [],
       email,
-      notifications: [],
     };
 
     await setDoc(doc(getFirestore(), "users", uid), userData);
@@ -91,6 +92,7 @@ async function addUser(user: User) {
       doc(getFirestore(), `users/${uid}/private`, "private-info"),
       privateUserData
     );
+
     // for checking if username is unique
     await setDoc(doc(getFirestore(), `usernames`, lowercaseUsername), { uid });
   } catch (error) {
@@ -154,7 +156,7 @@ async function updateUser(uid: string, obj: {}) {
   updateDoc(getUserRef(uid), obj);
 }
 
-// private user info. bookmarks, notifications, email
+// private user info. bookmarks and email
 async function updatePrivateUserInfo(uid: string, obj: {}) {
   updateDoc(getUserRef(`${uid}/private/private-info`), obj);
 }
@@ -265,12 +267,12 @@ async function followUser(userUid: string, userToFollowUid: string) {
   });
 }
 
-async function unfollowUser(userUid: string, userToFollowUid: string) {
+async function unfollowUser(userUid: string, userToUnfollow: string) {
   updateDoc(getDocRef(`users/${userUid}`), {
-    following: arrayRemove(userToFollowUid),
+    following: arrayRemove(userToUnfollow),
   });
 
-  updateDoc(getDocRef(`users/${userToFollowUid}`), {
+  updateDoc(getDocRef(`users/${userToUnfollow}`), {
     followers: arrayRemove(userUid),
   });
 }
@@ -285,7 +287,7 @@ async function sendNotificationToUser(uid: string, notification: Notification) {
 
   user.notifications.unshift(notification);
 
-  await updatePrivateUserInfo(uid, { notifications: user.notifications });
+  await updateUser(uid, { notifications: user.notifications });
 }
 
 async function sendNotificationToUsers(

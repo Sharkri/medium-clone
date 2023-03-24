@@ -33,7 +33,10 @@ export default function PostCommentContent({
   onToggleOpenReplies: Function;
   isRepliesOpen: boolean;
 }) {
-  const commentTimestamp = comment.timestamp.toDate();
+  const commentTimestamp = comment.timestamp
+    ? comment.timestamp.toDate()
+    : new Date(0);
+
   const { user } = useContext(UserContext);
 
   const isAuthor = comment.authorUid === post.authorUid;
