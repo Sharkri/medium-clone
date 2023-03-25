@@ -11,8 +11,10 @@ import IError from "../../interfaces/ErrorInterface";
 import LoadingButton from "../helper-components/LoadingButton";
 import Input from "../helper-components/Input";
 import PasswordInput from "../helper-components/PasswordInput";
+import GoBackButton from "./GoBackButton";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
-export default function SignInFormModal() {
+export default function SignInFormModal({ onGoBack }: { onGoBack: Function }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -71,7 +73,7 @@ export default function SignInFormModal() {
           if (success) setModalOpen(false);
         }}
         noValidate
-        className="flex flex-col gap-1 items-center"
+        className="flex flex-col items-center"
       >
         <Input
           error={emailError}
@@ -82,7 +84,6 @@ export default function SignInFormModal() {
           labelText="Your email"
           required
         />
-
         <PasswordInput
           error={passwordError}
           password={password}
@@ -97,6 +98,26 @@ export default function SignInFormModal() {
         >
           Continue
         </LoadingButton>
+
+        <button
+          type="button"
+          className="text-green text-[14.4px] mt-4 mb-2"
+          onClick={() => {
+            setModalOpen(
+              true,
+              <ForgotPasswordModal
+                onGoBack={() =>
+                  setModalOpen(true, <SignInFormModal onGoBack={onGoBack} />)
+                }
+              />
+            );
+          }}
+        >
+          <i className="fa-solid fa-key thin-icon mr-2" />
+          Forgot password?
+        </button>
+
+        <GoBackButton onGoBack={onGoBack}>All sign in options</GoBackButton>
       </form>
     </ModalContent>
   );

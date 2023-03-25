@@ -31,7 +31,7 @@ export default function Input({
 
   return (
     <div
-      className={`flex flex-col items-center gap-3 mt-3 mb-7 ${className} ${
+      className={`flex flex-col items-center gap-2 mt-3 mb-6 ${className} ${
         error ? "text-red-700" : "text-lighterblack"
       }`}
     >

@@ -18,6 +18,12 @@ export default function SignUpOptions({
   const { setModalOpen } = useContext(ModalContext);
   const [disabled, setDisabled] = useState(false);
 
+  const onGoBack = () =>
+    setModalOpen(
+      true,
+      <SignUpOptions hideAnonymousOption={hideAnonymousOption} />
+    );
+
   return (
     <AuthenticationPage
       isSignUpPage={true}
@@ -34,7 +40,9 @@ export default function SignUpOptions({
       </ButtonWithIcon>
       <ButtonWithIcon
         icon="fa-regular fa-envelope"
-        onClick={() => setModalOpen(true, <SignUpFormModal />)}
+        onClick={() =>
+          setModalOpen(true, <SignUpFormModal onGoBack={onGoBack} />)
+        }
       >
         Sign up with email
       </ButtonWithIcon>
