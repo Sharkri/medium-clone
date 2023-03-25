@@ -1,0 +1,27 @@
+rules_version = '2';
+
+// Returns true if the uploaded file is an image and its size is below the given number of MB.
+function isImageBelowMaxSize(maxSizeMB) {
+  return request.resource.size < maxSizeMB * 1024 * 1024
+      && request.resource.contentType.matches('image/.*');
+}
+
+function isSignedIn() {
+    return request.auth != null
+                    && request.auth.token.firebase.sign_in_provider != 'anonymous'
+}
+
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /users/{userId}/{fileName} {
+      allow write, update: if isSignedIn() && request.auth.uid == userId && isImageBelowMaxSize(5);
+      allow read;
+    }
+
+    match /posts/{postId}/{fileName} {
+      allow write: if isSignedIn() && isImageBelowMaxSize(5);
+      allow read;
+    }
+  }
+}
