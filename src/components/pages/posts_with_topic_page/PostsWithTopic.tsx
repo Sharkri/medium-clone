@@ -26,24 +26,25 @@ export default function PostsWithTopic({
   const [storyCount, setStoryCount] = useState(0);
   // 0 = all-time. 365 = year, 30 = month, 7 = week
   const [timeRange, setTimeRange] = useState<0 | 365 | 30 | 7>(0);
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<Post[] | null>(null);
 
   function getBestPosts() {
     // sort by most liked
-    const mostLiked = posts.sort((a, b) => b.likeCount - a.likeCount);
+    const mostLiked = posts?.sort((a, b) => b.likeCount - a.likeCount) || null;
 
     if (timeRange === 0) return mostLiked;
     else {
       // filter by minDate (This week, This month. etc)
       const minDate = sub(new Date(), { days: timeRange });
-      return mostLiked.filter((post) => post.timestamp.toDate() > minDate);
+      return (
+        mostLiked?.filter((post) => post.timestamp.toDate() > minDate) || null
+      );
     }
   }
 
   const bestPosts = getBestPosts();
-  const latestPosts = posts.sort(
-    (a, b) => b.timestamp.seconds - a.timestamp.seconds
-  );
+  const latestPosts =
+    posts?.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds) || null;
 
   const time = {
     7: "This week",
@@ -107,7 +108,7 @@ export default function PostsWithTopic({
               options={options}
               posts={sortBy === "latest" ? latestPosts : bestPosts}
               onPostChange={(newPosts: Post[]) =>
-                setPosts(posts.concat(newPosts))
+                setPosts((posts || []).concat(newPosts))
               }
             />
           }
