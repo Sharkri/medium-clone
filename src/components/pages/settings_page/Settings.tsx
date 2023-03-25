@@ -8,6 +8,7 @@ import ProfilePicture from "../../helper-components/ProfilePicture";
 import Sidebar from "../../main/Sidebar";
 import UpdateProfileInfoModal from "./UpdateProfileInfoModal";
 import UpdateEmailModal from "./UpdateEmailModal";
+import UpdatePasswordModal from "./UpdatePasswordModal";
 
 export default function Settings() {
   const { user } = useContext(UserContext);
@@ -49,6 +50,14 @@ export default function Settings() {
               <span className="text-grey font-content-sans text-[16.3px] group-hover:text-lightblack line-clamp-1 break-all">
                 {user.email}
               </span>
+            </button>
+
+            <button
+              className="flex justify-between gap-2"
+              onClick={() => setModalOpen(true, <UpdatePasswordModal />)}
+            >
+              <span className="text-sm text-lighterblack">Change password</span>
+              <i className="fa-solid fa-lock text-grey text-[16.3px]" />
             </button>
 
             <button
