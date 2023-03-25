@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/medium-clone">
       <App />
     </BrowserRouter>
   </React.StrictMode>

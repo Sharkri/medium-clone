@@ -2,6 +2,7 @@
   "name": "medium-clone",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sharkri.github.io/medium-clone/",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.2.1",
     "@tailwindcss/line-clamp": "^0.4.2",
@@ -14,6 +15,7 @@
     "@types/react-dom": "^18.0.10",
     "date-fns": "^2.29.3",
     "firebase": "^9.15.0",
+    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-firebase-hooks": "^5.1.1",
@@ -30,7 +32,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
