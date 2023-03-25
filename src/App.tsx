@@ -21,6 +21,7 @@ import NotificationPage from "./components/pages/notification_page/NotificationP
 import Library from "./components/pages/library_page/Library";
 import SearchPage from "./components/pages/search_page/SearchPage";
 import AllUserData from "./interfaces/AllUserData";
+import PageNotFound from "./components/pages/404_page/PageNotFound";
 
 function App() {
   const authState = useAuthState(getAuthInstance());
@@ -82,6 +83,8 @@ function App() {
         }
 
         <Routes>
+          <Route element={<PageNotFound />} path="*" />
+
           <Route
             element={isLoggedIn ? <Homepage /> : <LoggedOutHomepage />}
             path="/"
