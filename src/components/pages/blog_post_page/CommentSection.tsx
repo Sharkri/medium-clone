@@ -24,7 +24,7 @@ export default function CommentSection({
 
   return (
     <div
-      className="fixed w-full h-full flex justify-end bg-black/20 left-0 top-0 animate-fade-in cursor-pointer"
+      className="fixed z-30 w-full h-full flex justify-end bg-black/20 left-0 top-0 animate-fade-in cursor-pointer"
       onMouseDown={(e) => {
         const modalEdgeClicked =
           (e.target as HTMLElement) === commentModalRef.current;
@@ -74,7 +74,7 @@ export default function CommentSection({
               ))}
             </div>
           ) : (
-            <div className="font-sohne-italic text-grey grow flex flex-col justify-center items-center">
+            <div className="font-sohne-italic text-grey grow flex flex-col justify-center text-center">
               <p>There are currently no responses for this story.</p>
               <p>Be the first to respond.</p>
             </div>

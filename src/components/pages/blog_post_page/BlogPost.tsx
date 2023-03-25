@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 import { useParams } from "react-router-dom";
 import { likePost } from "../../../firebase/firebase-app";
@@ -12,12 +12,14 @@ import UserContext from "../../../UserContext";
 import ModalContext from "../../modal/ModalContext";
 import SignUpOptions from "../../sign_in_and_up/SignUpOptions";
 import usePost from "../../hooks/usePost";
-import Topic from "../../helper-components/Topic";
-import BookmarkButton from "../../helper-components/BookmarkButton";
-import CopyLink from "./CopyLink";
+import LikeButton from "./LikeButton";
+import OpenCommentSection from "../../helper-components/OpenCommentSection";
+import CommentSection from "./CommentSection";
+import useIsBottom from "../../hooks/useIsBottom";
+import BlogPostFooter from "./BlogPostFooter";
 
 export default function BlogPost() {
-  const { user: currentUser, isAnonymous } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const { setModalOpen } = useContext(ModalContext);
 
   const { title } = useParams();
@@ -34,9 +36,17 @@ export default function BlogPost() {
     };
   }, [post]);
 
+  const [commentsOpen, setCommentsOpen] = useState(false);
+
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const isBottom = useIsBottom(bottomRef);
+
   if (!post || !author || !comments || !postId) return null;
 
-  const currentUserLikeCount = currentUser ? post.likes[currentUser.uid] : 0;
+  async function onLike() {
+    if (!user) setModalOpen(true, <SignUpOptions hideAnonymousOption />);
+    else await likePost(postId, user.uid);
+  }
 
   return (
     <div className="max-w-[1336px] mx-auto">
@@ -45,7 +55,6 @@ export default function BlogPost() {
           <main className="mx-auto max-w-[680px] relative">
             <div className="mb-12">
               <BlogPostHeader author={author} post={post} />
-
               <BlogMarkdownWithTitleAndDesc
                 title={post.title}
                 description={post.description}
@@ -53,40 +62,39 @@ export default function BlogPost() {
               />
             </div>
 
-            <div className="flex flex-wrap mb-6">
-              {post.topics.map((topicName) => (
-                <Topic
-                  key={topicName}
-                  topicName={topicName}
-                  className="px-4 py-2 mr-2 mb-1 text-sm"
-                />
-              ))}
-            </div>
+            <footer ref={bottomRef}>
+              <BlogPostFooter
+                post={post}
+                comments={comments}
+                onPostLike={onLike}
+                onCommentsOpen={() => setCommentsOpen(true)}
+                user={user}
+              />
+            </footer>
 
-            <div className="flex items-center gap-4 justify-end">
-              <CopyLink link={window.location.href} />
-
-              <BookmarkButton
-                uid={currentUser?.uid}
-                postId={post.id}
-                isBookmarked={currentUser?.bookmarks.includes(post.id)}
-                isAnonymous={isAnonymous}
-              ></BookmarkButton>
-            </div>
-
-            <InteractionBar
-              post={post}
-              comments={comments}
-              currentUserLikeCount={currentUserLikeCount}
-              currUserUid={currentUser?.uid}
-              onLike={async () => {
-                if (!currentUser)
-                  setModalOpen(true, <SignUpOptions hideAnonymousOption />);
-                else await likePost(postId, currentUser.uid);
-              }}
-            />
+            <InteractionBar isVisible={!isBottom}>
+              <LikeButton
+                onLike={onLike}
+                currentUserLikeCount={user ? post.likes[user.uid] : 0}
+                likeCount={post.likeCount}
+                disabled={user?.uid === post.authorUid}
+              />
+              <div className="border border-neutral-200 h-3 mx-4" />
+              <OpenCommentSection
+                commentsLength={comments.length}
+                onOpen={() => setCommentsOpen(true)}
+              />
+            </InteractionBar>
           </main>
+
+          <CommentSection
+            onClose={() => setCommentsOpen(false)}
+            post={post}
+            comments={comments}
+            commentSectionOpen={commentsOpen}
+          />
         </article>
+
         <Sidebar>
           <div className="mt-10">
             <UserInfo user={author} />

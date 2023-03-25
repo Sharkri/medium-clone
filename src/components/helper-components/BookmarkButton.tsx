@@ -1,36 +1,26 @@
 import { arrayRemove, arrayUnion } from "firebase/firestore";
 import { useContext } from "react";
 import { updatePrivateUserInfo } from "../../firebase/firebase-app";
+import UserContext from "../../UserContext";
 import ModalContext from "../modal/ModalContext";
 import SignUpOptions from "../sign_in_and_up/SignUpOptions";
 
-export default function BookmarkButton({
-  uid,
-  postId,
-  isBookmarked,
-  isAnonymous,
-}: {
-  uid?: string;
-  postId: string;
-  isBookmarked: boolean | undefined;
-  isAnonymous: boolean;
-}) {
+export default function BookmarkButton({ postId }: { postId: string }) {
   const { setModalOpen } = useContext(ModalContext);
+  const { user, isAnonymous } = useContext(UserContext);
+  const isBookmarked = user?.bookmarks?.includes(postId);
 
   const unBookmarkPost = () => {
-    updatePrivateUserInfo(uid!, { bookmarks: arrayRemove(postId) });
+    updatePrivateUserInfo(user!.uid, { bookmarks: arrayRemove(postId) });
   };
   const bookmarkPost = () => {
-    updatePrivateUserInfo(uid!, { bookmarks: arrayUnion(postId) });
+    updatePrivateUserInfo(user!.uid, { bookmarks: arrayUnion(postId) });
   };
 
   return (
     <button
       onClick={() => {
-        if (isAnonymous) return;
-
-        // if there is no user
-        if (!uid) {
+        if (isAnonymous || !user) {
           setModalOpen(true, <SignUpOptions hideAnonymousOption />);
           return;
         }
@@ -45,7 +35,9 @@ export default function BookmarkButton({
       title={isAnonymous ? "Anonymous users cannot have bookmarks" : undefined}
     >
       <i
-        className={`${isBookmarked ? "fa-solid" : "fa-regular"} fa-bookmark`}
+        className={`${
+          isBookmarked ? "fa-solid" : "fa-regular"
+        } fa-bookmark thin-icon`}
       />
     </button>
   );

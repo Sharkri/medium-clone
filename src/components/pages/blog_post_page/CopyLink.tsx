@@ -6,7 +6,7 @@ export default function CopyLink({ link }: { link: string }) {
       dropdownStyles="min-w-[130px] py-[10px] px-5 grid place-items-center"
       buttonStyles="text-grey text-[17px] flex"
     >
-      <i className="fa-solid fa-arrow-up-right-from-square" />
+      <i className="fa-solid fa-arrow-up-right-from-square thin-icon" />
 
       <button
         onClick={() => navigator.clipboard.writeText(link)}
