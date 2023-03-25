@@ -21,7 +21,7 @@ export default function InteractionBar({
   const closeCommentSection = () => setCommentSectionOpen(false);
 
   return (
-    <div className="fixed h-[40px] bottom-4 w-full max-w-[680px] flex justify-center z-20">
+    <div className="fixed h-[40px] bottom-5 w-full max-w-[680px] flex justify-center z-20 max-[680px]:left-1/2 max-[680px]:-translate-x-1/2">
       <div className="flex items-center h-[40px] shadow-lg pl-4 pr-[14px] rounded-full text-grey bg-white">
         <LikeButton
           likeCount={post.likeCount}

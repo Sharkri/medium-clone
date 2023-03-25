@@ -41,7 +41,7 @@ export default function BlogPost() {
   return (
     <div className="max-w-[1336px] mx-auto">
       <div className="flex justify-evenly max-lg:block">
-        <article className="mx-6 mb-4 grow-[0.8]">
+        <article className="mx-6 mb-4 grow-[0.7]">
           <main className="mx-auto max-w-[680px] relative">
             <div className="mb-12">
               <BlogPostHeader author={author} post={post} />
@@ -58,7 +58,7 @@ export default function BlogPost() {
                 <Topic
                   key={topicName}
                   topicName={topicName}
-                  className="px-4 py-2 mr-2 text-sm"
+                  className="px-4 py-2 mr-2 mb-1 text-sm"
                 />
               ))}
             </div>
