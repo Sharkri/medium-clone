@@ -33,12 +33,12 @@ function App() {
   const isAuthenticated = user && !user.isAnonymous;
 
   // userData anyone can see
-  const [userData] = useDocumentData(
+  const [userData, userDataLoading] = useDocumentData(
     isAuthenticated ? getUserRef(user.uid) : null
   );
 
   // private user data (bookmarks, notifications, email)
-  const [privateUserData] = useDocumentData(
+  const [privateUserData, privateUserDataLoading] = useDocumentData(
     isAuthenticated ? getUserRef(`${user.uid}/private/private-info`) : null
   );
 
@@ -57,6 +57,7 @@ function App() {
 
   // anonymous account also counts as logged in
   const isLoggedIn = !!user;
+  const isUserDataLoading = privateUserDataLoading || userDataLoading;
 
   return (
     <ModalContext.Provider
@@ -70,88 +71,82 @@ function App() {
         value={{
           user: allUserData,
           isAnonymous: !!user?.isAnonymous,
-          loading,
+          loading: isUserDataLoading,
         }}
       >
         <Modal />
+        <div className={isUserDataLoading ? "hidden" : undefined}>
+          {
+            // show header anywhere except "/" path unless logged in
+            (pathname !== "/" || isLoggedIn) && <Header />
+          }
 
-        {
-          // show header anywhere except "/" path unless logged in
-          (pathname !== "/" || isLoggedIn) && (
-            <Header user={allUserData} isAnonymous={user?.isAnonymous} />
-          )
-        }
-
-        <Routes>
-          <Route element={<PageNotFound />} path="*" />
-
-          <Route
-            element={isLoggedIn ? <Homepage /> : <LoggedOutHomepage />}
-            path="/"
-          />
-
-          <Route
-            element={
-              <AuthenticatedRoute isLoggedIn={isLoggedIn}>
-                <CreatePost />
-              </AuthenticatedRoute>
-            }
-            path="/new-story"
-          />
-
-          <Route element={<SearchPage />} path="/search" />
-
-          <Route
-            element={
-              <AuthenticatedRoute isLoggedIn={isLoggedIn}>
-                <NotificationPage />
-              </AuthenticatedRoute>
-            }
-            path="/notifications"
-          />
-
-          <Route
-            element={
-              <AuthenticatedRoute isLoggedIn={isLoggedIn}>
-                <Library />
-              </AuthenticatedRoute>
-            }
-            path="/library"
-          />
-
-          <Route element={<BlogPost />} path=":username/posts/:title" />
-
-          <Route element={<ProfilePage page="profile" />} path="u/:username" />
-          <Route
-            element={<ProfilePage page="about" />}
-            path="u/:username/about"
-          />
-          <Route
-            element={<ProfilePage page="followers" />}
-            path="u/:username/followers"
-          />
-          <Route
-            element={<ProfilePage page="following" />}
-            path="u/:username/following"
-          />
-          <Route
-            element={
-              <AuthenticatedRoute isLoggedIn={isLoggedIn}>
-                <Settings />
-              </AuthenticatedRoute>
-            }
-            path="/settings"
-          ></Route>
-
-          <Route
-            element={<PostsWithTopic sortBy="latest" />}
-            path="/tag/:topicName"
-          />
-          <Route
-            element={<PostsWithTopic sortBy="best" />}
-            path="/tag/:topicName/best"
-          />
-        </Routes>
+          <Routes>
+            <Route element={<PageNotFound />} path="*" />
+            <Route
+              element={isLoggedIn ? <Homepage /> : <LoggedOutHomepage />}
+              path="/"
+            />
+            <Route
+              element={
+                <AuthenticatedRoute isLoggedIn={isLoggedIn}>
+                  <CreatePost />
+                </AuthenticatedRoute>
+              }
+              path="/new-story"
+            />
+            <Route element={<SearchPage />} path="/search" />
+            <Route
+              element={
+                <AuthenticatedRoute isLoggedIn={isLoggedIn}>
+                  <NotificationPage />
+                </AuthenticatedRoute>
+              }
+              path="/notifications"
+            />
+            <Route
+              element={
+                <AuthenticatedRoute isLoggedIn={isLoggedIn}>
+                  <Library />
+                </AuthenticatedRoute>
+              }
+              path="/library"
+            />
+            <Route element={<BlogPost />} path=":username/posts/:title" />
+            <Route
+              element={<ProfilePage page="profile" />}
+              path="u/:username"
+            />
+            <Route
+              element={<ProfilePage page="about" />}
+              path="u/:username/about"
+            />
+            <Route
+              element={<ProfilePage page="followers" />}
+              path="u/:username/followers"
+            />
+            <Route
+              element={<ProfilePage page="following" />}
+              path="u/:username/following"
+            />
+            <Route
+              element={
+                <AuthenticatedRoute isLoggedIn={isLoggedIn}>
+                  <Settings />
+                </AuthenticatedRoute>
+              }
+              path="/settings"
+            ></Route>
+            <Route
+              element={<PostsWithTopic sortBy="latest" />}
+              path="/tag/:topicName"
+            />
+            <Route
+              element={<PostsWithTopic sortBy="best" />}
+              path="/tag/:topicName/best"
+            />
+          </Routes>
+        </div>
       </UserContext.Provider>
     </ModalContext.Provider>
   );
