@@ -20,7 +20,7 @@ import PostsWithTopic from "./components/pages/posts_with_topic_page/PostsWithTo
 import NotificationPage from "./components/pages/notification_page/NotificationPage";
 import Library from "./components/pages/library_page/Library";
 import SearchPage from "./components/pages/search_page/SearchPage";
-import AllUserData from "./interfaces/AllUserData";
+import AllUserData from "./interfaces/AllUserDataInterface";
 import PageNotFound from "./components/pages/404_page/PageNotFound";
 
 function App() {

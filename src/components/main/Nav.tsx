@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import AllUserData from "../../interfaces/AllUserData";
+import AllUserData from "../../interfaces/AllUserDataInterface";
 import Dropdown from "../helper-components/Dropdown";
 import ProfilePicture from "../helper-components/ProfilePicture";
 

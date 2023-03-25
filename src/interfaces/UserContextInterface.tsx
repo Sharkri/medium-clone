@@ -1,4 +1,4 @@
-import AllUserData from "./AllUserData";
+import AllUserData from "./AllUserDataInterface";
 
 export default interface IUserContext {
   user: AllUserData | null;

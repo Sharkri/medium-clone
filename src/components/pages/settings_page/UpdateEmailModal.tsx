@@ -1,6 +1,6 @@
 import { FormEvent, useContext, useState } from "react";
 import { changeEmail } from "../../../firebase/firebase-app";
-import AllUserData from "../../../interfaces/AllUserData";
+import AllUserData from "../../../interfaces/AllUserDataInterface";
 import LoadingButton from "../../helper-components/LoadingButton";
 import ModalContent from "../../modal/ModalContent";
 import ModalContext from "../../modal/ModalContext";
