@@ -86,11 +86,9 @@ function Nav({
               <div className="text-sm mb-1 group-hover:text-lighterblack">
                 Sign out
               </div>
-              {user && (
-                <p className="text-[13px] break-all line-clamp-1">
-                  {user.email}
-                </p>
-              )}
+              <p className="text-[13px] break-all line-clamp-1">
+                {user?.email || "anonymous@mail.com"}
+              </p>
             </button>
           </div>
         </>
