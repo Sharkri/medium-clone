@@ -46,13 +46,8 @@ export default function CreateComment({
         setLoading(false);
         setCommentText("");
       }}
-      onClick={() => {
-        if (!user) {
-          setModalOpen(true, <SignUpOptions hideAnonymousOption />);
-        } else setExpanded(true);
-      }}
     >
-      {!hideUserInfo && (
+      {hideUserInfo ? null : (
         <div
           className={`${
             !expanded && "hidden"
@@ -68,13 +63,18 @@ export default function CreateComment({
         className={`transition-all duration-300 ${
           expanded ? "min-h-[100px] p-[14px]" : "px-[14px] flex"
         } `}
+        onClick={() => {
+          if (!user) {
+            setModalOpen(true, <SignUpOptions hideAnonymousOption />);
+          } else setExpanded(true);
+        }}
       >
         <TextareaAutosize
           placeholder={placeholder}
           value={commentText}
           onChange={(e) => setCommentText(e.target.value)}
           disabled={!user}
-          className="resize-none outline-none text-sm w-full text-lighterblack"
+          className="resize-none outline-none text-sm w-full text-lighterblack bg-transparent"
         ></TextareaAutosize>
       </div>
 
