@@ -25,7 +25,13 @@ export default function LoggedOutHeader({
 
         <nav className="flex items-center gap-6 text-sm">
           <div className="flex gap-6 max-md:hidden">
-            <a href="https://github.com/Sharkri/medium-clone">Github Repo</a>
+            <a
+              href="https://github.com/Sharkri/medium-clone"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Github Repo
+            </a>
           </div>
           <OpenModalButton
             element={<SignInOptions />}
