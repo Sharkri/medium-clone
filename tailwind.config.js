@@ -26,6 +26,19 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            "code::before": false,
+            "code::after": false,
+
+            code: {
+              padding: "2px 4px",
+              color: "rgb(41,41,41)",
+              fontFamily:
+                'source-code-pro, Menlo, Monaco, "Courier New", Courier, monospace',
+              fontSize: "75%",
+              fontWeight: "400",
+              backgroundColor: "#f2f2f2",
+            },
+
             h1: {
               fontSize: "22px",
             },
