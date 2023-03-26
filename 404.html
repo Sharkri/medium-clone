@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Page not found</title>
-  </head>
-  <body>
+    <meta charset="UTF-8" />
+    <title>Page Not Found</title>
     <script>
       const path = window.location.pathname;
       const url = "https://sharkri.github.io" + path;
-      window.location.replace(url);
+      window.history.replaceState(null, "", url);
+    </script>
+  </head>
+  <body>
+    <p>Page not found. Redirecting...</p>
+    <script>
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
     </script>
   </body>
 </html>
