@@ -35,9 +35,16 @@ export default function FollowPage({
       </h1>
 
       <div className="flex flex-col gap-6">
-        {followersList.map((follower) => (
-          <FollowerUserInfo follower={follower} key={follower.uid} />
-        ))}
+        {followersList.length ? (
+          followersList.map((follower) => (
+            <FollowerUserInfo follower={follower} key={follower.uid} />
+          ))
+        ) : (
+          <div className="flex text-grey text-lg whitespace-pre-wrap">
+            <span className="line-clamp-1">{user.displayName} </span>
+            <span>has no {type}.</span>
+          </div>
+        )}
       </div>
     </div>
   );
