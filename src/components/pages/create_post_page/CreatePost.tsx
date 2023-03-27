@@ -40,11 +40,9 @@ export default function CreatePost() {
       </div>
 
       <div
-        className={`flex flex-col items-center mb-12 pt-4 ${
-          isPublishing ? "hidden" : ""
-        }`}
+        className={`flex flex-col mb-12 pt-4 ${isPublishing ? "hidden" : ""}`}
       >
-        <div className="flex gap-3 text-sm">
+        <div className="flex gap-3 text-sm mx-auto">
           <button
             className="flex items-center bg-lightblack px-4 py-2 text-white rounded-full"
             onClick={() => setIsEditing(!isEditing)}
@@ -72,8 +70,9 @@ export default function CreatePost() {
             Publish
           </button>
         </div>
+
         <div
-          className={`flex flex-col w-full max-w-[740px] px-5 pt-2 ${
+          className={`flex flex-col mx-auto w-full max-w-[740px] px-5 pt-2 ${
             !isEditing && "hidden"
           }`}
         >
@@ -99,13 +98,16 @@ export default function CreatePost() {
             autoFocus
           />
         </div>
+
         {!isEditing && (
-          <div className="max-w-[680px]">
-            <BlogMarkdownWithTitleAndDesc
-              title={title}
-              description={description}
-              blogContents={blogContents}
-            />
+          <div className="max-w-[680px] mt-4 mx-auto max-sm:mx-4">
+            <div>
+              <BlogMarkdownWithTitleAndDesc
+                title={title}
+                description={description}
+                blogContents={blogContents}
+              />
+            </div>
           </div>
         )}
       </div>
