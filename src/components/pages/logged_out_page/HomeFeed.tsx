@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import Post from "../../../interfaces/PostInterface";
-import Posts from "../../helper-components/Posts";
+import MostLikedPosts from "../../helper-components/MostLikedPosts";
 import Sidebar from "../../main/Sidebar";
 
 function HomeFeed({ headerTop }: { headerTop: string }) {
@@ -11,18 +9,12 @@ function HomeFeed({ headerTop }: { headerTop: string }) {
     "Technology",
     "Writing",
   ];
-  const [posts, setPosts] = useState<Post[] | null>(null);
 
   return (
     <div className="max-w-[1192px] mx-auto">
       <div className="flex gap-12 mx-12">
         <section className="grow pt-12">
-          <Posts
-            posts={posts}
-            onPostChange={(newPosts: Post[]) =>
-              setPosts((posts || []).concat(newPosts))
-            }
-          />
+          <MostLikedPosts />
         </section>
 
         <Sidebar headerTop={headerTop}>

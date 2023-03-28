@@ -43,6 +43,7 @@ export default function PostsWithTopic({
   }
 
   const bestPosts = getBestPosts();
+  // sort posts by timestamp descending
   const latestPosts =
     posts?.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds) || null;
 

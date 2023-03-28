@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Post from "../../../interfaces/PostInterface";
-import Posts from "../../helper-components/Posts";
+import Post from "../../interfaces/PostInterface";
+import Posts from "./Posts";
 
-export default function ForYouPosts() {
+export default function MostLikedPosts() {
   const [posts, setPosts] = useState<Post[] | null>(null);
 
   const mostLikedPosts = posts

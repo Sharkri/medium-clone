@@ -6,7 +6,7 @@ import ScrollerItems from "../../helper-components/ScrollerItems";
 import Topic from "../../helper-components/Topic";
 import Sidebar from "../../main/Sidebar";
 import FollowingPosts from "./FollowingPosts";
-import ForYouPosts from "./ForYouPosts";
+import MostLikedPosts from "../../helper-components/MostLikedPosts";
 
 export default function Homepage() {
   const [search] = useSearchParams();
@@ -41,7 +41,7 @@ export default function Homepage() {
           {feed === "following" ? (
             <FollowingPosts following={user?.following} />
           ) : (
-            <ForYouPosts />
+            <MostLikedPosts />
           )}
         </main>
         <Sidebar>
