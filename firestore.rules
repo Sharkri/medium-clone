@@ -132,6 +132,7 @@ service cloud.firestore {
 
                 post.lowercaseTopics is list &&
                 post.topics is list &&
+                post.topics.size() <= 5 &&
                 post.lowercaseTopics.size() == post.topics.size() &&
 
                 post.readingTimeInMinutes >= 0 &&

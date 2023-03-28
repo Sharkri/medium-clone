@@ -31,7 +31,7 @@ export default function PublishPost({
   const [topicValue, setTopicValue] = useState("");
   const [topicsArray, setTopicsArray] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
-  const tooManyTopics = topicsArray.length > 5;
+  const tooManyTopics = topicsArray.length >= 5;
 
   const navigate = useNavigate();
   const previewImage = useImagePreview(file);
@@ -194,7 +194,11 @@ export default function PublishPost({
 
             <input
               id="topic"
-              placeholder={tooManyTopics ? undefined : "topic 1, topic 2..."}
+              placeholder={
+                tooManyTopics
+                  ? "Maximum topics reached."
+                  : "topic 1, topic 2..."
+              }
               className="border border-black/10 outline-none px-4 py-2 mb-4 bg-zinc-50"
               onChange={(e) => onTopicChange(e.target.value)}
               value={topicValue}
