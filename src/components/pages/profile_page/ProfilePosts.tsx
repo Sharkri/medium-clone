@@ -1,12 +1,15 @@
-import { where } from "firebase/firestore";
+import { orderBy, where } from "firebase/firestore";
 import { useState } from "react";
 import Post from "../../../interfaces/PostInterface";
 import UserData from "../../../interfaces/UserDataInterface";
 import Posts from "../../helper-components/Posts";
 
 export default function ProfilePosts({ user }: { user: UserData }) {
-  // only posts where author is the user
-  const options = [where("authorUid", "==", user.uid)];
+  // only posts where author is the user and latest posts as well
+  const options = [
+    where("authorUid", "==", user.uid),
+    orderBy("timestamp", "desc"),
+  ];
 
   const [posts, setPosts] = useState<Post[] | null>(null);
 

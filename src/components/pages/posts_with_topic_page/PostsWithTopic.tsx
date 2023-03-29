@@ -1,12 +1,11 @@
-import { sub } from "date-fns";
 import { where } from "firebase/firestore";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getPostCount } from "../../../firebase/firebase-app";
 import compactNumber from "../../../helper-functions/compactNumber";
-import Post from "../../../interfaces/PostInterface";
 import Dropdown from "../../helper-components/Dropdown";
-import Posts from "../../helper-components/Posts";
+import LatestPosts from "../../helper-components/LatestPosts";
+import MostLikedPosts from "../../helper-components/MostLikedPosts";
 import ScrollerItems from "../../helper-components/ScrollerItems";
 import Sidebar from "../../main/Sidebar";
 
@@ -17,35 +16,13 @@ export default function PostsWithTopic({
 }) {
   const { topicName } = useParams();
 
-  const options = useMemo(() => {
-    return [
-      where("lowercaseTopics", "array-contains", topicName?.toLowerCase()),
-    ];
-  }, [topicName]);
+  const topicOptions = [
+    where("lowercaseTopics", "array-contains", topicName?.toLowerCase()),
+  ];
 
   const [storyCount, setStoryCount] = useState(0);
   // 0 = all-time. 365 = year, 30 = month, 7 = week
   const [timeRange, setTimeRange] = useState<0 | 365 | 30 | 7>(0);
-  const [posts, setPosts] = useState<Post[] | null>(null);
-
-  function getBestPosts() {
-    // sort by most liked
-    const mostLiked = posts?.sort((a, b) => b.likeCount - a.likeCount) || null;
-
-    if (timeRange === 0) return mostLiked;
-    else {
-      // filter by minDate (This week, This month. etc)
-      const minDate = sub(new Date(), { days: timeRange });
-      return (
-        mostLiked?.filter((post) => post.timestamp.toDate() > minDate) || null
-      );
-    }
-  }
-
-  const bestPosts = getBestPosts();
-  // sort posts by timestamp descending
-  const latestPosts =
-    posts?.sort((a, b) => b.timestamp.seconds - a.timestamp.seconds) || null;
 
   const time = {
     7: "This week",
@@ -55,8 +32,11 @@ export default function PostsWithTopic({
   };
 
   useEffect(() => {
-    getPostCount(...options).then(setStoryCount);
-  }, [options]);
+    if (!topicName) return;
+
+    // get the post count for topic
+    getPostCount(...topicOptions).then(setStoryCount);
+  }, [topicName]);
 
   return (
     <div className="max-w-[1336px] m-auto">
@@ -104,15 +84,11 @@ export default function PostsWithTopic({
               )}
             </ScrollerItems>
           </header>
-          {
-            <Posts
-              options={options}
-              posts={sortBy === "latest" ? latestPosts : bestPosts}
-              onPostChange={(newPosts: Post[]) =>
-                setPosts((posts || []).concat(newPosts))
-              }
-            />
-          }
+          {sortBy === "latest" ? (
+            <LatestPosts options={topicOptions} />
+          ) : (
+            <MostLikedPosts timeRange={timeRange} options={topicOptions} />
+          )}
         </main>
 
         <Sidebar>

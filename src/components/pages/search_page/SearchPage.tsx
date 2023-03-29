@@ -38,7 +38,7 @@ export default function SearchPage() {
           posts={posts}
           onPostChange={setPosts}
           options={[
-            orderBy("title"),
+            orderBy("title", "desc"),
             where("title", ">=", query),
             where("title", "<=", query + "\uf8ff"),
           ]}
