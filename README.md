@@ -35,7 +35,7 @@ Project is created with:
 - [React Router](https://reactrouter.com/)
 - [ESLint](https://eslint.org/)
 - [React Markdown](https://github.com/remarkjs/react-markdown)
-- [React Infinite Scroll](https://github.com/ankeetmaini/react-infinite-scroll-component)
+- [React Infinite Scroller](https://github.com/danbovey/react-infinite-scroller)
 - [Jest](https://jestjs.io/)
 
 ## Showcase
