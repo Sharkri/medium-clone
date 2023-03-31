@@ -54,14 +54,20 @@ export default function Posts({
   if (posts == null) return null;
 
   return (
-    <InfiniteScroll
-      loadMore={fetchNewPosts}
-      hasMore={hasMore}
-      loader={<Spinner className="w-8 h-8 mx-auto" key={0} />}
-    >
-      {posts.map((post) => (
-        <PostPreview post={post} key={post.id} />
-      ))}
-    </InfiniteScroll>
+    <>
+      <InfiniteScroll
+        loadMore={fetchNewPosts}
+        hasMore={hasMore}
+        loader={<Spinner className="w-8 h-8 mx-auto" key={0} />}
+      >
+        {posts.map((post) => (
+          <PostPreview post={post} key={post.id} />
+        ))}
+      </InfiniteScroll>
+
+      {!hasMore && (
+        <p className="text-center text-grey my-4">You've reached the end</p>
+      )}
+    </>
   );
 }
