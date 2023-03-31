@@ -120,10 +120,10 @@ service cloud.firestore {
         return post.authorUid == request.auth.uid && isValidId(post.id) && 
                 isUniquePostId(post.id) &&
                 isNonEmptyString(post.title) &&
-                post.title.size() < 100 &&
+                post.title.size() <= 100 &&
 
                 post.description is string && 
-                post.description.size() < 140 && 
+                post.description.size() <= 140 && 
 
                 post.blogContents is string &&
                 post.likeCount == 0 &&
